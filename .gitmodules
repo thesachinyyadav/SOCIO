@@ -1,0 +1,9 @@
+[submodule "socioapp"]
+	path = socioapp
+	url = https://github.com/thesachinyyadav/sociomobilev2.git
+[submodule "sociogated"]
+	path = sociogated
+	url = https://github.com/thesachinyyadav/universitygatedv2.git
+[submodule "socioweb"]
+	path = socioweb
+	url = https://github.com/thesachinyyadav/socio2026v2.git

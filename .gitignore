@@ -1,0 +1,21 @@
+# SOCIO parent repo ignore rules
+# Submodule internals are managed in each child repo's own .gitignore
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs / temp at parent level
+*.log
+*.tmp
+*.swp
+
+# Environment files at parent level
+.env
+.env.*
+!.env.example
+
+# Local helper artifacts
+scripts/tmp/
