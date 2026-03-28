@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOCIOWEB Task Distribution Sheet</title>
+  <style>
+    :root {
+      --blue-900: #0f2f66;
+      --blue-700: #154cb3;
+      --blue-100: #e8f0ff;
+      --gray-900: #111827;
+      --gray-700: #374151;
+      --gray-600: #4b5563;
+      --gray-300: #d1d5db;
+      --gray-200: #e5e7eb;
+      --gray-100: #f3f4f6;
+      --white: #ffffff;
+      --green-700: #166534;
+      --amber-700: #92400e;
+      --red-700: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #eef3fb;
+      color: var(--gray-900);
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      line-height: 1.35;
+    }
+
+    .sheet {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 1px solid var(--gray-300);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 12px 28px rgba(15, 47, 102, 0.12);
+    }
+
+    .header {
+      border-bottom: 2px solid var(--gray-200);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 28px;
+      color: var(--blue-900);
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+
+    .scope {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .scope-box {
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: var(--gray-100);
+      font-size: 13px;
+      color: var(--gray-700);
+    }
+
+    .scope-label {
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-right: 6px;
+    }
+
+    .summary {
+      margin-top: 18px;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .ux-picks {
+      margin-top: 14px;
+      border: 1px solid #bfdbfe;
+      border-left: 5px solid var(--blue-700);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f8fbff;
+    }
+
+    .ux-picks h3 {
+      margin: 0;
+      padding: 10px 12px;
+      font-size: 15px;
+      color: var(--blue-900);
+      background: #eef4ff;
+      border-bottom: 1px solid #dbeafe;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--gray-200);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: var(--blue-100);
+      color: var(--blue-900);
+      font-weight: 700;
+    }
+
+    .tickets {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .person {
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 14px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      background: #fcfdff;
+    }
+
+    .person-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 8px;
+    }
+
+    .person-name {
+      margin: 0;
+      color: var(--blue-900);
+      font-size: 18px;
+    }
+
+    .person-meta {
+      margin: 2px 0 0;
+      color: var(--gray-600);
+      font-size: 12px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 5px 10px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge-sec {
+      color: var(--red-700);
+      background: #fee2e2;
+      border-color: #fecaca;
+    }
+
+    .badge-db {
+      color: var(--green-700);
+      background: #dcfce7;
+      border-color: #bbf7d0;
+    }
+
+    .badge-fs {
+      color: var(--amber-700);
+      background: #fef3c7;
+      border-color: #fde68a;
+    }
+
+    .task {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 8px;
+      background: var(--white);
+    }
+
+    .task-id {
+      font-weight: 700;
+      color: var(--blue-900);
+      font-size: 13px;
+    }
+
+    .task-title {
+      margin: 2px 0 6px;
+      font-size: 14px;
+      color: var(--gray-900);
+      font-weight: 700;
+    }
+
+    .task-line {
+      margin: 4px 0;
+      font-size: 12px;
+      color: var(--gray-700);
+    }
+
+    .task-label {
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .footer {
+      margin-top: 18px;
+      border-top: 2px solid var(--gray-200);
+      padding-top: 10px;
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+
+    .signoff {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .sign-box {
+      border: 1px dashed var(--gray-300);
+      border-radius: 8px;
+      padding: 8px;
+      min-height: 46px;
+      font-size: 11px;
+      color: var(--gray-600);
+    }
+
+    .print-btn {
+      margin: 0 auto 14px;
+      display: block;
+      border: none;
+      background: var(--blue-700);
+      color: var(--white);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .scope {
+        grid-template-columns: 1fr;
+      }
+
+      .signoff {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+
+      body {
+        padding: 0;
+        background: #fff;
+      }
+
+      .sheet {
+        max-width: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn no-print" onclick="window.print()">Print This Assignment Sheet</button>
+
+  <div class="sheet">
+    <div class="header">
+      <h1 class="title">SOCIOWEB Execution Sheet</h1>
+      <p class="subtitle">Prepared for intern execution handout | Date: 28 March 2026 | Sprint Window: 2 WORKING DAYS</p>
+
+      <div class="scope">
+        <div class="scope-box"><span class="scope-label">Scope:</span> SOCIOWEB only (client + server)</div>
+        <div class="scope-box"><span class="scope-label">Excluded:</span> No work in sociomobile and no work in sociogated</div>
+      </div>
+    </div>
+
+    <div class="summary">
+      <table>
+        <thead>
+          <tr>
+            <th>Assignee</th>
+            <th>Primary Strength</th>
+            <th>Mode</th>
+            <th>Ticket Count</th>
+            <th>Priority Focus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hatim Abizer Tinwala</td>
+            <td>Cybersecurity specialist</td>
+            <td>Remote (Dubai)</td>
+            <td>3</td>
+            <td>Security hardening only</td>
+          </tr>
+          <tr>
+            <td>Advaith Biju</td>
+            <td>DB + full stack</td>
+            <td>On-site</td>
+            <td>3</td>
+            <td>Data consistency and DB-backed fixes</td>
+          </tr>
+          <tr>
+            <td>Alton Joe</td>
+            <td>Full stack</td>
+            <td>On-site</td>
+            <td>3</td>
+            <td>Discover and events UX behavior</td>
+          </tr>
+          <tr>
+            <td>Suryachalam V M</td>
+            <td>Full stack</td>
+            <td>On-site</td>
+            <td>3</td>
+            <td>Performance and navigation stability</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ux-picks">
+      <h3>UI/UX Owner Picks (User Selected)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Developer</th>
+            <th>Selected UI/UX Improvement</th>
+            <th>Linked Ticket</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Advaith Biju</td>
+            <td>Fest/Event mapping UX clarity</td>
+            <td>ADV-01</td>
+          </tr>
+          <tr>
+            <td>Alton Joe</td>
+            <td>Events search/filter bar UX</td>
+            <td>ALT-02</td>
+          </tr>
+          <tr>
+            <td>Suryachalam V M</td>
+            <td>Navigation smoothness UX</td>
+            <td>SUR-03</td>
+          </tr>
+          <tr>
+            <td>Hatim Abizer Tinwala</td>
+            <td>No UI/UX ticket by plan (security-only scope)</td>
+            <td>--</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tickets">
+      <section class="person">
+        <div class="person-head">
+          <div>
+            <h2 class="person-name">Hatim Abizer Tinwala</h2>
+            <p class="person-meta">Security-only allocation as requested</p>
+          </div>
+          <span class="badge badge-sec">CYBERSECURITY ONLY</span>
+        </div>
+
+        <div class="task">
+          <div class="task-id">HAT-01</div>
+          <div class="task-title">Route-specific rate limiting and abuse control</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/server/index.js, socioweb/server/routes/userRoutes.js, socioweb/server/routes/registrationRoutes.js, socioweb/server/routes/chatRoutes.js, socioweb/server/routes/contactRoutes.js</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> sensitive endpoints enforce limits with consistent 429 JSON, limits configurable via env, and no false-positive lockouts during normal use.</p>
+        </div>
+
+        <div class="task">
+          <div class="task-id">HAT-02</div>
+          <div class="task-title">Lock down exposed user data and outsider edit path</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/server/routes/userRoutes.js, socioweb/server/middleware/authMiddleware.js</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> user read endpoint requires proper auth, outsider name edit no longer accepts weak visitor_id-only fallback, and unauthorized access always returns 401/403 without sensitive details.</p>
+        </div>
+
+        <div class="task">
+          <div class="task-id">HAT-03</div>
+          <div class="task-title">Security headers, body limits, and safe error responses</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/server/index.js</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> helmet enabled safely, JSON/urlencoded limits enforced, global errors do not leak raw internal message strings in production responses.</p>
+        </div>
+      </section>
+
+      <section class="person">
+        <div class="person-head">
+          <div>
+            <h2 class="person-name">Advaith Biju</h2>
+            <p class="person-meta">DB-oriented full-stack allocation</p>
+          </div>
+          <span class="badge badge-db">DB + FULL STACK</span>
+        </div>
+
+        <div class="task">
+          <div class="task-id">ADV-01</div>
+          <div class="task-title">Standardize fest relation to stable fest_id across stack</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/server/routes/eventRoutes.js, socioweb/server/routes/festRoutes.js, socioweb/server/routes/reportRoutes.js, socioweb/client/app/_components/Admin/ManageEvent.tsx, socioweb/client/app/create/event/page.tsx</p>
+          <p class="task-line"><span class="task-label">UI/UX pick:</span> Yes (selected by lead)</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> event to fest mapping uses ID-safe references end-to-end and does not break when fest title is edited.</p>
+        </div>
+
+        <div class="task">
+          <div class="task-id">ADV-02</div>
+          <div class="task-title">Resolve table naming mismatch (fest vs fests) with one canonical source</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/server/routes/reportRoutes.js, socioweb/server/routes/chatRoutes.js, socioweb/server/config/database.js, socioweb/socios.sql (and migration if needed)</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> no route queries non-existent table name, all fest reads pass in dev and production schemas.</p>
+        </div>
+
+        <div class="task">
+          <div class="task-id">ADV-03</div>
+          <div class="task-title">Add server-side pagination/filtering for heavy admin lists</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/server/routes/userRoutes.js, socioweb/server/routes/eventRoutes_secured.js, socioweb/server/routes/festRoutes.js, socioweb/client/app/masteradmin/page.tsx</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> APIs support page, pageSize, search, sort; UI consumes paged responses and avoids loading entire datasets at once.</p>
+        </div>
+      </section>
+
+      <section class="person">
+        <div class="person-head">
+          <div>
+            <h2 class="person-name">Alton Joe</h2>
+            <p class="person-meta">On-site full-stack UX implementation</p>
+          </div>
+          <span class="badge badge-fs">FULL STACK</span>
+        </div>
+
+        <div class="task">
+          <div class="task-id">ALT-01</div>
+          <div class="task-title">Make Discover campus selector actually filter content</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/client/app/Discover/page.tsx, socioweb/client/context/EventContext.tsx</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> selected campus changes the event and fest datasets shown (carousel, trending, upcoming, fests) with clear empty states.</p>
+        </div>
+
+        <div class="task">
+          <div class="task-id">ALT-02</div>
+          <div class="task-title">Events page search UX completion</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/client/app/events/page.tsx, socioweb/client/app/_components/NavigationBar.tsx</p>
+          <p class="task-line"><span class="task-label">UI/UX pick:</span> Yes (selected by lead)</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> events page has visible search input, URL query sync works both ways, and category plus search filters can be combined.</p>
+        </div>
+
+        <div class="task">
+          <div class="task-id">ALT-03</div>
+          <div class="task-title">Fix card clipping and responsive overflow defects</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/client/app/_components/Discover/EventCard.tsx, socioweb/client/app/_components/Discover/FestCard.tsx, relevant page containers</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> no clipped cards or stat panels at 320, 375, 768, 1024, 1280 widths and at 100 percent and 125 percent browser zoom.</p>
+        </div>
+      </section>
+
+      <section class="person">
+        <div class="person-head">
+          <div>
+            <h2 class="person-name">Suryachalam V M</h2>
+            <p class="person-meta">On-site full-stack stability and performance</p>
+          </div>
+          <span class="badge badge-fs">FULL STACK</span>
+        </div>
+
+        <div class="task">
+          <div class="task-id">SUR-01</div>
+          <div class="task-title">Replace hard mobile block with soft app recommendation</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/client/app/layout.tsx, socioweb/client/app/_components/MobileDetectionRedirect.tsx</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> mobile users can still use web, with optional app CTA banner/modal instead of forced full-screen block.</p>
+        </div>
+
+        <div class="task">
+          <div class="task-id">SUR-02</div>
+          <div class="task-title">Stop destructive cache and service-worker clearing on load</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/client/app/_components/ClientInit.tsx</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> no unconditional unregister/delete on every visit, while chunk-recovery still works without reload loops.</p>
+        </div>
+
+        <div class="task">
+          <div class="task-id">SUR-03</div>
+          <div class="task-title">Navigation cleanup to avoid full reloads</div>
+          <p class="task-line"><span class="task-label">Files:</span> socioweb/client/app/_components/NavigationBar.tsx, socioweb/client/app/profile/page.tsx, socioweb/client/app/create/event/page.tsx, socioweb/client/app/_components/CreateFestForm.tsx</p>
+          <p class="task-line"><span class="task-label">UI/UX pick:</span> Yes (selected by lead)</p>
+          <p class="task-line"><span class="task-label">Definition of done:</span> replace window.location patterns with router push/replace where applicable, preserving stateful client UX.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">
+      <div><strong>Execution policy:</strong> each ticket needs a PR, before and after screenshots where UI changes exist, and a short QA note.</div>
+      <div><strong>Priority order:</strong> HAT-01, HAT-02, ADV-01, SUR-01, ALT-03, then remaining tickets.</div>
+
+      <div class="signoff">
+        <div class="sign-box">Hatim sign-off:<br />Date:</div>
+        <div class="sign-box">Advaith sign-off:<br />Date:</div>
+        <div class="sign-box">Alton sign-off:<br />Date:</div>
+        <div class="sign-box">Suryachalam sign-off:<br />Date:</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
