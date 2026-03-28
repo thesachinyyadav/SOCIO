@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOCIOWEB Legal Execution Sheet - Bhoomi</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --paper: #ffffff;
+      --bg: #eef3fb;
+      --blue-900: #0f2f66;
+      --blue-700: #154cb3;
+      --blue-100: #e8f0ff;
+      --green-700: #166534;
+      --green-100: #dcfce7;
+      --amber-700: #92400e;
+      --amber-100: #fef3c7;
+      --red-700: #b91c1c;
+      --red-100: #fee2e2;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      line-height: 1.35;
+    }
+
+    .sheet {
+      max-width: 1120px;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 26px;
+      box-shadow: 0 12px 28px rgba(15, 47, 102, 0.12);
+    }
+
+    .print-btn {
+      margin: 0 auto 14px;
+      display: block;
+      border: none;
+      background: var(--blue-700);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .header {
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 30px;
+      color: var(--blue-900);
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .scope-grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .scope-box {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 9px 11px;
+      background: #f8fafc;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    .scope-label {
+      font-weight: 700;
+      color: var(--blue-900);
+    }
+
+    .badge-row {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .b-legal { background: var(--green-100); color: var(--green-700); border-color: #bbf7d0; }
+    .b-risk { background: var(--red-100); color: var(--red-700); border-color: #fecaca; }
+
+    .note {
+      margin-top: 12px;
+      border: 1px solid #bfdbfe;
+      border-left: 5px solid var(--blue-700);
+      background: #f8fbff;
+      border-radius: 10px;
+      padding: 10px 11px;
+      font-size: 12px;
+      color: #1f2937;
+    }
+
+    .summary {
+      margin-top: 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--blue-100);
+      color: var(--blue-900);
+      font-weight: 700;
+    }
+
+    .section-title {
+      margin: 18px 0 8px;
+      font-size: 18px;
+      color: var(--blue-900);
+    }
+
+    .card {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 11px;
+      margin-top: 9px;
+      background: #fdfdff;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .task-id {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue-900);
+      margin-bottom: 4px;
+    }
+
+    .task-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+
+    .line {
+      margin: 4px 0;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    .line strong { color: #111827; }
+
+    .milestone {
+      margin-top: 14px;
+      border: 1px solid #dbeafe;
+      border-left: 5px solid var(--blue-700);
+      background: #f8fbff;
+      border-radius: 10px;
+      padding: 11px;
+      font-size: 12px;
+      color: #1f2937;
+    }
+
+    .footer {
+      margin-top: 16px;
+      border-top: 2px solid #e5e7eb;
+      padding-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .signoff {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .sign-box {
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      min-height: 46px;
+      padding: 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 960px) {
+      .scope-grid { grid-template-columns: 1fr; }
+      .signoff { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .sheet {
+        max-width: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn no-print" onclick="window.print()">Print Bhoomi Legal Sheet</button>
+
+  <div class="sheet">
+    <div class="header">
+      <h1 class="title">BHOOMI LEGAL EXECUTION SHEET</h1>
+      <p class="subtitle">SOCIOWEB Legal and Compliance Workplan | Date: 28 March 2026 | Owner: Bhoomi Prabhakar (Legal Intern)</p>
+
+      <div class="scope-grid">
+        <div class="scope-box"><span class="scope-label">Scope:</span> SOCIOWEB legal pages, user communications, data handling process documents, and policy alignment</div>
+        <div class="scope-box"><span class="scope-label">Out of Scope:</span> No sociomobile work and no sociogated work</div>
+        <div class="scope-box"><span class="scope-label">Expected Depth:</span> Full legal review, redlining, process drafting, and final compliance sign-off pack</div>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge b-legal">Legal Track</span>
+        <span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fde68a;">No Coding Required</span>
+        <span class="badge b-risk">Risk Reduction Priority</span>
+      </div>
+
+      <div class="note">
+        <strong>Execution mode for Bhoomi:</strong> Legal and documentation ownership only. Tech team must provide screenshots, process notes, and sample outputs where needed. Bhoomi is not expected to read or modify code.
+      </div>
+    </div>
+
+    <div class="summary">
+      <table>
+        <thead>
+          <tr>
+            <th>Workstream</th>
+            <th>Objective</th>
+            <th>Primary Inputs</th>
+            <th>Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Policy Harmonization</td>
+            <td>Align privacy, terms, cookies, and consent copy to one legal baseline.</td>
+            <td>Current policy pages, consent prompts, founder notes</td>
+            <td>Redline set + approved consolidated language pack</td>
+          </tr>
+          <tr>
+            <td>Data Governance</td>
+            <td>Map personal data lifecycle from collection to deletion.</td>
+            <td>Form fields list, data export samples, process walkthrough from tech team</td>
+            <td>Data inventory, lawful basis matrix, retention schedule</td>
+          </tr>
+          <tr>
+            <td>User Rights Operations</td>
+            <td>Define DSAR, rectification, deletion, and consent withdrawal workflows.</td>
+            <td>Support inbox samples, user escalation flow, current response templates</td>
+            <td>SOP pack with response templates and SLA windows</td>
+          </tr>
+          <tr>
+            <td>Commercial and Risk Docs</td>
+            <td>Prepare legal docs for campus and organizer operations.</td>
+            <td>Organizer workflow, outreach forms, notification content samples</td>
+            <td>Organizer terms annex, disclaimer set, incident legal playbook</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">Detailed Legal Ticket Set (Extensive)</h2>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-01</div>
+      <h3 class="task-title">Master Legal Baseline and Version Ledger</h3>
+      <p class="line"><strong>Focus:</strong> Create one authoritative baseline for terms, privacy, and cookies language with version history and effective dates.</p>
+      <p class="line"><strong>Input needed:</strong> Current policy text and founder-approved business rules.</p>
+      <p class="line"><strong>Deliverable:</strong> "Policy Baseline v1" redline doc and a public-facing change log section text.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-02</div>
+      <h3 class="task-title">Consent Language Consistency Audit</h3>
+      <p class="line"><strong>Focus:</strong> Ensure all consent prompts use consistent legal wording and no contradictory obligations.</p>
+      <p class="line"><strong>Input needed:</strong> Screenshots of all consent points from web flows.</p>
+      <p class="line"><strong>Deliverable:</strong> Approved consent copy set with mandatory and optional consent distinctions.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-03</div>
+      <h3 class="task-title">PII Data Inventory and Legal Basis Mapping</h3>
+      <p class="line"><strong>Focus:</strong> Catalogue all personal fields collected and map each to purpose, legal basis, and retention requirement.</p>
+      <p class="line"><strong>Input needed:</strong> Data dictionary and sample exported records provided by Advaith/Hatim.</p>
+      <p class="line"><strong>Deliverable:</strong> Data Register spreadsheet with fields, sensitivity class, basis, owner, retention term.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-04</div>
+      <h3 class="task-title">Retention and Deletion Policy for Live Data</h3>
+      <p class="line"><strong>Focus:</strong> Define retention windows for users, registrations, contact messages, notifications, and attendance records.</p>
+      <p class="line"><strong>Input needed:</strong> Current backup/storage policy and operational constraints from the engineering team.</p>
+      <p class="line"><strong>Deliverable:</strong> Retention matrix and deletion request protocol (legal plus operational).</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-05</div>
+      <h3 class="task-title">Outsider Flow Legal Guardrail Pack</h3>
+      <p class="line"><strong>Focus:</strong> Validate outsider profile flow, visitor ID usage, one-time name edit language, and misuse disclaimers.</p>
+      <p class="line"><strong>Input needed:</strong> Outsider signup/profile screenshots and current warning messages.</p>
+      <p class="line"><strong>Deliverable:</strong> Outsider policy annex and approved warning copy set.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-06</div>
+      <h3 class="task-title">Communications and Notification Compliance</h3>
+      <p class="line"><strong>Focus:</strong> Separate transactional vs informational notifications and define opt-out language where required.</p>
+      <p class="line"><strong>Input needed:</strong> Sample notification messages and current trigger conditions.</p>
+      <p class="line"><strong>Deliverable:</strong> Notification policy clause and outbound messaging compliance checklist.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-07</div>
+      <h3 class="task-title">DSAR and User Rights Operating SOP</h3>
+      <p class="line"><strong>Focus:</strong> Formal process for access, correction, deletion, and objection requests with SLA timings.</p>
+      <p class="line"><strong>Input needed:</strong> Current support handling process and escalation owners.</p>
+      <p class="line"><strong>Deliverable:</strong> DSAR SOP + response templates for support and legal escalation.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-08</div>
+      <h3 class="task-title">Cookies and Tracking Representation Validation</h3>
+      <p class="line"><strong>Focus:</strong> Verify cookie claims match actual implementation and remove outdated statements if unused.</p>
+      <p class="line"><strong>Input needed:</strong> Browser cookie capture report from tech team plus current policy text.</p>
+      <p class="line"><strong>Deliverable:</strong> Cookie disclosure truth-test report plus corrected policy copy.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-09</div>
+      <h3 class="task-title">Third-Party and Vendor Disclosure Schedule</h3>
+      <p class="line"><strong>Focus:</strong> Build legal disclosure list for all major processors and service dependencies used by SOCIOWEB.</p>
+      <p class="line"><strong>Input needed:</strong> Vendor list from founders and infrastructure owners.</p>
+      <p class="line"><strong>Deliverable:</strong> Vendor disclosure table + DPA required/not-required tracker.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-10</div>
+      <h3 class="task-title">Campus Event Participation Legal Terms Annex</h3>
+      <p class="line"><strong>Focus:</strong> Draft participant obligations, organizer responsibilities, conduct clauses, and dispute handling.</p>
+      <p class="line"><strong>Input needed:</strong> Registration flow screenshots and founder policy decisions.</p>
+      <p class="line"><strong>Deliverable:</strong> Terms Annex A for event registration and participation.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-11</div>
+      <h3 class="task-title">Contact Form and Support Inbox Legal Language</h3>
+      <p class="line"><strong>Focus:</strong> Add legal-safe text around response timelines, handling expectations, and sensitive info warnings.</p>
+      <p class="line"><strong>Input needed:</strong> Current contact forms, support templates, and escalation process.</p>
+      <p class="line"><strong>Deliverable:</strong> Updated contact disclosures and support messaging policy copy.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-12</div>
+      <h3 class="task-title">Legal Incident and Breach Escalation Playbook</h3>
+      <p class="line"><strong>Focus:</strong> Define severity tiers, notification thresholds, evidence logging requirements, and escalation matrix.</p>
+      <p class="line"><strong>Input needed:</strong> Current incident response process from Hatim and founders.</p>
+      <p class="line"><strong>Deliverable:</strong> Incident legal playbook with role ownership and response timeline.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-13</div>
+      <h3 class="task-title">Plain-Language Rewrite Pass for User-Facing Legal Pages</h3>
+      <p class="line"><strong>Focus:</strong> Keep legal correctness while improving readability for students and organizers.</p>
+      <p class="line"><strong>Input needed:</strong> Existing policy text and approved legal baseline.</p>
+      <p class="line"><strong>Deliverable:</strong> Readability-improved legal copy with no reduction in enforceability.</p>
+    </div>
+
+    <div class="card">
+      <div class="task-id">BHO-LEGAL-14</div>
+      <h3 class="task-title">Final Compliance Sign-Off Bundle</h3>
+      <p class="line"><strong>Focus:</strong> Consolidate all outputs into one review package for founder approval and implementation handoff.</p>
+      <p class="line"><strong>Input needed:</strong> Final outputs from all prior legal tickets plus founder comments.</p>
+      <p class="line"><strong>Deliverable:</strong> Complete legal compliance bundle with risk register and final recommendation memo.</p>
+    </div>
+
+    <div class="milestone">
+      <strong>Milestones (Execution Order):</strong><br />
+      1) BHO-LEGAL-01 to 04 (policy and data baseline),<br />
+      2) BHO-LEGAL-05 to 09 (operational controls and disclosures),<br />
+      3) BHO-LEGAL-10 to 14 (commercial clauses, final playbooks, and sign-off pack).
+    </div>
+
+    <div class="footer">
+      <div><strong>Required output format:</strong> each ticket must produce at least one written artifact (redline, matrix, SOP, annex, or checklist) and one implementation recommendation note.</div>
+      <div><strong>Review gate:</strong> no legal copy goes live without founder approval and cross-check against implemented behavior.</div>
+
+      <div class="signoff">
+        <div class="sign-box">Bhoomi completion sign-off:<br />Date:</div>
+        <div class="sign-box">Founder legal review sign-off:<br />Date:</div>
+        <div class="sign-box">Implementation owner sign-off:<br />Date:</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
