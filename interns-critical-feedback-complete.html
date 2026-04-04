@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOCIO Interns Critical Feedback - Complete Review</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --ink: #1b2433;
+      --muted: #5f6c82;
+      --line: #d6dbe7;
+      --critical: #8f1f1f;
+      --high: #b4451f;
+      --medium: #946200;
+      --good: #1d7f4f;
+      --accent: #1d4f91;
+      --shadow: 0 14px 32px rgba(20, 34, 58, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 10% 0%, #f3dede 0%, transparent 32%),
+        radial-gradient(circle at 96% 6%, #dae8fb 0%, transparent 36%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", "Franklin Gothic Medium", "Trebuchet MS", sans-serif;
+      line-height: 1.48;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    .hero {
+      border-radius: 18px;
+      background: linear-gradient(128deg, #2b1111 0%, #5f1e1e 54%, #182f56 100%);
+      color: #f8f9ff;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -120px;
+      top: -150px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+
+    .kicker {
+      margin: 0;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ffd3d3;
+      border: 1px solid rgba(255, 211, 211, 0.4);
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+      line-height: 1.2;
+    }
+
+    .sub {
+      margin: 0;
+      color: #f1d9d9;
+      max-width: 980px;
+    }
+
+    .meta {
+      margin-top: 14px;
+      color: #dcc8d6;
+      font-size: 0.92rem;
+    }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: #ffd7d7;
+      color: #4b1a1a;
+    }
+
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.14);
+      color: #f7f8ff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .stats {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat .val {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .stat .lab {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .section {
+      margin-top: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .section h2 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+    }
+
+    .section p {
+      margin-top: 0;
+      color: var(--muted);
+    }
+
+    .banner {
+      border-left: 5px solid var(--critical);
+      background: #fff1f1;
+      color: #4d2020;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    .risk-table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: auto;
+      max-height: 700px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th,
+    td {
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+    }
+
+    th {
+      background: #f7f9fc;
+      color: #4f5d74;
+      font-size: 0.78rem;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .sev {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.65px;
+      text-transform: uppercase;
+    }
+
+    .sev.critical {
+      background: #ffd7d7;
+      color: var(--critical);
+      border: 1px solid #efb7b7;
+    }
+
+    .sev.high {
+      background: #ffe6d8;
+      color: var(--high);
+      border: 1px solid #f4c6ac;
+    }
+
+    .sev.medium {
+      background: #fff2d7;
+      color: var(--medium);
+      border: 1px solid #f2dbab;
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcff;
+      padding: 12px;
+    }
+
+    .panel h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .score {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcff;
+      padding: 10px;
+    }
+
+    .score h3 {
+      margin: 0 0 4px;
+      font-size: 0.95rem;
+    }
+
+    .score .v {
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .bar {
+      width: 100%;
+      height: 9px;
+      border-radius: 100px;
+      background: #e7ebf2;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #8f1f1f, #1d4f91);
+    }
+
+    .timeline {
+      border-left: 2px solid #ced7e8;
+      margin-left: 6px;
+      padding-left: 14px;
+    }
+
+    .step {
+      margin: 10px 0;
+      position: relative;
+    }
+
+    .step::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #1d4f91;
+      position: absolute;
+      left: -20px;
+      top: 5px;
+    }
+
+    .foot {
+      margin-top: 14px;
+      color: #607089;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 1100px) {
+      .stats,
+      .score-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .two {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .stats,
+      .score-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      th {
+        display: none;
+      }
+
+      tr {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        margin: 0 0 10px;
+      }
+
+      td {
+        border-bottom: 1px solid var(--line);
+      }
+
+      td:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .hero,
+      .section,
+      .stat {
+        box-shadow: none;
+      }
+
+      .actions {
+        display: none;
+      }
+
+      .wrap {
+        max-width: 100%;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <p class="kicker">Critical feedback report</p>
+      <h1>SOCIO interns branch: complete critical feedback</h1>
+      <p class="sub">
+        This is a strict review intended for accountability and production readiness.
+        It includes all major positives, all blockers, and exact remediation requirements.
+      </p>
+      <p class="meta">Scope: sociowebinterns/socio2026v2 compared to socioweb | Date: April 3, 2026</p>
+      <div class="actions">
+        <button class="btn primary" onclick="window.print()">Print or Save as PDF</button>
+        <button class="btn secondary" onclick="document.getElementById('risk-matrix').scrollIntoView({behavior:'smooth'})">Go to risk matrix</button>
+      </div>
+    </header>
+
+    <section class="stats">
+      <article class="stat">
+        <div class="val">27</div>
+        <div class="lab">Backend files changed</div>
+      </article>
+      <article class="stat">
+        <div class="val">58</div>
+        <div class="lab">Frontend files changed</div>
+      </article>
+      <article class="stat">
+        <div class="val">2,414</div>
+        <div class="lab">Backend insertions</div>
+      </article>
+      <article class="stat">
+        <div class="val">20,514</div>
+        <div class="lab">Frontend insertions</div>
+      </article>
+      <article class="stat">
+        <div class="val">Not ready</div>
+        <div class="lab">Production merge status</div>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2>Final judgement</h2>
+      <div class="banner">
+        The branch cannot be merged to production in current form due to critical security and migration safety issues.
+      </div>
+      <ul>
+        <li>The team delivered substantial implementation work and some useful hardening in selected routes.</li>
+        <li>However, authorization design regressed in multiple places with IP based elevation and bypass flows.</li>
+        <li>Database migration quality is inconsistent and can fail unpredictably across environments.</li>
+        <li>Performance improvements are partial: indexes were added, but API query strategy still often bypasses DB optimization.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="risk-matrix">
+      <h2>Complete risk matrix (critical feedback)</h2>
+      <div class="risk-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Severity</th>
+              <th>Domain</th>
+              <th>Feedback</th>
+              <th>Evidence</th>
+              <th>Consequence</th>
+              <th>Required fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="sev critical">Critical</span></td>
+              <td>Secret management</td>
+              <td>Service role key is committed directly in script source.</td>
+              <td>run-migration.js lines 4 to 5</td>
+              <td>Credential compromise, full database takeover risk.</td>
+              <td>Rotate key immediately, invalidate old key, remove from git history, enforce pre-commit secret scanning.</td>
+            </tr>
+            <tr>
+              <td><span class="sev critical">Critical</span></td>
+              <td>Authorization</td>
+              <td>Master admin privilege can be assigned in middleware based on caller IP and forwarded header.</td>
+              <td>server/middleware/authMiddleware.js lines around 173 to 183</td>
+              <td>Privilege escalation path if proxy trust assumptions break.</td>
+              <td>Delete role elevation logic and enforce persisted RBAC claims only.</td>
+            </tr>
+            <tr>
+              <td><span class="sev critical">Critical</span></td>
+              <td>Authorization</td>
+              <td>Synthetic admin identity is injected in route layer for bypass behavior.</td>
+              <td>server/routes/userRoutes.js lines around 23 to 33 and server/routes/reportRoutes.js lines around 46 to 55</td>
+              <td>Non-standard auth path and sensitive data exposure risk.</td>
+              <td>Remove bypass code, use one centralized auth guard with strict verification.</td>
+            </tr>
+            <tr>
+              <td><span class="sev high">High</span></td>
+              <td>Client privilege model</td>
+              <td>User profile response mutates is_masteradmin by IP check, not database truth.</td>
+              <td>server/routes/userRoutes.js lines around 134 to 151</td>
+              <td>UI authorization drift and false-admin state on client.</td>
+              <td>Return database truth only; never mutate role in response serialization.</td>
+            </tr>
+            <tr>
+              <td><span class="sev high">High</span></td>
+              <td>Migration safety</td>
+              <td>Fest and fests references are mixed across SQL scripts and snapshots.</td>
+              <td>socios.sql lines around 229, 231, 431, 436 and migration 001 vs 002 mismatch</td>
+              <td>Migration failure and environment-specific schema drift.</td>
+              <td>Canonicalize schema naming and patch all SQL assets before any release migration.</td>
+            </tr>
+            <tr>
+              <td><span class="sev high">High</span></td>
+              <td>Migration tooling</td>
+              <td>One migration runner splits SQL by semicolon and executes via RPC per fragment.</td>
+              <td>run-migration.js lines around 13 and 25</td>
+              <td>PL/pgSQL block breakage and partial failed migrations.</td>
+              <td>Deprecate this script and keep only transactional pg-based migration runner.</td>
+            </tr>
+            <tr>
+              <td><span class="sev high">High</span></td>
+              <td>Network trust</td>
+              <td>IP checks use x-forwarded-for without explicit trust-proxy hardening in app bootstrap.</td>
+              <td>Multiple routes and middleware using forwarded header</td>
+              <td>Header spoofing risk in misconfigured deployment paths.</td>
+              <td>Define trusted proxy boundary explicitly and never use IP as role source of truth.</td>
+            </tr>
+            <tr>
+              <td><span class="sev medium">Medium</span></td>
+              <td>Performance</td>
+              <td>Events and fests listing routes fetch large datasets and apply filtering and pagination in memory.</td>
+              <td>server/routes/eventRoutes_secured.js and server/routes/festRoutes.js list handlers</td>
+              <td>High memory pressure and poor scaling under traffic.</td>
+              <td>Push filter/sort/pagination and aggregation into SQL queries.</td>
+            </tr>
+            <tr>
+              <td><span class="sev medium">Medium</span></td>
+              <td>Caching</td>
+              <td>Global no-store on API plus route-level no-store reduces cache efficiency for public reads.</td>
+              <td>server/index.js API middleware and event/fest routes</td>
+              <td>Unnecessary load and slower perceived performance.</td>
+              <td>Apply selective cache strategy by endpoint sensitivity.</td>
+            </tr>
+            <tr>
+              <td><span class="sev medium">Medium</span></td>
+              <td>Notifications</td>
+              <td>Individual notification query no longer explicitly excludes broadcast records in one path.</td>
+              <td>server/routes/notificationRoutes.js notifications read logic</td>
+              <td>Potential duplicate rows or read-state confusion in edge cases.</td>
+              <td>Restore explicit query constraints and add regression tests for mixed notification datasets.</td>
+            </tr>
+            <tr>
+              <td><span class="sev medium">Medium</span></td>
+              <td>Operational hygiene</td>
+              <td>Excessive diagnostic logging remains in sensitive paths.</td>
+              <td>auth, user, event, fest, notification routes include verbose logs</td>
+              <td>Noise, accidental data leakage, and log maintenance burden.</td>
+              <td>Adopt structured logging policy with sanitized fields and env-based log levels.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>What they did well (must acknowledge)</h2>
+      <ul>
+        <li>Introduced real feature expansion and substantial engineering effort.</li>
+        <li>Secured previously open delete routes for events and registrations with role checks.</li>
+        <li>Added several useful indexes and archive workflow fields.</li>
+        <li>Added fest table resolver utility to reduce runtime table-name breakage.</li>
+        <li>Improved some input validations and response diagnostics for troubleshooting.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Database speed claim: strict evaluation</h2>
+      <div class="two">
+        <div class="panel">
+          <h3>Valid improvements</h3>
+          <ul>
+            <li>Indexes were added on key listing/filtering columns.</li>
+            <li>Event archive indexes are sensible for archive views.</li>
+            <li>Department linking index improves user to department lookup.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Why gains are limited</h3>
+          <ul>
+            <li>Endpoints still fetch full tables and process in application memory.</li>
+            <li>Migration inconsistency can negate performance fixes by failing schema rollout.</li>
+            <li>No evidence of query-plan validation, benchmark, or load-test proof in branch artifacts.</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Verdict:</strong> partial performance work exists, but architecture and migration reliability still block calling it production-grade optimization.</p>
+    </section>
+
+    <section class="section">
+      <h2>Engineering quality scorecard</h2>
+      <div class="score-grid">
+        <article class="score">
+          <h3>Security</h3>
+          <div class="v">3 / 10</div>
+          <div class="bar"><span style="width:30%"></span></div>
+        </article>
+        <article class="score">
+          <h3>Correctness</h3>
+          <div class="v">5.5 / 10</div>
+          <div class="bar"><span style="width:55%"></span></div>
+        </article>
+        <article class="score">
+          <h3>Migration safety</h3>
+          <div class="v">4 / 10</div>
+          <div class="bar"><span style="width:40%"></span></div>
+        </article>
+        <article class="score">
+          <h3>Performance design</h3>
+          <div class="v">6 / 10</div>
+          <div class="bar"><span style="width:60%"></span></div>
+        </article>
+        <article class="score">
+          <h3>Release readiness</h3>
+          <div class="v">3.5 / 10</div>
+          <div class="bar"><span style="width:35%"></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Mandatory remediation plan</h2>
+      <div class="timeline">
+        <div class="step">
+          <strong>Day 0 to Day 1 (immediate hard stop items)</strong>
+          <ul>
+            <li>Rotate and revoke exposed service role credentials.</li>
+            <li>Remove all role elevation and synthetic admin bypass code.</li>
+            <li>Disable unsafe migration scripts and keep one audited migration path.</li>
+          </ul>
+        </div>
+        <div class="step">
+          <strong>Day 2 to Day 4 (stabilization)</strong>
+          <ul>
+            <li>Fix all fest or fests naming inconsistencies across SQL and code.</li>
+            <li>Refactor heavy list APIs to database-level pagination and filters.</li>
+            <li>Add integration tests for role enforcement and notification behavior.</li>
+          </ul>
+        </div>
+        <div class="step">
+          <strong>Day 5 to Day 7 (merge gate)</strong>
+          <ul>
+            <li>Run clean migration test on empty database and existing snapshot database.</li>
+            <li>Run security review on auth flow and proxy configuration.</li>
+            <li>Run load test on events/fests listing routes and compare baseline p95 latency.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Acceptance criteria for merge</h2>
+      <ul>
+        <li>No committed secrets in repository history or working tree.</li>
+        <li>No in-memory privilege elevation paths remain in server code.</li>
+        <li>All SQL migrations execute end-to-end in deterministic order on CI.</li>
+        <li>Events and fests list APIs return paginated DB-level results without full-table in-memory processing.</li>
+        <li>Auth and notification regression tests pass in CI.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Direct feedback to interns</h2>
+      <p>
+        You clearly put in effort and delivered substantial features. That part is appreciated.
+        But security and migration discipline are non-negotiable at this level.
+        The current branch demonstrates speed, not release discipline.
+      </p>
+      <p>
+        The expectation now is not more new features. The expectation is to close blockers,
+        prove safe migration behavior, and show controlled authorization design.
+      </p>
+    </section>
+
+    <p class="foot">
+      This report is intentionally strict. It is meant to protect production quality while recognizing implementation effort.
+    </p>
+  </main>
+</body>
+</html>
