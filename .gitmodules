@@ -7,3 +7,6 @@
 [submodule "socioweb"]
 	path = socioweb
 	url = https://github.com/thesachinyyadav/socio2026v2.git
+[submodule "sociowebintern"]
+	path = sociowebinterns/socio2026v2
+	url = https://github.com/sgk18/socio2026v2.git
