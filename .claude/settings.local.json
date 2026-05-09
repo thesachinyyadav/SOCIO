@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr *)",
+      "Bash(git commit -m ' *)",
+      "Bash(xargs grep *)",
+      "Bash(npx tsc *)",
+      "Bash(git add *)",
+      "Bash(git merge *)",
+      "Bash(git push *)",
+      "Bash(grep *)",
+      "Bash(gh api *)",
+      "Read(//tmp/**)",
+      "Bash(git apply *)",
+      "Bash(gh repo *)",
+      "Bash(git branch *)"
+    ]
+  }
+}
