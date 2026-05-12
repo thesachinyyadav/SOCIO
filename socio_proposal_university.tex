@@ -1,0 +1,501 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{fontenc}
+\usepackage{inputenc}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{tcolorbox}
+\usepackage{parskip}
+\usepackage{multicol}
+\usepackage{amssymb}
+
+% ── Colours ───────────────────────────────────────────────────────────────────
+\definecolor{primary}{HTML}{1a1a2e}
+\definecolor{accent}{HTML}{e94560}
+\definecolor{green}{HTML}{27ae60}
+\definecolor{amber}{HTML}{e67e22}
+\definecolor{red}{HTML}{c0392b}
+\definecolor{blue}{HTML}{2980b9}
+\definecolor{lightgray}{HTML}{f5f5f5}
+\definecolor{midgray}{HTML}{cccccc}
+\definecolor{darkgray}{HTML}{555555}
+\definecolor{gold}{HTML}{f39c12}
+
+% ── Hyperref ──────────────────────────────────────────────────────────────────
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=blue}
+
+% ── Section Formatting ────────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{primary}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{accent}}{}{0em}{}
+
+% ── Header / Footer ───────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{darkgray} SOCIO Platform — Licensing Proposal}
+\fancyhead[R]{\small\color{darkgray} Sachin Yadav \& Surya Vamshi}
+\fancyfoot[C]{\small\color{darkgray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Custom Boxes ──────────────────────────────────────────────────────────────
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{scenariobox}[2][]{
+    colback=#2!6, colframe=#2,
+    boxrule=1pt, arc=5pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt,
+    title={\bfseries #1},
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{infobox}{
+    colback=lightgray, colframe=midgray,
+    boxrule=0.5pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{highlightbox}{
+    colback=primary!5, colframe=primary,
+    boxrule=0.8pt, arc=4pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt
+}
+
+\newtcolorbox{recommendbox}{
+    colback=green!8, colframe=green,
+    boxrule=1pt, arc=5pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt
+}
+
+% ── Column Types ──────────────────────────────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title Page ────────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+
+{\fontsize{40}{50}\selectfont\bfseries\color{primary} SOCIO}\\[0.4cm]
+{\Large\color{accent} Platform Licensing Proposal}\\[0.3cm]
+{\normalsize\color{darkgray} Presented to Christ (Deemed to be University), Bengaluru}
+
+\vspace{1.2cm}
+\noindent\rule{\textwidth}{1.5pt}
+\vspace{0.5cm}
+
+\begin{highlightbox}
+\centering
+A production-deployed, three-product university event management platform\\[0.3cm]
+\textbf{socioweb} \textbullet\ \textbf{socioapp} \textbullet\ \textbf{sociogated}\\[0.3cm]
+{\small 192,285+ lines of code \textbullet\ 2,000+ commits \textbullet\ 18 months of development \textbullet\ 10+ student contributors}
+\end{highlightbox}
+
+\vspace{1.5cm}
+
+{\normalsize
+\textbf{Presented by}\\[0.4cm]
+\begin{tabular}{cc}
+\textbf{Sachin Yadav} & \textbf{Surya Vamshi} \\
+Lead Developer & Co-Developer \\
+{\small Christ (Deemed to be University)} & {\small Christ (Deemed to be University)}
+\end{tabular}
+}
+
+\vfill
+{\small\color{darkgray} Confidential \textbullet\ Prepared for institutional licensing discussions \textbullet\ \the\year}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{About This Proposal}
+
+This document presents a set of structured licensing options for the SOCIO platform — a fully production-deployed university event management system built by students of Christ University. The university may choose any of the options presented, or use them as a basis for further discussion.
+
+Each option is designed to be mutually beneficial. We have structured these scenarios so that the university has clarity on exactly what they receive, what the costs are, and what the terms look like — without ambiguity.
+
+\begin{infobox}
+\textbf{What is being offered:} The right to deploy, operate, and — depending on the selected option — resell the SOCIO platform to other institutions. The platform is already live and serving real users at \texttt{socio.christuniversity.in}.
+\end{infobox}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{What the University Receives}
+
+Regardless of which licensing option is selected, the university receives:
+
+\begin{itemize}[leftmargin=*]
+    \item Full source code of all three products — socioweb (\texttt{socio2026v2}), socioapp (\texttt{sociomobilev2}), and sociogated (\texttt{universitygatedv2})
+    \item Complete deployment documentation and handover support
+    \item A working Android APK ready for distribution to students
+    \item All third-party service configurations (Supabase, authentication, notifications, AI chatbot)
+    \item A platform already proven in production at a real university — not a prototype
+\end{itemize}
+
+\vspace{0.4cm}
+
+\begin{tabularx}{\textwidth}{L{3.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Product} & \textbf{What it does} \\
+\midrule
+\textbf{socioweb} & Full event management: creation, multi-stage institutional approval (HOD → Dean → CFO → Finance), student registration, QR ticketing, venue/catering/stall bookings, attendance tracking, 3-tier analytics, AI chatbot, push notifications \\
+\addlinespace
+\textbf{socioapp} & Native Android app and PWA: event discovery, registration, digital tickets, volunteer QR scanner with offline capability, shake-to-scan, push notifications \\
+\addlinespace
+\textbf{sociogated} & Campus gate access control: visitor registration, QR pass generation, guard verification at entry, CSO approval, colour-coded passes (student/speaker/VIP) \\
+\bottomrule
+\end{tabularx}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Licensing Options — At a Glance}
+
+\begin{tabularx}{\textwidth}{C{0.5cm} L{4cm} C{2.3cm} C{2.3cm} C{2.3cm}}
+\toprule
+\rowcolor{primary!12}
+\textbf{\#} & \textbf{Option} & \textbf{Upfront Fee} & \textbf{Ongoing Fee} & \textbf{Resale Rights} \\
+\midrule
+A & Full Ownership Transfer & ₹20L+ & None & Yes, unrestricted \\
+B & Module Transfer, Brand Retained & ₹18–20L & None & Yes, as ``Socio [Uni]'' \\
+C & Perpetual Exclusive License & ₹10–12L & ₹2L/year & Yes \\
+D & Revenue Share & ₹8–10L & ₹1L per institution & Yes \\
+E & Hybrid (Recommended) & ₹12–15L & ₹75K per institution & Yes \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+{\small\color{darkgray} All options include: MCA fee waiver for both developers (₹4,80,000), knowledge transfer, and deployment handover.}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Option A — Full Ownership Transfer}
+
+\begin{scenariobox}[Full Ownership Transfer]{darkgray}
+The university acquires complete intellectual property ownership of all three products. No ongoing obligations or fees of any kind after the transfer.
+\end{scenariobox}
+
+\vspace{0.4cm}
+
+\subsection*{What the university receives}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Full IP ownership of socioweb, socioapp, and sociogated
+    \item Unrestricted rights to modify, rebrand, and resell to any institution under any name
+    \item No future obligations or dependencies on the original developers
+    \item Freedom to integrate with existing ERP or run as a standalone product
+\end{itemize}
+
+\subsection*{What the developers receive}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item One-time cash payment
+    \item MCA fee waiver for both developers (₹4,80,000) — documented in contract
+    \item Developer credit acknowledged in the product
+\end{itemize}
+
+\subsection*{Pricing}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Component} & \textbf{Amount} \\
+\midrule
+One-time cash payment & ₹20,00,000 \\
+MCA fee waiver (2 persons) & ₹4,80,000 \\
+\textbf{Total value to developers} & \textbf{₹24,80,000} \\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Conditions}
+\begin{enumerate}[leftmargin=*, noitemsep]
+    \item Developer credit (Sachin Yadav and Surya Vamshi) must be acknowledged in the product and any documentation
+    \item The SOCIO name may be used or replaced at the university's discretion
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Option B — Module Transfer, Brand Retained}
+
+\begin{scenariobox}[Module Transfer with Brand Retention]{blue}
+The university receives full rights to deploy and resell the platform. The SOCIO brand name is retained by the developers. All deployments — including to other institutions — carry the ``Socio'' name (e.g.\ ``Socio Christ University'').
+\end{scenariobox}
+
+\vspace{0.4cm}
+
+\subsection*{What the university receives}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Full source code of all three products
+    \item Exclusive rights to deploy and resell to other universities
+    \item Complete operational control of every deployment
+    \item Proven product identity that travels with the platform — ``Socio [University Name]'' builds instant recognition
+\end{itemize}
+
+\subsection*{What the developers receive}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item One-time cash payment
+    \item MCA fee waiver (₹4,80,000) — in writing
+    \item SOCIO brand name retained — not part of the sale
+    \item Right to build new SOCIO products independently in the future
+\end{itemize}
+
+\subsection*{Pricing}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Component} & \textbf{Amount} \\
+\midrule
+One-time cash payment & ₹18,00,000 – ₹20,00,000 \\
+MCA fee waiver (2 persons) & ₹4,80,000 \\
+\textbf{Total value to developers} & \textbf{₹22,80,000 – ₹24,80,000} \\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Conditions}
+\begin{enumerate}[leftmargin=*, noitemsep]
+    \item All deployments to other institutions use the ``Socio'' name as part of the product title
+    \item The university may not register ``SOCIO'' as a trademark
+    \item Developer credit retained in the product
+    \item Non-compete applies to this specific codebase only — developers may build new products independently
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Option C — Perpetual Exclusive License}
+
+\begin{scenariobox}[Perpetual Exclusive License]{green}
+The university does not purchase the IP outright. Instead, they hold an exclusive, perpetual license to deploy and resell the platform. The developers retain ownership of the codebase.
+\end{scenariobox}
+
+\vspace{0.4cm}
+
+\subsection*{What the university receives}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Exclusive license — no other institution can use this platform independently
+    \item Rights to deploy, operate, and resell to other universities
+    \item Access to updates and improvements made by the developers
+    \item Lower upfront cost with structured annual renewal
+\end{itemize}
+
+\subsection*{What the developers receive}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Upfront license fee
+    \item Annual renewal fee — predictable income
+    \item Retained IP ownership
+    \item MCA fee waiver (₹4,80,000) — in writing
+\end{itemize}
+
+\subsection*{Pricing}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Component} & \textbf{Amount} \\
+\midrule
+Upfront license fee & ₹10,00,000 – ₹12,00,000 \\
+Annual renewal fee & ₹2,00,000 per year \\
+MCA fee waiver (2 persons) & ₹4,80,000 \\
+\textbf{Year 1 total} & \textbf{₹16,80,000 – ₹18,80,000} \\
+\textbf{Over 5 years} & \textbf{₹22,80,000 – ₹24,80,000} \\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Conditions}
+\begin{enumerate}[leftmargin=*, noitemsep]
+    \item License is exclusive — developers will not sell or license this codebase to any other party
+    \item Annual renewal is binding for a minimum of 3 years
+    \item Developers retain IP; the university has full operational control within the license scope
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Option D — Revenue Share}
+
+\begin{scenariobox}[Revenue Share Model]{gold}
+Lower upfront cost. The developers receive a fixed fee for every institution the university successfully onboards using the SOCIO platform. Both parties benefit when the product succeeds.
+\end{scenariobox}
+
+\vspace{0.4cm}
+
+\subsection*{What the university receives}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Full source code and deployment rights
+    \item Right to resell to other universities
+    \item Significantly lower upfront financial commitment
+    \item Pay more only when you earn more — risk is shared
+\end{itemize}
+
+\subsection*{What the developers receive}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Upfront cash payment
+    \item ₹1,00,000 for each institution the university deploys the platform to
+    \item MCA fee waiver (₹4,80,000) — in writing
+    \item Participation in the revenue the platform generates
+\end{itemize}
+
+\subsection*{Pricing}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Component} & \textbf{Amount} \\
+\midrule
+Upfront cash & ₹8,00,000 – ₹10,00,000 \\
+Per institution onboarded & ₹1,00,000 \\
+MCA fee waiver (2 persons) & ₹4,80,000 \\
+\textbf{At 5 institutions} & \textbf{₹17,80,000 – ₹19,80,000} \\
+\textbf{At 10 institutions} & \textbf{₹22,80,000 – ₹24,80,000} \\
+\textbf{At 20 institutions} & \textbf{₹32,80,000 – ₹34,80,000} \\
+\bottomrule
+\end{tabularx}
+
+\subsection*{Conditions}
+\begin{enumerate}[leftmargin=*, noitemsep]
+    \item The university provides a deployment record once every six months (list of institutions onboarded)
+    \item Per-institution fee is due within 30 days of each new deployment going live
+    \item Developers retain the right to verify deployment records once per year
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Option E — Hybrid Model (Recommended)}
+
+\begin{recommendbox}
+\textbf{This is the option we recommend.} It balances a fair upfront payment with a modest per-institution fee that only applies when the university actively deploys to other institutions. The university benefits from a lower upfront cost; the developers participate in the platform's success. The SOCIO name is retained and travels with every deployment.
+\end{recommendbox}
+
+\vspace{0.6cm}
+
+\begin{scenariobox}[Hybrid — Upfront + Per-Institution + Brand Retention]{green}
+A one-time upfront payment, MCA fee waiver, SOCIO brand retention, and a fixed fee per institution the university deploys to. Clean, structured, fair to both sides.
+\end{scenariobox}
+
+\vspace{0.4cm}
+
+\subsection*{What the university receives}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Full source code of all three products with complete handover
+    \item Exclusive rights to deploy and resell to other universities
+    \item Full operational control of every deployment
+    \item Lower upfront commitment than a full IP purchase
+    \item A branded, recognisable product — ``Socio [University Name]'' — that builds institutional credibility as it scales
+\end{itemize}
+
+\subsection*{What the developers receive}
+\begin{itemize}[leftmargin=*, noitemsep]
+    \item Upfront cash payment
+    \item MCA fee waiver for both developers — documented in contract
+    \item ₹75,000 per institution the university deploys to
+    \item SOCIO brand name retained — travels with every deployment
+    \item Right to build new products under the SOCIO brand independently
+\end{itemize}
+
+\subsection*{Pricing}
+
+\begin{tabularx}{\textwidth}{L{5.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Component} & \textbf{Amount} \\
+\midrule
+Upfront cash payment & ₹12,00,000 – ₹15,00,000 \\
+MCA fee waiver (2 persons) & ₹4,80,000 \\
+Per institution onboarded & ₹75,000 \\
+\textbf{Day 1 value} & \textbf{₹16,80,000 – ₹19,80,000} \\
+\textbf{At 5 institutions} & \textbf{₹20,55,000 – ₹23,55,000} \\
+\textbf{At 10 institutions} & \textbf{₹24,30,000 – ₹27,30,000} \\
+\textbf{At 20 institutions} & \textbf{₹31,80,000 – ₹34,80,000} \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\subsection*{Why This Works for the University}
+
+If the university sells the platform to each institution at ₹3,00,000 per deployment (a conservative estimate for a bundled ERP module), a ₹75,000 per-deployment fee to the developers represents a 25\% margin cost — well within standard software distribution margins. The university retains ₹2,25,000 per institution after the developer fee.
+
+\subsection*{Conditions}
+\begin{enumerate}[leftmargin=*, noitemsep]
+    \item All deployments to other institutions carry the ``Socio'' name as part of the product title
+    \item University may not register ``SOCIO'' as a trademark
+    \item Developer credit (Sachin Yadav and Surya Vamshi) acknowledged in product and documentation
+    \item Non-compete is limited to this specific codebase — developers may build new independent products
+    \item Deployment record shared every six months; per-institution fee due within 30 days of go-live
+    \item MCA fee waiver is guaranteed for the full programme duration regardless of deployment outcomes
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Maintenance and Ongoing Support}
+
+Regardless of which option is selected, ongoing maintenance and new feature development are available as a separate engagement.
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Service} & \textbf{Proposed Terms} \\
+\midrule
+Monthly maintenance retainer & ₹30,000 – ₹50,000/month \\
+Scope & Bug fixes, server maintenance, security patches, minor configuration changes \\
+New features & Quoted separately per request \\
+New university onboarding support & ₹25,000 – ₹50,000 per deployment assisted \\
+Contract duration & Minimum 12 months, renewable annually \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\begin{infobox}
+The maintenance retainer is optional and is independent of the licensing deal. It formalises the ongoing relationship and ensures the university has direct developer support for any issues that arise post-deployment. This is particularly relevant as the platform is extended to other institutions.
+\end{infobox}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Summary and Comparison}
+
+\begin{tabularx}{\textwidth}{L{3.8cm} C{1.6cm} C{1.8cm} C{1.6cm} C{1.8cm} C{1.6cm}}
+\toprule
+\rowcolor{primary!12}
+\textbf{Feature} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} \\
+\midrule
+Full source code transfer & Yes & Yes & Yes & Yes & Yes \\
+Resale to other universities & Yes & Yes & Yes & Yes & Yes \\
+IP ownership (university) & Yes & No & No & No & No \\
+SOCIO brand retained (devs) & No & Yes & Yes & Yes & Yes \\
+Upfront cash & ₹20L & ₹18–20L & ₹10–12L & ₹8–10L & ₹12–15L \\
+Annual/per-uni ongoing fee & None & None & ₹2L/yr & ₹1L/uni & ₹75K/uni \\
+MCA fee waiver & Yes & Yes & Yes & Yes & Yes \\
+Future SOCIO products (devs) & No & Yes & Yes & Yes & Yes \\
+Maintenance included & No & No & No & No & No \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.8cm}
+
+\begin{recommendbox}
+\textbf{Our recommendation is Option E (Hybrid).}\\[0.3cm]
+It offers the university the lowest upfront commitment of any sale-based option, gives them full rights to operate and resell, and ensures fair compensation for the development team only when the university successfully deploys to other institutions. The SOCIO brand traveling with each deployment adds credibility to the product at every institution it reaches.\\[0.3cm]
+We are open to discussing and adjusting any of the terms presented above. This document is a starting point for a conversation, not a final demand.
+\end{recommendbox}
+
+\vspace{1.5cm}
+
+\begin{center}
+{\normalsize
+\textbf{Sachin Yadav} \quad\textbullet\quad \textbf{Surya Vamshi}\\[0.2cm]
+{\small Christ (Deemed to be University), Bengaluru}\\[0.4cm]
+{\small\color{darkgray} SOCIO Platform Licensing Proposal \textbullet\ Confidential \textbullet\ \the\year}
+}
+\end{center}
+
+\end{document}

@@ -1,0 +1,468 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{fontenc}
+\usepackage{inputenc}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{tcolorbox}
+\usepackage{parskip}
+\usepackage{amssymb}
+
+% ── Colours ───────────────────────────────────────────────────────────────────
+\definecolor{primary}{HTML}{1a1a2e}
+\definecolor{accent}{HTML}{e94560}
+\definecolor{green}{HTML}{27ae60}
+\definecolor{amber}{HTML}{e67e22}
+\definecolor{red}{HTML}{c0392b}
+\definecolor{blue}{HTML}{2980b9}
+\definecolor{lightgray}{HTML}{f5f5f5}
+\definecolor{midgray}{HTML}{cccccc}
+\definecolor{darkgray}{HTML}{555555}
+
+% ── Hyperref ──────────────────────────────────────────────────────────────────
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=blue}
+
+% ── Section Formatting ────────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{primary}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{accent}}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{darkgray}}{}{0em}{}
+
+% ── Header / Footer ───────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{darkgray} SOCIO — Deal Decision Framework}
+\fancyhead[R]{\small\color{darkgray} Confidential — Sachin \& Surya}
+\fancyfoot[C]{\small\color{darkgray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Custom Boxes ──────────────────────────────────────────────────────────────
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{canbox}{
+    colback=green!8, colframe=green,
+    boxrule=0.8pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{cannotbox}{
+    colback=red!8, colframe=red,
+    boxrule=0.8pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{questionbox}{
+    colback=amber!8, colframe=amber,
+    boxrule=0.8pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{warnbox}{
+    colback=accent!8, colframe=accent,
+    boxrule=0.8pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{infobox}{
+    colback=lightgray, colframe=midgray,
+    boxrule=0.5pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% ── Column Types ──────────────────────────────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ── Symbols ───────────────────────────────────────────────────────────────────
+\newcommand{\yes}{\textcolor{green}{\textbf{\checkmark}}}
+\newcommand{\no}{\textcolor{red}{\textbf{\texttimes}}}
+\newcommand{\ask}{\textcolor{amber}{\textbf{?}}}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title ─────────────────────────────────────────────────────────────────────
+\begin{center}
+    {\fontsize{28}{36}\selectfont\bfseries\color{primary} SOCIO}\\[0.3cm]
+    {\Large\color{accent} Deal Decision Framework}\\[0.2cm]
+    {\normalsize\color{darkgray} What we can do. What we cannot. What we must ask.}\\[0.4cm]
+    \noindent\rule{\textwidth}{1pt}\\[0.2cm]
+    {\small\color{darkgray} Prepared by Sachin Yadav \& Surya Vamshi \textbullet\ Confidential \textbullet\ \the\year}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{infobox}
+\textbf{Purpose of this document:} This is an internal decision reference for Sachin and Surya before finalising the software licensing deal with the university. It lays out what is agreed, what is off-limits, and what questions still need clear answers from Father Jossy before anything is signed.
+\end{infobox}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{What We Are Selling}
+
+\begin{infobox}
+We are selling the \textbf{current modules} — the code, the deployment, and the right to run and distribute the platform. We are \textbf{not} selling the SOCIO brand, the SOCIO name, or our right to build new products under SOCIO in the future.
+\end{infobox}
+
+\vspace{0.4cm}
+
+\begin{tabularx}{\textwidth}{L{5cm} L{1.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Item} & \textbf{Status} & \textbf{Notes} \\
+\midrule
+socioweb codebase (\texttt{socio2026v2}) & \yes\ Selling & Full source code and deployment \\
+socioapp codebase (\texttt{sociomobilev2}) & \yes\ Selling & Full source code, Android APK \\
+sociogated codebase (\texttt{universitygatedv2}) & \yes\ Selling & Full source code and deployment \\
+\midrule
+The \textbf{SOCIO brand name} & \no\ Keeping & Name stays ours. Not part of the sale. \\
+Rights to build future SOCIO products & \no\ Keeping & We can build anything new under SOCIO \\
+Our GitHub accounts and history & \no\ Keeping & Repos are ours; we hand over code, not accounts \\
+\bottomrule
+\end{tabularx}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Scenarios — What We CAN Do}
+
+\begin{canbox}
+\textbf{\color{green} These are things we are allowed to do after the deal is signed.}
+\end{canbox}
+
+\vspace{0.4cm}
+
+\subsection{Scenario 1 — Build new products under the SOCIO name}
+
+After selling the current modules, we can build entirely new products under the SOCIO brand. Examples: a SOCIO product for corporate event management, a SOCIO alumni network platform, a SOCIO placement portal. The university is buying these specific modules — not the brand or our future work.
+
+\textbf{Condition:} The new product must not be a direct copy/resale of the same codebase we sold. It should be a genuinely new build.
+
+\vspace{0.3cm}
+
+\subsection{Scenario 2 — Pursue our MCA under the fee waiver}
+
+The university will waive MCA fees for both Sachin and Surya as part of the deal. We can enrol and complete the MCA programme. This is separate from the software deal and must be documented in writing.
+
+\textbf{Condition:} Get the fee waiver confirmed in the signed contract — not verbally, not via email alone.
+
+\vspace{0.3cm}
+
+\subsection{Scenario 3 — The app stays named ``SOCIO''}
+
+The deployed product at the university will carry the SOCIO name — e.g.\ ``Socio Christ University'' or similar. This means every student and faculty member who uses the platform sees the SOCIO brand. When the university resells to other institutions, those institutions also see ``Socio [University Name].'' Our brand grows with every deployment.
+
+\textbf{Condition:} The naming convention must be agreed and written into the contract. They cannot strip the SOCIO name when deploying or reselling.
+
+\vspace{0.3cm}
+
+\subsection{Scenario 4 — Retain credit as original developers}
+
+Even after the sale, we retain the right to publicly say we built SOCIO and that it is deployed at Christ University. This is part of our professional portfolio. We can show it in interviews, add it to our CV, reference it in future work.
+
+\textbf{Condition:} Ensure the contract does not include a confidentiality clause that prevents us from claiming authorship.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Scenarios — What We CANNOT Do}
+
+\begin{cannotbox}
+\textbf{\color{red} These are restrictions we are agreeing to as part of the deal.}
+\end{cannotbox}
+
+\vspace{0.4cm}
+
+\subsection{Scenario 5 — Sell this same codebase to another university}
+
+Once the deal is signed, we cannot take the same codebase — socioweb, socioapp, sociogated as they exist today — and sell or deploy them for another university. The university is paying for exclusivity on these specific modules.
+
+\begin{warnbox}
+\textbf{Important distinction:} This restriction applies to \textbf{this codebase only}. It should NOT prevent us from building a new, independent platform for another university in the future. Make sure the contract language says ``this version'' or ``this codebase'' — not ``any similar software.''
+\end{warnbox}
+
+\vspace{0.3cm}
+
+\subsection{Scenario 6 — Run a competing deployment of the same modules}
+
+We cannot spin up our own parallel deployment of the same modules and offer it to other institutions as a competing product. The university's exclusivity covers this.
+
+\vspace{0.3cm}
+
+\subsection{Scenario 7 — Fork and resell without material change}
+
+Taking the existing code, making minor changes, and selling it as a ``new'' product to other universities would be a violation of the agreement. Any new product we build must be a genuine rebuild, not a cosmetic fork.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Additional Benefits Offered}
+
+\begin{infobox}
+Beyond the cash payment and fee waiver, the university has offered an additional benefit: a work opportunity within their ERP team, specifically for SOCIO-related work on an as-needed basis. This section documents the situation and what each person is likely to do.
+\end{infobox}
+
+\vspace{0.4cm}
+
+\subsection{The Work Offer}
+
+The university has offered both Sachin and Surya the option to work within their ERP team — specifically on SOCIO-related development, maintenance, or integration work, on an as-needed basis. This is not a mandatory condition of the deal; it is a benefit being offered alongside it.
+
+\begin{tabularx}{\textwidth}{L{3.5cm} L{2.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Person} & \textbf{Likely Decision} & \textbf{Reason} \\
+\midrule
+\textbf{Surya Vamshi} & May accept & Open to the opportunity; evaluating \\
+\textbf{Sachin Yadav} & Likely decline & Already placed at South Indian Bank \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\begin{warnbox}
+\textbf{Critical point:} The decision to accept or decline the work offer must have \textbf{zero effect} on the software deal, the fee waiver, or any other terms. Declining the job should not reduce the cash payment or affect either person's MCA enrolment. This must be stated explicitly in the contract.
+\end{warnbox}
+
+\vspace{0.4cm}
+
+\subsection{What the Work Offer is Actually Worth}
+
+This depends entirely on the answer to questions that have not yet been asked. ``Work for SOCIO if required'' with no salary, no defined scope, and no commitment is worth nothing on paper. It could mean:
+
+\begin{itemize}[leftmargin=*]
+    \item A salaried part-time or full-time position — genuinely valuable
+    \item A consulting retainer — valuable if the rate is fair
+    \item An informal ``call us when we need you'' arrangement — no guaranteed income, no value
+\end{itemize}
+
+Until these are defined, do not count this as a monetary benefit in the deal valuation.
+
+\vspace{0.3cm}
+
+\subsection{The Conflict Risk for Surya}
+
+If Surya takes the job and works inside the university's ERP team on SOCIO, he will be building features and improvements on top of the codebase we sold. This creates a potential issue:
+
+\begin{itemize}[leftmargin=*]
+    \item Work Surya does as an employee becomes the university's IP, not ours
+    \item If the scope expands to ERP work beyond SOCIO, that knowledge and work also belongs to the university
+    \item If the university later resells to other institutions, improvements Surya built as an employee go with it — with no additional compensation
+\end{itemize}
+
+\textbf{Recommendation for Surya:} If accepting the job, negotiate a clear scope — work on SOCIO maintenance only, with a defined hourly or monthly rate, and explicit IP ownership of any new features built in that role.
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{The Grey Areas — Needs Clarification}
+
+\begin{questionbox}
+\textbf{\color{amber} These are scenarios we are not yet sure about. We need clarity before signing.}
+\end{questionbox}
+
+\vspace{0.4cm}
+
+\subsection{Grey Area A — Building for other universities from scratch}
+
+If we build a completely new event management platform for another university two years from now — same problem space, different code — is that a violation?
+
+\textbf{Our position:} It should not be. We are selling code, not our skills or our future.\\
+\textbf{Status:} \ask\ \textbf{Needs to be explicitly stated in the contract.}
+
+\vspace{0.3cm}
+
+\subsection{Grey Area B — Open-sourcing part of the codebase}
+
+Can we open-source components of the codebase after the sale — for example, a generic approval workflow library we extracted from the project?
+
+\textbf{Status:} \ask\ \textbf{Not discussed. Must ask.}
+
+\vspace{0.3cm}
+
+\subsection{Grey Area C — Using the same tech stack and patterns}
+
+The patterns, architecture decisions, and technical approach we used in SOCIO are part of our knowledge. We will naturally carry those into future projects. Is that considered replication?
+
+\textbf{Our position:} No. You cannot sell someone's learned experience.\\
+\textbf{Status:} \ask\ \textbf{Clarify that the restriction is on the code, not on our knowledge or approach.}
+
+\vspace{0.3cm}
+
+\subsection{Grey Area D — What happens if Surya or Sachin leaves the MCA mid-programme}
+
+If one of us drops out of the MCA for any reason — personal, medical, academic — does the fee waiver get clawed back? Does it affect the software deal?
+
+\textbf{Status:} \ask\ \textbf{Must be explicitly addressed in the contract.}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Questions to Ask Father Jossy}
+
+\begin{questionbox}
+\textbf{\color{amber} Do not sign anything until you have clear answers to these questions. Get all answers confirmed in writing.}
+\end{questionbox}
+
+\vspace{0.4cm}
+
+\subsection{On Branding}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Q\arabic*.}]
+
+    \item \textbf{When you resell this to other universities, what will the product be called?}\\
+    Will it be ``Socio [University Name]'' keeping our brand, or will it be rebranded entirely under the university or another name?\\
+    \textit{Why this matters: If they strip the SOCIO name, we lose even the brand value from this deal.}
+
+    \item \textbf{Will the SOCIO name appear in the app, the web platform, and any marketing materials when you sell to other institutions?}\\
+    \textit{Why this matters: We need written confirmation that the brand travels with the product.}
+
+    \item \textbf{Can the university register ``SOCIO'' as their own trademark or brand?}\\
+    \textit{Why this matters: We must retain trademark rights. We are filing our own trademark — confirming they won't.}
+
+\end{enumerate}
+
+\subsection{On the Non-Compete}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Q\arabic*.}, resume]
+
+    \item \textbf{When you say we cannot ``replicate'' this — does that mean this specific codebase only, or any similar software we build in the future?}\\
+    \textit{Why this matters: A broad non-compete would bar us from working in this space for years. We can only agree to not resell this specific version.}
+
+    \item \textbf{If we build a completely new platform from scratch two years from now for a different institution — is that covered by this agreement?}\\
+    \textit{Why this matters: Our answer is no, it should not be. We need the university to confirm this in writing.}
+
+    \item \textbf{What is the duration of the non-compete on this codebase?}\\
+    Is it indefinite, or for a specific number of years?\\
+    \textit{Why this matters: Indefinite restrictions on specific code are standard. Indefinite restrictions on what we can build are not acceptable.}
+
+\end{enumerate}
+
+\subsection{On the Fee Waiver}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Q\arabic*.}, resume]
+
+    \item \textbf{Will the fee waiver be documented in the signed contract, or is it a separate understanding?}\\
+    \textit{Why this matters: Verbal commitments do not survive personnel changes. It must be in the contract.}
+
+    \item \textbf{Does the fee waiver cover the full duration of the MCA programme, or just the first year?}\\
+    \textit{Why this matters: If fees increase or the waiver lapses after Year 1, we carry the remaining cost with no recourse.}
+
+    \item \textbf{If one of us is unable to continue the MCA for any reason, does the fee waiver for that person affect the software deal in any way?}\\
+    \textit{Why this matters: The fee waiver and the software deal should be independent. One failing should not undo the other.}
+
+    \item \textbf{Are there any conditions attached to the fee waiver — such as maintaining a certain CGPA, attendance percentage, or remaining enrolled?}\\
+    \textit{Why this matters: Hidden conditions on the waiver create leverage over us that extends beyond the software deal.}
+
+\end{enumerate}
+
+\subsection{On Maintenance and Support}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Q\arabic*.}, resume]
+
+    \item \textbf{After the sale, who is responsible for maintaining the platform — bug fixes, server issues, security patches?}\\
+    \textit{Why this matters: If we are expected to maintain it post-sale, that is additional work that must be compensated separately.}
+
+    \item \textbf{If the university wants new features added after the sale, is that included in this deal or will it be a separate engagement?}\\
+    \textit{Why this matters: Feature requests after sale are common. We should not be obligated to build them for free.}
+
+    \item \textbf{What happens to the third-party service API keys and subscriptions — Supabase, OpenAI, Resend, OneSignal, Sentry, Vercel? Will the university take over these accounts and their costs?}\\
+    \textit{Why this matters: We are currently paying for some of these. Post-sale, these costs must transfer to the university.}
+
+\end{enumerate}
+
+\subsection{On the Work Offer}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Q\arabic*.}, resume]
+
+    \item \textbf{Is this a formal job offer with a fixed salary, or is it informal ``call you when needed'' work?}\\
+    \textit{Why this matters: An informal arrangement has no guaranteed income and no real value. A salaried position does.}
+
+    \item \textbf{What is the compensation — monthly salary, hourly rate, or project-based?}\\
+    \textit{Why this matters: Without a defined rate, the work offer cannot be counted as a benefit.}
+
+    \item \textbf{If Sachin declines the job offer, does that affect any other part of the deal — the cash payment, the fee waiver, or any other term?}\\
+    \textit{Why this matters: Sachin is placed at South Indian Bank and may not take the role. The deal must stand regardless.}
+
+    \item \textbf{If Surya takes the job, who owns the IP of any new features or improvements he builds in that role?}\\
+    \textit{Why this matters: Work done as a university employee typically belongs to the university. This must be clearly defined before accepting.}
+
+    \item \textbf{What is the scope of the work — SOCIO maintenance only, or broader ERP development?}\\
+    \textit{Why this matters: Surya's skills should not be absorbed into general ERP work that is outside the original agreement.}
+
+    \item \textbf{Is there a minimum guaranteed number of hours or months of work, or is it purely on-demand?}\\
+    \textit{Why this matters: On-demand with no minimum guarantee means no income security.}
+
+\end{enumerate}
+
+\subsection{On the Deal Structure}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Q\arabic*.}, resume]
+
+    \item \textbf{What is the exact cash amount being offered, separate from the fee waiver?}\\
+    \textit{Why this matters: We need to establish the two components clearly — cash and fee waiver — as separate line items.}
+
+    \item \textbf{What is the payment timeline for the cash component?}\\
+    Lump sum on signing, or split across milestones?\\
+    \textit{Why this matters: We need to plan around when the money arrives.}
+
+    \item \textbf{Who drafts the contract — the university's legal team or us?}\\
+    \textit{Why this matters: Whoever drafts it controls the language. We should at minimum have it reviewed by a lawyer before signing.}
+
+    \item \textbf{Will the agreement acknowledge Sachin Yadav and Surya Vamshi as the original developers and creators of the SOCIO platform?}\\
+    \textit{Why this matters: Our authorship and credit must be on record, even after the sale.}
+
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Summary — Before You Sign}
+
+\begin{tabularx}{\textwidth}{L{7cm} L{1.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Item} & \textbf{Status} & \textbf{Action} \\
+\midrule
+SOCIO brand name retained by us & \ask & Confirm in contract \\
+Fee waiver for both — full programme & \ask & Confirm in contract \\
+Cash component agreed & \ask & Negotiate minimum ₹15–20 lakh \\
+Non-compete limited to this codebase only & \ask & Confirm exact language \\
+Future SOCIO products explicitly allowed & \ask & Confirm in contract \\
+SOCIO name retained on all resales & \ask & Confirm in contract \\
+University cannot trademark SOCIO & \ask & Confirm; file trademark ourselves \\
+Maintenance post-sale is separate & \ask & Define scope or exclude \\
+Third-party service costs transfer to university & \ask & List all services in contract \\
+Authorship credit retained & \ask & Confirm in contract \\
+Job offer declining does not affect deal & \ask & Confirm explicitly for Sachin \\
+Work offer compensation rate defined & \ask & Get in writing if Surya accepts \\
+IP of future work-as-employee defined & \ask & Critical if Surya takes the job \\
+\midrule
+\rowcolor{green!10}
+File SOCIO trademark before signing & \no\ Not done & Do this first — ₹4,500–9,000 online \\
+Have a lawyer review the contract & \no\ Not done & Budget ₹15,000–20,000 \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.8cm}
+
+\begin{cannotbox}
+\textbf{\color{red} Do not sign until:}
+\begin{enumerate}[leftmargin=*, noitemsep]
+    \item All questions above have written answers — not verbal assurances.
+    \item The SOCIO trademark application is filed or in progress.
+    \item A lawyer has reviewed the final contract draft.
+    \item The fee waiver is in the contract — not in a side letter or email.
+    \item The non-compete is scoped to this codebase only, with a clear duration.
+\end{enumerate}
+\end{cannotbox}
+
+\vspace{1cm}
+\begin{center}
+{\small\color{darkgray} SOCIO Deal Decision Framework \textbullet\ Sachin Yadav \& Surya Vamshi \textbullet\ Confidential}
+\end{center}
+
+\end{document}

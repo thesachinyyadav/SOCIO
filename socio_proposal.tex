@@ -1,0 +1,591 @@
+    \documentclass[12pt,a4paper]{article}
+
+    % ── Packages ──────────────────────────────────────────────────────────────────
+    \usepackage[a4paper, margin=2.5cm]{geometry}
+    \usepackage{fontenc}
+    \usepackage{inputenc}
+    \usepackage{xcolor}
+    \usepackage{titlesec}
+    \usepackage{booktabs}
+    \usepackage{array}
+    \usepackage{enumitem}
+    \usepackage{hyperref}
+    \usepackage{fancyhdr}
+    \usepackage{tabularx}
+    \usepackage{colortbl}
+    \usepackage{tcolorbox}
+    \usepackage{parskip}
+    \usepackage{multicol}
+    \usepackage{amssymb}
+
+    % ── Colours ───────────────────────────────────────────────────────────────────
+    \definecolor{primary}{HTML}{1a1a2e}
+    \definecolor{accent}{HTML}{e94560}
+    \definecolor{green}{HTML}{27ae60}
+    \definecolor{amber}{HTML}{e67e22}
+    \definecolor{red}{HTML}{c0392b}
+    \definecolor{blue}{HTML}{2980b9}
+    \definecolor{lightgray}{HTML}{f5f5f5}
+    \definecolor{midgray}{HTML}{cccccc}
+    \definecolor{darkgray}{HTML}{555555}
+    \definecolor{gold}{HTML}{f39c12}
+
+    % ── Hyperref ──────────────────────────────────────────────────────────────────
+    \hypersetup{colorlinks=true, linkcolor=accent, urlcolor=blue}
+
+    % ── Section Formatting ────────────────────────────────────────────────────────
+    \titleformat{\section}{\large\bfseries\color{primary}}{}{0em}{}[\titlerule]
+    \titleformat{\subsection}{\normalsize\bfseries\color{accent}}{}{0em}{}
+    \titleformat{\subsubsection}{\normalsize\bfseries\color{darkgray}}{}{0em}{}
+
+    % ── Header / Footer ───────────────────────────────────────────────────────────
+    \pagestyle{fancy}
+    \fancyhf{}
+    \fancyhead[L]{\small\color{darkgray} SOCIO — Deal Proposal Scenarios}
+    \fancyhead[R]{\small\color{darkgray} Confidential — Sachin \& Surya}
+    \fancyfoot[C]{\small\color{darkgray}\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+
+    % ── Custom Boxes ──────────────────────────────────────────────────────────────
+    \tcbuselibrary{skins, breakable}
+
+    \newtcolorbox{scenariobox}[2][]{
+        colback=#2!6, colframe=#2,
+        boxrule=1pt, arc=5pt,
+        left=10pt, right=10pt, top=8pt, bottom=8pt,
+        #1
+    }
+
+    \newtcolorbox{infobox}{
+        colback=lightgray, colframe=midgray,
+        boxrule=0.5pt, arc=4pt,
+        left=8pt, right=8pt, top=6pt, bottom=6pt
+    }
+
+    \newtcolorbox{warnbox}{
+        colback=accent!8, colframe=accent,
+        boxrule=0.8pt, arc=4pt,
+        left=8pt, right=8pt, top=6pt, bottom=6pt
+    }
+
+    \newtcolorbox{recommendbox}{
+        colback=green!8, colframe=green,
+        boxrule=1pt, arc=5pt,
+        left=10pt, right=10pt, top=8pt, bottom=8pt
+    }
+
+    % ── Column Types ──────────────────────────────────────────────────────────────
+    \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+    \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+    % ── Symbols ───────────────────────────────────────────────────────────────────
+    \newcommand{\good}{\textcolor{green}{\textbf{\checkmark}}}
+    \newcommand{\bad}{\textcolor{red}{\textbf{\texttimes}}}
+    \newcommand{\neutral}{\textcolor{amber}{\textbf{$\sim$}}}
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \begin{document}
+
+    % ── Title ─────────────────────────────────────────────────────────────────────
+    \begin{center}
+        {\fontsize{26}{34}\selectfont\bfseries\color{primary} SOCIO Platform}\\[0.3cm]
+        {\Large\color{accent} Deal Proposal Scenarios}\\[0.2cm]
+        {\normalsize\color{darkgray} A structured set of options to present to the university}\\[0.4cm]
+        \noindent\rule{\textwidth}{1pt}\\[0.2cm]
+        {\small\color{darkgray} Prepared by Sachin Yadav \& Surya Vamshi \textbullet\ Confidential \textbullet\ \the\year}
+    \end{center}
+
+    \vspace{0.5cm}
+
+    \begin{infobox}
+    \textbf{How to use this document:} Walk into the meeting with these scenarios prepared. You do not have to present all of them — pick the one you want and use the others as fallback positions. Each scenario is self-contained. The university can see exactly what they get and what it costs them. Having options on the table shows confidence and professionalism.
+    \end{infobox}
+
+    \vspace{0.5cm}
+
+    % ── Scenario Overview Table ───────────────────────────────────────────────────
+    \begin{tabularx}{\textwidth}{C{0.6cm} L{3.8cm} C{2.2cm} C{2.2cm} C{2.2cm} C{1.6cm}}
+    \toprule
+    \rowcolor{primary!12}
+    \textbf{\#} & \textbf{Scenario} & \textbf{Upfront Cash} & \textbf{Ongoing} & \textbf{IP Transfer} & \textbf{For Us} \\
+    \midrule
+    1 & Full IP Sale & ₹20L+ & None & Full & \neutral \\
+    2 & Module Sale, Brand Retained & ₹18–20L & None & Code only & \good \\
+    3 & Exclusive License & ₹10–12L & ₹2L/yr & None & \good \\
+    4 & Revenue Share & ₹8–10L & ₹1L per uni & None & \good \\
+    5 & Hybrid (Recommended) & ₹12–15L & ₹75K per uni & Code only & \good \\
+    6 & Maintenance Retainer Add-on & Any above & ₹40K/mo & Separate & \good \\
+    \bottomrule
+    \end{tabularx}
+
+    \vspace{0.3cm}
+    {\small\color{darkgray} All figures exclude the MCA fee waiver (₹4.8L) which is a separate benefit in every scenario.}
+
+    \newpage
+    \tableofcontents
+    \newpage
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \section{Scenario 1 — Full IP Sale}
+
+    \begin{scenariobox}{darkgray}
+    \textbf{What it is:} The university buys everything — the code, full intellectual property rights, and the right to do whatever they want with it including rebranding, modifying, and reselling under any name.
+    \end{scenariobox}
+
+    \vspace{0.4cm}
+
+    \subsection*{What the university gets}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Full ownership of all three codebases (socioweb, socioapp, sociogated)
+        \item Right to rebrand, modify, and resell freely
+        \item No obligations to retain the SOCIO name
+        \item Complete IP ownership — we have no further claim
+    \end{itemize}
+
+    \subsection*{What we get}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item One-time cash payment
+        \item MCA fee waiver (both)
+        \item Work offer (optional)
+        \item No ongoing revenue or control
+    \end{itemize}
+
+    \subsection*{The Numbers}
+
+    \begin{tabularx}{\textwidth}{L{5cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Component} & \textbf{Amount} \\
+    \midrule
+    Cash (minimum) & ₹20,00,000 \\
+    Fee waiver (both) & ₹4,80,000 \\
+    \textbf{Total deal value} & \textbf{₹24,80,000+} \\
+    \bottomrule
+    \end{tabularx}
+
+    \subsection*{Pros and Cons}
+
+    \begin{multicols}{2}
+    \textbf{\color{green} Pros}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Cleanest deal — no ongoing obligations
+        \item Highest upfront cash justified
+        \item University has no reason to dispute anything
+    \end{itemize}
+
+    \columnbreak
+
+    \textbf{\color{red} Cons}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item We lose the SOCIO brand entirely
+        \item They can strip our name and rebrand
+        \item No participation in future resale revenue
+        \item We cannot use even the name in our portfolio
+    \end{itemize}
+    \end{multicols}
+
+    \begin{warnbox}
+    \textbf{Only accept Scenario 1 if:} The cash is ₹20L minimum AND they agree in writing to retain developer credit (our names on the product). Without that, do not sell the IP outright.
+    \end{warnbox}
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \newpage
+    \section{Scenario 2 — Module Sale, Brand Retained}
+
+    \begin{scenariobox}{blue}
+    \textbf{What it is:} We sell the code and give them full rights to deploy, operate, and resell it. But the SOCIO brand name remains ours. The product is always deployed as ``Socio [University Name]'' — never under any other name. We retain the right to build new products under SOCIO.
+    \end{scenariobox}
+
+    \vspace{0.4cm}
+
+    \textbf{This is our current proposal.}
+
+    \subsection*{What the university gets}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Full source code of all three products
+        \item Right to deploy, operate, and resell to other universities
+        \item Exclusive use of this specific codebase
+        \item Product carries the SOCIO name on all deployments
+    \end{itemize}
+
+    \subsection*{What we get}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item One-time cash payment
+        \item MCA fee waiver (both)
+        \item SOCIO brand name — retained fully
+        \item Right to build new SOCIO products and sell independently
+        \item Our name distributed across every university that uses it
+    \end{itemize}
+
+    \subsection*{The Numbers}
+
+    \begin{tabularx}{\textwidth}{L{5cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Component} & \textbf{Amount} \\
+    \midrule
+    Cash (minimum) & ₹18,00,000 \\
+    Fee waiver (both) & ₹4,80,000 \\
+    \textbf{Total deal value} & \textbf{₹22,80,000+} \\
+    \bottomrule
+    \end{tabularx}
+
+    \subsection*{Key Conditions to Include in Contract}
+    \begin{enumerate}[leftmargin=*, noitemsep]
+        \item All deployments — including to other universities — must use the ``Socio'' name
+        \item University cannot trademark or register the SOCIO name
+        \item Developer credit (Sachin Yadav and Surya Vamshi) must be retained in the product
+        \item Restriction is on this codebase only — future SOCIO products are fully ours
+    \end{enumerate}
+
+    \begin{recommendbox}
+    \textbf{Recommended if:} The university agrees to retain the SOCIO name across all deployments and the cash is at or above ₹18L. This scenario gives us the cleanest deal with brand value preserved.
+    \end{recommendbox}
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \newpage
+    \section{Scenario 3 — Exclusive License (No IP Transfer)}
+
+    \begin{scenariobox}{green}
+    \textbf{What it is:} We do not sell the code. We license it. The university pays a fee to use and resell the platform — but the IP stays with us. If they stop paying or the agreement ends, we can take it back. We keep full ownership.
+    \end{scenariobox}
+
+    \vspace{0.4cm}
+
+    \subsection*{What the university gets}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Exclusive license to deploy and resell the platform
+        \item Same functionality as a sale — they control the deployment
+        \item Access to updates and improvements we make
+    \end{itemize}
+
+    \subsection*{What we get}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Upfront license fee
+        \item Annual renewal fee — recurring income
+        \item Full IP ownership — we can always build on it
+        \item If the agreement ends, ownership reverts to us entirely
+    \end{itemize}
+
+    \subsection*{The Numbers}
+
+    \begin{tabularx}{\textwidth}{L{5cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Component} & \textbf{Amount} \\
+    \midrule
+    Upfront license fee & ₹10,00,000 – ₹12,00,000 \\
+    Annual renewal fee & ₹2,00,000/year \\
+    Fee waiver (both) & ₹4,80,000 \\
+    \textbf{Year 1 total value} & \textbf{₹16,80,000 – ₹18,80,000} \\
+    \textbf{Over 5 years} & \textbf{₹22,80,000 – ₹24,80,000} \\
+    \bottomrule
+    \end{tabularx}
+
+    \subsection*{Pros and Cons}
+
+    \begin{multicols}{2}
+    \textbf{\color{green} Pros}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item We retain full IP ownership
+        \item Recurring annual income
+        \item If they default or mistreat the deal, we can exit
+        \item We can still improve the product
+    \end{itemize}
+
+    \columnbreak
+
+    \textbf{\color{red} Cons}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item University may resist — they want to own it
+        \item Lower upfront cash
+        \item Requires ongoing relationship management
+        \item Renewal collection can become difficult
+    \end{itemize}
+    \end{multicols}
+
+    \begin{warnbox}
+    \textbf{Watch out for:} The university may try to negotiate the annual renewal away after the first year. Lock in the renewal fee as a binding condition in the contract, not optional.
+    \end{warnbox}
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \newpage
+    \section{Scenario 4 — Revenue Share Model}
+
+    \begin{scenariobox}{gold}
+    \textbf{What it is:} Lower upfront payment, but every time the university successfully deploys and sells the platform to another university, we receive a fixed fee per deployment. We participate in the upside they generate from our product.
+    \end{scenariobox}
+
+    \vspace{0.4cm}
+
+    \subsection*{What the university gets}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Lower upfront cost — easier to commit to
+        \item Full rights to deploy and resell
+        \item They pay more only if they succeed
+    \end{itemize}
+
+    \subsection*{What we get}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Upfront payment
+        \item ₹1 lakh for every university they onboard using our platform
+        \item If they sell to 10 universities — we earn ₹10L extra
+        \item Fee waiver covered
+    \end{itemize}
+
+    \subsection*{The Numbers}
+
+    \begin{tabularx}{\textwidth}{L{5cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Component} & \textbf{Amount} \\
+    \midrule
+    Upfront cash & ₹8,00,000 – ₹10,00,000 \\
+    Fee waiver (both) & ₹4,80,000 \\
+    Per university onboarded & ₹1,00,000 \\
+    \textbf{If 10 universities onboarded} & \textbf{₹22,80,000 – ₹24,80,000 total} \\
+    \textbf{If 20 universities onboarded} & \textbf{₹32,80,000 – ₹34,80,000 total} \\
+    \bottomrule
+    \end{tabularx}
+
+    \subsection*{Pros and Cons}
+
+    \begin{multicols}{2}
+    \textbf{\color{green} Pros}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Easier for university to agree to upfront
+        \item We benefit if the product succeeds
+        \item Aligns both parties — they are motivated to sell
+        \item Total payout can far exceed any one-time fee
+    \end{itemize}
+
+    \columnbreak
+
+    \textbf{\color{red} Cons}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item University may under-report deployments
+        \item Collection depends on their honesty
+        \item Income is unpredictable
+        \item Needs a verification mechanism
+    \end{itemize}
+    \end{multicols}
+
+    \begin{infobox}
+    \textbf{To make this work:} The contract must include an audit right — we are entitled to see deployment records once or twice a year. Without this, the university can deploy to 20 universities and report zero. This is non-negotiable in a revenue share model.
+    \end{infobox}
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \newpage
+    \section{Scenario 5 — Hybrid Model (Recommended)}
+
+    \begin{scenariobox}{green}
+    \textbf{What it is:} A combination of upfront cash, a per-university fee, the MCA fee waiver, brand retention, and an optional work arrangement. This is the most balanced deal — the university gets certainty, we get fair compensation now and participation in the upside.
+    \end{scenariobox}
+
+    \vspace{0.4cm}
+
+    \begin{recommendbox}
+    \textbf{This is the scenario we recommend walking in with.} It is fair, it is professional, and it gives the university a clear, structured offer they can evaluate.
+    \end{recommendbox}
+
+    \vspace{0.4cm}
+
+    \subsection*{Structure}
+
+    \begin{tabularx}{\textwidth}{L{5cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Component} & \textbf{Terms} \\
+    \midrule
+    Upfront cash payment & ₹12,00,000 – ₹15,00,000 \\
+    MCA fee waiver & Both Sachin and Surya — full programme — in writing \\
+    Per university onboarded & ₹75,000 per institution the university deploys to \\
+    Brand condition & Product deployed as ``Socio [University Name]'' always \\
+    IP condition & Code ownership transfers; SOCIO brand stays with us \\
+    Non-compete & This codebase only; future SOCIO products are ours \\
+    Developer credit & Our names retained in the product and documentation \\
+    Work offer (Surya) & Optional — separate negotiation, separate contract \\
+    \bottomrule
+    \end{tabularx}
+
+    \vspace{0.4cm}
+
+    \subsection*{What This Looks Like Over Time}
+
+    \begin{tabularx}{\textwidth}{L{5cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Deployment Scale} & \textbf{Total Value to Us} \\
+    \midrule
+    Day 1 (upfront + fees) & ₹16,80,000 – ₹19,80,000 \\
+    +5 universities onboarded & ₹20,55,000 – ₹23,55,000 \\
+    +10 universities onboarded & ₹24,30,000 – ₹27,30,000 \\
+    +20 universities onboarded & ₹31,80,000 – ₹34,80,000 \\
+    \bottomrule
+    \end{tabularx}
+
+    \vspace{0.4cm}
+
+    \subsection*{Why This Works for the University}
+
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Lower upfront than a full buyout — easier to commit
+        \item They pay ₹75K per deployment only when they earn from it
+        \item If they sell each deployment at ₹3–5L, ₹75K is a small margin
+        \item Clear, structured deal — no ambiguity
+    \end{itemize}
+
+    \subsection*{Why This Works for Us}
+
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Fair upfront compensation for 18 months of work
+        \item SOCIO brand grows with every university deployment
+        \item We participate in the revenue we make possible
+        \item Future SOCIO products are fully protected
+        \item Fees covered — no financial pressure on MCA
+    \end{itemize}
+
+    \subsection*{How to Present This in the Room}
+
+    Say this:
+
+    \begin{infobox}
+    ``Father, we want to make this work for both sides. Our proposal is ₹12--15 lakh upfront, you cover both our MCA fees in writing, and a small ₹75,000 fee for every university you successfully deploy Socio to. The SOCIO name stays on the product everywhere it goes. You get full control, we get fair compensation for the work we put in. This is a clean, professional deal.''
+    \end{infobox}
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \newpage
+    \section{Scenario 6 — Maintenance Retainer Add-On}
+
+    \begin{scenariobox}{blue}
+    \textbf{What it is:} This is not a standalone deal — it is an add-on to any of the scenarios above. After the sale or license, we are retained on a monthly basis to maintain the platform, fix bugs, deploy updates, and support new university rollouts.
+    \end{scenariobox}
+
+    \vspace{0.4cm}
+
+    \subsection*{Why This Should Be Separate}
+
+    The university will need ongoing support after the deal. Server issues, bug fixes, feature requests, and new university onboarding all require developer involvement. If this is not defined and priced separately, they will call us for free indefinitely.
+
+    \subsection*{Structure}
+
+    \begin{tabularx}{\textwidth}{L{5cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Component} & \textbf{Terms} \\
+    \midrule
+    Monthly retainer & ₹30,000 – ₹50,000/month \\
+    Scope & Bug fixes, server maintenance, security patches, minor updates \\
+    Excluded & New features, major redesigns, new product modules \\
+    New features & Quoted and billed separately per request \\
+    New university onboarding & ₹25,000 – ₹50,000 per deployment assisted \\
+    Who does the work & Surya (if he takes the work offer), or both \\
+    Contract duration & Minimum 12 months, renewable \\
+    \bottomrule
+    \end{tabularx}
+
+    \vspace{0.4cm}
+
+    \subsection*{For Surya Specifically}
+
+    If Surya accepts the university's work offer, this retainer structure should be the basis of that engagement — not an informal ``we'll call you.'' A formal retainer means:
+
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Guaranteed monthly income regardless of how often they call
+        \item Clear scope — Surya is not doing free general ERP work
+        \item Any new features built remain within the agreed scope
+        \item Surya can negotiate IP ownership of anything major he builds
+    \end{itemize}
+
+    \begin{warnbox}
+    \textbf{If Sachin is at South Indian Bank:} The retainer can be Surya-only. But make sure the contract does not make Sachin liable for support work he has no time to do. Sachin's obligations end at the point of sale.
+    \end{warnbox}
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \newpage
+    \section{Scenarios We Did Not Think Of — But Should Know}
+
+    \begin{infobox}
+    These are situations that may come up during or after the deal that you may not have considered. Being prepared for these gives you an advantage in the room.
+    \end{infobox}
+
+    \vspace{0.4cm}
+
+    \subsection{What if the university wants to add features before they can resell it?}
+
+    They may say the platform needs changes to fit their ERP before it is ready to sell to other universities. Who builds those changes?
+
+    \textbf{Options:}
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item \textbf{We build it — at cost.} Quote a fixed price for each addition. Do not do it for free.
+        \item \textbf{They build it with their own team.} That is their right if they have the IP.
+        \item \textbf{Surya builds it under the retainer.} Only if Scenario 6 is in place.
+    \end{itemize}
+
+    \subsection{What if another university approaches us directly, before or after the deal?}
+
+    Before signing: You are free to talk. After signing: You cannot sell this codebase to them. But you can tell them a new version is in development and take their contact for the future.
+
+    \subsection{What if the university cannot sell it to other universities and the deal falls flat?}
+
+    If the university's ERP bundle does not attract other universities, the platform just sits with Christ University. You still received your upfront payment. The per-university fees never come, but the core deal is not affected. This is why the upfront cash must be adequate on its own — do not rely on the per-university fee to make the numbers work.
+
+    \subsection{What if the university asks for the source code but not a formal contract?}
+
+    Do not hand over any code without a signed contract. Not even a zip file, not even a GitHub access invite. The code is all the leverage you have before signing.
+
+    \subsection{What if they want to white-label it — remove the SOCIO name entirely?}
+
+    If they want to rebrand it as ``Christ Campus App'' or any other name for other universities — that changes the deal significantly. White-labelling removes all brand value you were supposed to retain. If they want white-label rights, charge more — add ₹5–8L to the upfront figure and renegotiate.
+
+    \subsection{What if they want to integrate it into their existing ERP and it stops being a standalone product?}
+
+    Once merged into a larger ERP, your product becomes invisible — no brand, no identity, no credit. If this is the plan, you need to either:
+    \begin{itemize}[leftmargin=*, noitemsep]
+        \item Charge significantly more (it becomes part of their core product)
+        \item Or ensure a module-level credit is maintained (``Events powered by SOCIO'')
+    \end{itemize}
+
+    \subsection{What if they want an NDA before showing you the full deal terms?}
+
+    An NDA is normal. Sign it if required. But read it carefully — some NDAs prevent you from working on anything similar for a period of time, which would be unacceptable for you.
+
+    \subsection{What if Father Jossy agrees but the university's official decision-making process delays the deal?}
+
+    Father Jossy may be the champion but not the final authority. Universities have finance committees, boards, and procurement processes. Ask directly: \textit{``Who is the final signatory on this contract?''} Make sure you are talking to someone whose yes means yes.
+
+    % ══════════════════════════════════════════════════════════════════════════════
+    \newpage
+    \section{Which Scenario to Walk in With}
+
+    \begin{tabularx}{\textwidth}{L{3cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Situation} & \textbf{Recommended Scenario} \\
+    \midrule
+    They want to own it fully and are willing to pay fairly & Scenario 2 (Module Sale, Brand Retained) at ₹18L+ \\
+    They are hesitant on upfront cost & Scenario 5 (Hybrid) — lower upfront, per-university fee \\
+    They want maximum control and no ongoing obligations & Scenario 1 (Full IP Sale) — but demand ₹20L minimum \\
+    They want flexibility and a long-term relationship & Scenario 3 (License) with annual renewal \\
+    Budget is tight but they are confident about reselling & Scenario 4 (Revenue Share) — lower upfront, earn on success \\
+    \midrule
+    \textbf{Our opening position} & \textbf{Scenario 5 (Hybrid) — ₹12–15L cash + ₹75K per university + fees + brand retention} \\
+    \textbf{Our minimum acceptable} & \textbf{Scenario 2 — ₹15L cash + fees, brand retained, Sachin's placement unaffected} \\
+    \textbf{Walk away if} & \textbf{Total cash below ₹10L, brand stripped, or non-compete covers future work} \\
+    \bottomrule
+    \end{tabularx}
+
+    \vspace{1cm}
+
+    \begin{recommendbox}
+    \textbf{Final advice before walking in:}\\[0.4cm]
+    Go in with Scenario 5. Present it calmly and confidently — not as a demand, as a proposal. ``Here is what we are suggesting and why it works for both of us.'' If they push back on the per-university fee, move to Scenario 2 with a higher upfront. If they push back on the upfront, move back to Scenario 4 with revenue share. Never go below ₹10L cash regardless of what other benefits are on the table.\\[0.3cm]
+    And do not decide anything in the room. Tell them you will review whatever they propose and come back in 48 hours. Decisions made under time pressure in a meeting rarely go in your favour.
+    \end{recommendbox}
+
+    \vspace{1.5cm}
+    \begin{center}
+    {\small\color{darkgray} SOCIO Deal Proposal Scenarios \textbullet\ Sachin Yadav \& Surya Vamshi \textbullet\ Confidential}
+    \end{center}
+
+    \end{document}

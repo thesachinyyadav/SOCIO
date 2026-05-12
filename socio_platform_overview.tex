@@ -1,0 +1,950 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{fontenc}
+\usepackage{inputenc}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{parskip}
+
+% ── Colour Palette ─────────────────────────────────────────────────────────────
+\definecolor{primary}{HTML}{1a1a2e}
+\definecolor{accent}{HTML}{e94560}
+\definecolor{lightgray}{HTML}{f5f5f5}
+\definecolor{midgray}{HTML}{cccccc}
+\definecolor{darkgray}{HTML}{555555}
+\definecolor{green}{HTML}{2ecc71}
+\definecolor{blue}{HTML}{3498db}
+
+% ── Hyperref Setup ─────────────────────────────────────────────────────────────
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=blue,
+    pdfauthor={Sachin Yadav \& Surya Vamshi},
+    pdftitle={SOCIO Platform — Complete Technical Overview},
+    pdfsubject={Software Product Documentation},
+}
+
+% ── Section Formatting ─────────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{primary}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{accent}}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{darkgray}}{}{0em}{}
+
+% ── Header / Footer ────────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{darkgray} SOCIO Platform — Technical Overview}
+\fancyhead[R]{\small\color{darkgray} Confidential}
+\fancyfoot[C]{\small\color{darkgray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Custom Environments ────────────────────────────────────────────────────────
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{infobox}[1][]{
+    colback=lightgray, colframe=midgray,
+    boxrule=0.5pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    #1
+}
+
+\newtcolorbox{highlightbox}[1][]{
+    colback=primary!5, colframe=primary,
+    boxrule=0.8pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    #1
+}
+
+% ── Column Types ───────────────────────────────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title Page ─────────────────────────────────────────────────────────────────
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    {\fontsize{36}{44}\selectfont\bfseries\color{primary} SOCIO}\\[0.4cm]
+    {\Large\color{accent} University Event Management Platform}\\[0.2cm]
+    {\normalsize\color{darkgray} Complete Technical Product Overview}
+
+    \vspace{1.5cm}
+    \noindent\rule{\textwidth}{1.5pt}
+    \vspace{0.4cm}
+
+    \begin{multicols}{3}
+        \centering
+        {\large\bfseries socioweb}\\
+        {\small Main Web Platform}\\[0.2cm]
+        {\footnotesize\color{darkgray} socio.christuniversity.in}
+
+        \columnbreak
+        \centering
+        {\large\bfseries socioapp}\\
+        {\small Mobile PWA + Android}\\[0.2cm]
+        {\footnotesize\color{darkgray} app.withsocio.com}
+
+        \columnbreak
+        \centering
+        {\large\bfseries sociogated}\\
+        {\small Campus Gate Access}\\[0.2cm]
+        {\footnotesize\color{darkgray} gated.withsocio.com}
+    \end{multicols}
+
+    \vspace{0.4cm}
+    \noindent\rule{\textwidth}{1.5pt}
+
+    \vspace{2cm}
+
+    \begin{highlightbox}
+        \centering
+        \textbf{Production Status:} Live and deployed at Christ University, Bengaluru\\
+        \textbf{Architecture:} Three-product SaaS platform, independently deployable\\
+        \textbf{Scale:} 61 web pages \textbullet\ 130+ API endpoints \textbullet\ 20 mobile screens \textbullet\ 21+ database tables\\
+        \textbf{Effort:} 192,285+ lines of code \textbullet\ 2,000+ commits \textbullet\ 18 months \textbullet\ 10+ students \textbullet\ 0 external hires
+    \end{highlightbox}
+
+    \vfill
+
+    {\normalsize
+        \textbf{Authors}\\[0.3cm]
+        Sachin Yadav \quad\textbullet\quad Surya Vamshi\\[0.2cm]
+        {\color{darkgray} Christ (Deemed to be University), Bengaluru}
+    }
+
+    \vspace{1cm}
+    {\small\color{darkgray} Confidential — Prepared for institutional licensing discussions \textbullet\ \the\year}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Platform Overview}
+
+SOCIO is a fully production-deployed, multi-product university event management platform. It digitises the complete lifecycle of university events — from creation and multi-authority approval through student registration, ticketing, on-ground attendance scanning, post-event analytics, and physical campus access control.
+
+The platform is currently live at Christ University, Bengaluru, serving real students, organisers, department heads, and administrative staff. It is built with modern, scalable technology and is architected to support multiple university campuses simultaneously.
+
+\subsection{The Three Products}
+
+\begin{tabularx}{\textwidth}{L{2.8cm} L{3.5cm} L{3.5cm} L{3.5cm}}
+\toprule
+\rowcolor{primary!10}
+\textbf{Product} & \textbf{socioweb} & \textbf{socioapp} & \textbf{sociogated} \\
+\midrule
+\textbf{Purpose} & Organiser + student web platform & Student mobile app & Campus gate security \\
+\addlinespace
+\textbf{Users} & Organisers, HOD, Dean, CFO, Accounts, Venue, IT, Catering, Students & Students, Volunteers & Guards, CSO, Organisers \\
+\addlinespace
+\textbf{Status} & Production-ready & Production-ready & Functional MVP \\
+\addlinespace
+\textbf{Live URL} & socio.christuniversity.in & app.withsocio.com & gated.withsocio.com \\
+\addlinespace
+\textbf{Scale} & 61 pages, 130+ APIs & 20 screens, Android APK & 8 pages, 10 APIs \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Key Metrics at a Glance}
+
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{61} client-side web pages
+    \item \textbf{130+} REST API endpoints across 24 route files
+    \item \textbf{20} mobile screens (Android + PWA)
+    \item \textbf{10+} distinct user roles
+    \item \textbf{16+} database tables
+    \item \textbf{55+} React components (web)
+    \item \textbf{27} React components (mobile)
+    \item \textbf{4-stage} approval workflow engine
+    \item \textbf{3-tier} analytics dashboards
+    \item \textbf{2} AI models integrated (OpenAI + Gemini)
+    \item \textbf{2} push notification systems (WebPush + OneSignal)
+    \item \textbf{3} live production domains
+\end{itemize}
+\end{multicols}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{SOCIOWEB — Main Web Platform}
+
+\subsection{Technology Stack}
+
+\begin{tabularx}{\textwidth}{L{3.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Layer} & \textbf{Technology} \\
+\midrule
+Frontend Framework & Next.js 15 (App Router), React 19, TypeScript \\
+Styling & Tailwind CSS 4 \\
+Backend & Express 5, Node.js (ES Modules) \\
+Database & Supabase (PostgreSQL) via \texttt{@supabase/supabase-js} \\
+Authentication & Supabase Auth, Google OAuth, JWT (server-side verification), role expiry enforcement \\
+Email & Resend (transactional mail) \\
+AI / Chatbot & OpenAI GPT-4o-mini (primary) + Google Gemini Flash (fallback chain) \\
+Charts / Analytics & Recharts (AreaChart, BarChart, PieChart, FunnelChart) \\
+Forms & React Hook Form + Zod validation \\
+QR Codes & \texttt{qrcode} (server-side generation), \texttt{qr-scanner} (client-side) \\
+Push Notifications & WebPush (browser), OneSignal (mobile) \\
+Error Tracking & Sentry \\
+Excel Export & ExcelJS with custom themed XLSX layer \\
+Animation & GSAP + ScrollTrigger, Framer Motion \\
+Deployment & Vercel (client), nginx reverse proxy, PM2 process manager \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Backend API — 24 Route Files, 130+ Endpoints}
+
+\begin{longtable}{L{4.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route File} & \textbf{Scope and Key Operations} \\
+\midrule
+\endhead
+\texttt{authRoutes.js} & Login, session management, /me endpoint, JWT verification \\
+\addlinespace
+\texttt{userRoutes.js} & User CRUD, role assignment with expiry, pagination, search \\
+\addlinespace
+\texttt{eventRoutes\_secured.js} & Full event lifecycle: create, edit, publish, archive, soft-delete, custom fields, volunteer assignment, gated sync \\
+\addlinespace
+\texttt{festRoutes.js} & Fest lifecycle: create, edit, archive, event linkage, bi-directional gated sync \\
+\addlinespace
+\texttt{registrationRoutes.js} & Individual and team registration, teammate auto-provisioning, QR code issuance, capacity enforcement, outsider handling \\
+\addlinespace
+\texttt{attendanceRoutes.js} & QR scan verification, per-volunteer rate limiting, attendance upsert, push notification on scan \\
+\addlinespace
+\texttt{approvalRoutes.js} & Multi-stage approval workflow engine: HOD → Dean → CFO → Accounts, blocking/non-blocking stages, audit log, budget line items \\
+\addlinespace
+\texttt{venueRoutes.js} & Venue CRUD, campus-based filtering \\
+\addlinespace
+\texttt{venueBookingRoutes.js} & Venue booking: conflict detection, approve/reject/return, overlap flagging \\
+\addlinespace
+\texttt{cateringRoutes.js} & Catering vendor management, order bookings, accept/decline workflow \\
+\addlinespace
+\texttt{stallBookingRoutes.js} & Stall booking requests tied to events and fests \\
+\addlinespace
+\texttt{serviceRequestRoutes.js} & Venue booking queue with backward-compatibility shim \\
+\addlinespace
+\texttt{clubRoutes.js} & Club membership application and management \\
+\addlinespace
+\texttt{feedbackRoutes.js} & Post-event feedback dispatch via push notification, data collection per participant \\
+\addlinespace
+\texttt{analyticsRoutes.js} & Master admin analytics: overview, student insights, event metrics, department breakdown, AI-powered predictions, date range filtering \\
+\addlinespace
+\texttt{hodAnalyticsRoutes.js} & HOD-scoped analytics: department-filtered KPIs, fest breakdown \\
+\addlinespace
+\texttt{deanAnalyticsRoutes.js} & Dean analytics: institution-wide KPIs, insider/outsider participant split, per-department leaderboard, monthly trends \\
+\addlinespace
+\texttt{reportRoutes.js} & Data export and report generation \\
+\addlinespace
+\texttt{notificationRoutes.js} & Push subscribe/unsubscribe (WebPush + OneSignal), broadcast notifications, per-user read state \\
+\addlinespace
+\texttt{chatRoutes.js} & AI chatbot: GPT-4o-mini primary, Gemini fallback, daily rate limiting, page-context injection \\
+\addlinespace
+\texttt{volunteerRoutes.js} & Volunteer event access validation, assigned event list \\
+\addlinespace
+\texttt{uploadRoutes.js} & Multer file uploads to Supabase Storage \\
+\addlinespace
+\texttt{contactRoutes.js} & Contact form, support inbox \\
+\addlinespace
+\texttt{statuscheckRoutes.js} & Internal system health: probes all 22 route groups, load-tests all API endpoints \\
+\bottomrule
+\end{longtable}
+
+\subsection{Client Pages — 61 Pages}
+
+\subsubsection{Public / Marketing Pages}
+
+\begin{tabularx}{\textwidth}{L{4.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Description} \\
+\midrule
+\texttt{/} & Landing page with animated hero, platform features, FAQ, and CTA \\
+\texttt{/events} & Event discovery listing with search and filters \\
+\texttt{/fests} & Fest discovery listing \\
+\texttt{/clubs} & Club discovery listing \\
+\texttt{/event/[id]} & Event detail: registration CTA, schedule, prizes, rules, organiser info, WhatsApp link \\
+\texttt{/fest/[id]} & Fest detail: timeline, sponsors, social links, FAQs, sub-events \\
+\texttt{/club/[id]} & Club detail: member list, role applications \\
+\texttt{/Discover} & Unified discovery hub: events, fests, clubs, category grid, image carousel \\
+\texttt{/about} (4 pages) & About, mission, story, team \\
+\texttt{/pricing} & Tiered pricing page (Free / Basic / Pro / Enterprise in INR) \\
+\texttt{/solutions} & Use-case marketing page \\
+\texttt{/faq, /contact} & Support and contact pages \\
+\texttt{/support} (3 pages) & Support, careers, support inbox \\
+\texttt{/app-download} & App download CTA page \\
+\texttt{/privacy, /terms, /cookies, /refunds} & Legal and policy pages \\
+\texttt{/guide/organiser} & Organiser onboarding guide \\
+\texttt{/guide/masteradmin} & Master admin onboarding guide \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{Authentication}
+
+\begin{tabularx}{\textwidth}{L{4.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Description} \\
+\midrule
+\texttt{/auth} & Google OAuth sign-in page \\
+\texttt{/auth/callback} & OAuth redirect handler \\
+\texttt{/auth/verify} & Post-login verification and role resolution \\
+\texttt{/auth/popup-success} & Popup OAuth flow success handler \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{Student User Pages}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Description} \\
+\midrule
+\texttt{/profile} & Profile page: user info, all registered events, QR code access, registration cancellation \\
+\texttt{/event/[id]/register} & Registration form: individual and team modes, custom fields, department/campus filtering, capacity enforcement \\
+\texttt{/event/[id]/ticket/[regId]} & Digital ticket with QR code, Google Calendar add, print layout \\
+\texttt{/event/[id]/participants} & Participant list view \\
+\texttt{/attendance} & Attendance status page \\
+\texttt{/feedback/[eventId]} & Post-event feedback submission form \\
+\texttt{/feedbacks/[eventId]} & Feedback results view for organisers \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{Organiser Pages}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Description} \\
+\midrule
+\texttt{/manage} & Organiser dashboard: own events/fests, Excel export, book venue/catering/stalls, send reminders, archive, delete \\
+\texttt{/create/event} & Event creation wizard \\
+\texttt{/create/fest} & Fest creation wizard \\
+\texttt{/create/clubs} & Club creation wizard \\
+\texttt{/edit/event/[id]} & Event editing flow \\
+\texttt{/edit/fest/[id]} & Fest editing flow \\
+\texttt{/edit/clubs/[id]} & Club editing flow \\
+\texttt{/clubeditor/[id]} & Club member and role editor \\
+\texttt{/approvals/[itemId]} & Approval detail view with stage-by-stage breakdown \\
+\texttt{/volunteer} & Volunteer event list \\
+\texttt{/volunteer/scanner/[eventId]} & QR attendance scanner for volunteers \\
+\texttt{/bookvenue} & Venue booking request form \\
+\texttt{/bookcatering} & Catering booking request form \\
+\texttt{/bookstall} & Stall booking request form \\
+\texttt{/statuscheck} & Internal API health-check dashboard \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{Role-Gated Staff Portals}
+
+Each of the following pages is gated by a specific institutional role and is invisible to all other users.
+
+\begin{tabularx}{\textwidth}{L{3cm} L{2.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Role} & \textbf{Capabilities} \\
+\midrule
+\texttt{/masteradmin} & Master Admin & User management, role assignment with expiry, event/fest control, broadcast notifications, full analytics, data explorer, approvals manager \\
+\addlinespace
+\texttt{/dean} & Dean & Approval queue (pending/reviewed), Dean Analytics Dashboard \\
+\addlinespace
+\texttt{/hod} & HOD & Approval queue, HOD Analytics Dashboard, HOD Fest Dashboard \\
+\addlinespace
+\texttt{/cfo} & CFO & Approval queue with budget item breakdown per event \\
+\addlinespace
+\texttt{/accounts} & Finance Office & Approval queue for financial sign-off \\
+\addlinespace
+\texttt{/venue} & Venue Manager & Booking queue, approve/reject/return with revision notes, overlap detection \\
+\addlinespace
+\texttt{/catering} & Catering Vendor & Order management, accept/decline orders \\
+\addlinespace
+\texttt{/stalls} & Stalls Coordinator & Stall booking management \\
+\addlinespace
+\texttt{/it} & IT Support & IT request queue, approve/decline/return \\
+\bottomrule
+\end{tabularx}
+
+\subsection{User Role System}
+
+SOCIO implements a 10+ role access control system with time-bound role assignment:
+
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Student} — default registered user
+    \item \textbf{Organiser} — can create and manage events/fests/clubs
+    \item \textbf{Volunteer} — assigned to specific events for attendance scanning
+    \item \textbf{HOD} — department approval authority (blocking stage)
+    \item \textbf{Dean} — institution-level approval authority (blocking stage)
+    \item \textbf{CFO} — financial approval (optional stage)
+    \item \textbf{Accounts} — finance office sign-off (optional stage)
+    \item \textbf{Venue Manager} — handles venue booking requests
+    \item \textbf{Catering Vendor} — handles catering orders
+    \item \textbf{Stalls Coordinator} — handles stall bookings
+    \item \textbf{IT Support} — handles IT request queue
+    \item \textbf{Master Admin} — full platform control
+\end{itemize}
+\end{multicols}
+
+Role assignments include expiry dates, enforced server-side on every authenticated request.
+
+\subsection{Approval Workflow Engine}
+
+A complete multi-stage institutional event approval system is implemented:
+
+\begin{infobox}
+\textbf{Approval Flow:}\\[0.3cm]
+\textbf{Stage 1 (Blocking):} HOD Approval \quad$\rightarrow$\quad \textbf{Stage 2 (Blocking):} Dean Approval\\[0.2cm]
+\textbf{Stage 3 (Optional):} CFO Approval \quad$\rightarrow$\quad \textbf{Stage 4 (Optional):} Finance/Accounts\\[0.2cm]
+\textbf{Parallel (Non-blocking):} IT Request \textbullet\ Venue Booking \textbullet\ Catering \textbullet\ Stalls\\[0.3cm]
+Once all blocking stages are approved or skipped, the event goes live (\texttt{draft = false}).
+\end{infobox}
+
+Features of the approval engine:
+\begin{itemize}[leftmargin=*]
+    \item Full audit log per stage with timestamps and approver email
+    \item Fest events inherit approval from parent fest (bypass blocking stages)
+    \item Budget line item tracking per event (quantity × unit price)
+    \item Each role-holder sees only their own queue
+    \item Revision notes supported at each stage
+\end{itemize}
+
+\subsection{Analytics System — Three-Tier Dashboards}
+
+\begin{tabularx}{\textwidth}{L{3cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Dashboard} & \textbf{Features} \\
+\midrule
+\textbf{Master Admin} & KPI cards with month-on-month percentage change, area chart (monthly trend), pie chart (category breakdown), bar chart (department breakdown), funnel chart (registration → attendance), top events table, at-risk student detection, engagement scoring, AI-powered predictions, date range filters (30/90/180/365 days), themed Excel export \\
+\addlinespace
+\textbf{Data Explorer} & Deep drill-down: funnel chart, line chart, bar charts, prediction overlays, date preset selectors \\
+\addlinespace
+\textbf{HOD Analytics} & Department-scoped KPIs, HOD Fest Dashboard with per-fest breakdown \\
+\addlinespace
+\textbf{Dean Analytics} & Institution-wide KPIs, insider vs.\ outsider participant split, per-department leaderboard, per-fest drill-down, 5-question feedback aggregate scores, monthly trend, attendance rate \\
+\bottomrule
+\end{tabularx}
+
+\subsection{QR Ticketing System}
+
+\begin{itemize}[leftmargin=*]
+    \item Cryptographically signed QR codes generated server-side per registration
+    \item Each registration receives a unique, verifiable QR code
+    \item Ticket page supports print layout and Google Calendar integration
+    \item Volunteer QR scanner with per-volunteer rate limiting and real-time attendance upsert
+    \item Push notification sent to organiser on each scan
+    \item Outsider registration QR passes are bi-directionally synced to the SOCIO Gated system
+\end{itemize}
+
+\subsection{AI Chatbot}
+
+\begin{itemize}[leftmargin=*]
+    \item Primary model: OpenAI GPT-4o-mini
+    \item Fallback chain: Google Gemini Flash (automatic failover)
+    \item Per-user daily rate limiting
+    \item Page-context injection (chatbot is aware of current page content)
+    \item Available on both socioweb and socioapp via ChatbotFab component
+\end{itemize}
+
+\subsection{Operational Booking Modules}
+
+Three complete booking workflows for institutional operations:
+
+\textbf{Venue Booking:}
+Available venues filtered by campus. Booking requests routed to venue manager. Conflict detection and overlap flagging. Approve/reject/return-for-revision flow with notes.
+
+\textbf{Catering Booking:}
+Catering vendor portal with order management. Accept/decline per order. Tied to event/fest.
+
+\textbf{Stall Booking:}
+Stall requests linked to events and fests. Coordinator-managed queue.
+
+\subsection{Notification System}
+
+\begin{itemize}[leftmargin=*]
+    \item Browser push notifications via Web Push API
+    \item Mobile push via OneSignal integration
+    \item Broadcast notifications (master admin to all users)
+    \item Per-user read state tracking
+    \item Event reminders dispatched by organisers
+    \item Attendance scan notifications to organiser in real time
+    \item Post-event feedback push to all registered participants
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{SOCIOAPP — Mobile PWA and Android Application}
+
+\subsection{Technology Stack}
+
+\begin{tabularx}{\textwidth}{L{3.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Layer} & \textbf{Technology} \\
+\midrule
+Framework & Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4 \\
+Mobile Runtime & Capacitor 8 — Android APK (\texttt{com.socioapp.mobile}) \\
+Native Plugins & \texttt{@capacitor-mlkit/barcode-scanning}, \texttt{@capacitor/haptics}, \texttt{@capacitor/motion} (shake detection), \texttt{@capacitor/screen-orientation}, \texttt{@capacitor/share}, \texttt{@capacitor/browser} \\
+Authentication & Supabase Auth (web popup flow + native Capacitor Browser in-app flow) \\
+Data Fetching & SWR (caching, revalidation, TTL strategy) \\
+Push Notifications & OneSignal Cordova plugin \\
+QR Scanning & \texttt{@zxing/browser} + \texttt{@zxing/library} (web), native MLKit barcode scanning (Android) \\
+Animation & Framer Motion \\
+PDF Generation & jsPDF \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Mobile Screens — 20 Screens}
+
+\begin{longtable}{L{5.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Screen} & \textbf{Description} \\
+\midrule
+\endhead
+\textbf{Home} \texttt{/} & Personalised home: upcoming events, quick action grid (Discover, Registrations, Fests, Clubs, Volunteer Scanner, Catering), active fest highlights \\
+\addlinespace
+\textbf{Discover} \texttt{/discover} & Unified search with category filter chips, paginated event and fest results \\
+\addlinespace
+\textbf{Events} \texttt{/events} & Events listing with SWR caching, filter chips (Open / Past / All), search \\
+\addlinespace
+\textbf{Fests} \texttt{/fests} & Fests listing \\
+\addlinespace
+\textbf{Clubs} \texttt{/clubs} & Clubs listing \\
+\addlinespace
+\textbf{Event Detail} \texttt{/event/[id]} & Registration CTA, schedule, rules, prizes, organiser info \\
+\addlinespace
+\textbf{Event Register} \texttt{/event/[id]/register} & Individual and team registration form \\
+\addlinespace
+\textbf{Fest Detail} \texttt{/fest/[id]} & Fest details with sub-event listing \\
+\addlinespace
+\textbf{Club Detail} \texttt{/club/[id]} & Club info, role applications \\
+\addlinespace
+\textbf{Profile} \texttt{/profile} & User profile: registered events, QR codes per registration, volunteer events, catering orders, attendance status, settings link \\
+\addlinespace
+\textbf{Settings} \texttt{/profile/settings} & Account settings \\
+\addlinespace
+\textbf{Notifications} \texttt{/notifications} & Notification list: event, broadcast, system types; mark read, clear all \\
+\addlinespace
+\textbf{Volunteer Events} \texttt{/volunteer} & Volunteer's assigned event list \\
+\addlinespace
+\textbf{QR Scanner} \texttt{/volunteer/scanner/[eventId]} & Native MLKit scanner (Android), ZXing (web); offline scan queue with retry on reconnect; haptic feedback (success/error); toast history log; shake-to-scan gesture \\
+\addlinespace
+\textbf{Catering} \texttt{/catering} & Catering order view for vendor users \\
+\addlinespace
+\textbf{Auth} \texttt{/auth} & Sign-in page with native/web OAuth flow handling \\
+\addlinespace
+\textbf{Auth Callback} \texttt{/auth/callback} & OAuth handler with native deep-link support \\
+\addlinespace
+\textbf{Offline} \texttt{/offline} & Offline fallback page (PWA service worker) \\
+\addlinespace
+\textbf{Privacy / Terms} & Legal pages \\
+\bottomrule
+\end{longtable}
+
+\subsection{Native and PWA Features}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Shake-to-Scan:} Accelerometer via \texttt{@capacitor/motion} — shake the device to open QR scanner instantly
+    \item \textbf{Haptic Feedback:} Distinct haptic patterns for successful scan vs.\ error scan
+    \item \textbf{Offline QR Queue:} Scans made without internet are queued locally and submitted automatically on reconnect
+    \item \textbf{Native MLKit Barcode Scanning:} Hardware-accelerated on Android; ZXing fallback in web/PWA mode
+    \item \textbf{Orientation Lock:} Scanner screen locks to landscape for optimal scanning
+    \item \textbf{Desktop Gate:} Component blocks non-mobile access to app-specific pages
+    \item \textbf{PWA Install Prompt:} Smart Add-to-Home-Screen prompt
+    \item \textbf{Smart Notification Prompt:} Context-aware push permission request
+    \item \textbf{Session Persistence:} localStorage-based session restoration for PWA without re-authentication
+    \item \textbf{Onboarding Overlay:} Native onboarding flow on first app launch
+    \item \textbf{Campus Selector:} Multi-campus filtering on discovery screens
+    \item \textbf{Android APK:} \texttt{socio-app-debug.apk} (46 MB) committed and ready for distribution
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{SOCIOGATED — Campus Gate Access Management}
+
+\subsection{Overview}
+
+SOCIO Gated is a standalone gate access control system designed for campus security officers and event organisers. It manages physical entry to campus events — handling visitor registrations, QR pass generation, gate-level verification, and entry approvals. It runs on a completely separate database from the main platform for security isolation, while maintaining bi-directional sync with SOCIO Web.
+
+\subsection{Technology Stack}
+
+\begin{tabularx}{\textwidth}{L{3.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Layer} & \textbf{Technology} \\
+\midrule
+Framework & Next.js 14 (Pages Router), TypeScript, Tailwind CSS, Framer Motion \\
+Database & Supabase (PostgreSQL) — separate project from socioweb \\
+Authentication & Custom username/password login — role-based (guard, organiser, CSO) \\
+QR Generation & \texttt{qrcode} library \\
+PDF Passes & jsPDF — branded access passes \\
+\bottomrule
+\end{tabularx}
+
+\subsection{User Roles}
+
+\begin{tabularx}{\textwidth}{L{3cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Role} & \textbf{Responsibilities} \\
+\midrule
+\textbf{Organiser} & Submit event requests, view approval status, manage visitor registrations, generate bulk QR passes \\
+\textbf{CSO} (Chief Security Officer) & Approve or reject event requests, view notifications, manage all active events \\
+\textbf{Guard} & Scan visitor QR codes at entry gate, verify identity against colour-coded pass type \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Pages and API Routes}
+
+\subsubsection{UI Pages — 8 Pages}
+
+\begin{tabularx}{\textwidth}{L{5cm} L{2.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Page} & \textbf{Role} & \textbf{Description} \\
+\midrule
+\texttt{/login} & All & Username/password login \\
+\texttt{/organiser} & Organiser & Submit event requests, manage visitor registrations, bulk QR generation \\
+\texttt{/cso} & CSO & Approve/reject event requests, notifications, manage all events \\
+\texttt{/guard} & Guard & QR scanner: scan at gate, verify identity by colour-coded pass \\
+\texttt{/visitor-register} & Public & Pre-event visitor registration form \\
+\texttt{/on-spot-registration} & Organiser/Guard & Walk-up registration at the gate \\
+\texttt{/retrieve-qr} & Visitor & Retrieve lost QR pass by email or phone \\
+\texttt{/verify} & Guard & Manual visitor identity verification fallback \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{API Routes — 10 Endpoints}
+
+\begin{tabularx}{\textwidth}{L{4.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Endpoint} & \textbf{Description} \\
+\midrule
+\texttt{POST /api/login} & Authenticate user, return role-scoped session \\
+\texttt{GET/POST /api/event-requests} & Submit or list event requests from organisers \\
+\texttt{POST /api/cso/approve-event} & CSO approves event request, creates event row \\
+\texttt{GET /api/cso/notifications} & CSO new-event alert notifications \\
+\texttt{POST /api/registerVisitor} & Register visitor, generate QR pass, send QR by email \\
+\texttt{POST /api/registerOnSpotVisitor} & On-the-spot gate registration \\
+\texttt{POST /api/verifyVisitor} & Scan and verify visitor QR at entry gate \\
+\texttt{PUT /api/updateStatus} & Update visitor status (revoke entry pass) \\
+\texttt{POST /api/send-qr-email} & Resend QR pass to visitor email \\
+\texttt{GET /api/visitors} & List all visitors for an event \\
+\texttt{GET /api/approved-events} & List all CSO-approved active events \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Visitor Pass Colour System}
+
+Visitor passes are colour-coded at QR generation time and verified visually by guards:
+
+\begin{tabularx}{\textwidth}{L{3cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Colour} & \textbf{Visitor Type} \\
+\midrule
+\textbf{Blue} & Regular student / general visitor \\
+\textbf{Amber} & Speaker / resource person \\
+\textbf{Maroon} & VIP / distinguished guest \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Integration with SOCIO Web}
+
+The \texttt{gatedSync.js} module in the socioweb server maintains bi-directional sync:
+
+\begin{itemize}[leftmargin=*]
+    \item Events and fests created in SOCIO Web are automatically pushed to Gated's \texttt{event\_requests} table
+    \item Outsider registrations created in SOCIO Web automatically create visitor records in the Gated database
+    \item Gated organiser accounts are auto-provisioned from SOCIO organiser email addresses
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Integration Ecosystem}
+
+\begin{tabularx}{\textwidth}{L{3.5cm} L{3cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Service} & \textbf{Used In} & \textbf{Purpose} \\
+\midrule
+\textbf{Supabase} & All three products & PostgreSQL database, authentication, file storage \\
+\textbf{OpenAI GPT-4o-mini} & socioweb, socioapp & AI chatbot primary model \\
+\textbf{Google Gemini Flash} & socioweb, socioapp & AI chatbot fallback model \\
+\textbf{Resend} & socioweb & Transactional email delivery \\
+\textbf{OneSignal} & socioweb, socioapp & Mobile and web push notifications \\
+\textbf{Web Push API} & socioweb & Browser push notifications \\
+\textbf{Sentry} & socioweb & Real-time error tracking and monitoring \\
+\textbf{Google OAuth} & socioweb, socioapp & Single sign-on authentication \\
+\textbf{ExcelJS} & socioweb & Themed Excel report export \\
+\textbf{jsPDF} & socioapp, sociogated & PDF pass and ticket generation \\
+\textbf{Capacitor MLKit} & socioapp & Native Android barcode scanning \\
+\textbf{Vercel} & socioweb, socioapp & Frontend deployment and CDN \\
+\textbf{nginx + PM2} & socioweb server & Production process management \\
+\bottomrule
+\end{tabularx}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Database Architecture}
+
+The platform uses Supabase (PostgreSQL) with two isolated database projects:
+
+\textbf{SOCIO Web + App (shared database):}
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{users}
+    \item \texttt{events}
+    \item \texttt{fests}
+    \item \texttt{clubs}
+    \item \texttt{registrations}
+    \item \texttt{attendance\_status}
+    \item \texttt{approvals}
+    \item \texttt{venues}
+    \item \texttt{venue\_bookings}
+    \item \texttt{catering\_bookings}
+    \item \texttt{stall\_bookings}
+    \item \texttt{service\_requests}
+    \item \texttt{feedbacks}
+    \item \texttt{notifications}
+    \item \texttt{push\_subscriptions}
+    \item \texttt{broadcast\_notification\_status}
+\end{itemize}
+\end{multicols}
+
+\textbf{SOCIO Gated (isolated database):}
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{users}
+    \item \texttt{event\_requests}
+    \item \texttt{events}
+    \item \texttt{visitors}
+    \item \texttt{notifications}
+\end{itemize}
+\end{multicols}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Production Readiness Assessment}
+
+\begin{tabularx}{\textwidth}{L{5cm} C{2cm} C{2cm} C{2cm}}
+\toprule
+\rowcolor{primary!10}
+\textbf{Capability} & \textbf{socioweb} & \textbf{socioapp} & \textbf{sociogated} \\
+\midrule
+Live production deployment & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} \\
+Real user activity & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} \\
+Error monitoring (Sentry) & \textcolor{green}{\textbf{Yes}} & --- & --- \\
+Rate limiting & \textcolor{green}{\textbf{Yes}} & --- & --- \\
+Role expiry enforcement & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} \\
+Input validation (Zod) & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} & Partial \\
+CORS policy & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} \\
+Security audit logging & \textcolor{green}{\textbf{Yes}} & --- & \textcolor{green}{\textbf{Yes}} \\
+nginx reverse proxy & \textcolor{green}{\textbf{Yes}} & --- & --- \\
+PM2 process management & \textcolor{green}{\textbf{Yes}} & --- & --- \\
+PWA service worker & --- & \textcolor{green}{\textbf{Yes}} & --- \\
+Native Android APK & --- & \textcolor{green}{\textbf{Yes}} & --- \\
+Offline capability & --- & \textcolor{green}{\textbf{Yes}} & --- \\
+Versioned DB migrations & \textcolor{green}{\textbf{Yes}} & --- & --- \\
+Multi-campus support & \textcolor{green}{\textbf{Yes}} & \textcolor{green}{\textbf{Yes}} & Partial \\
+Tiered pricing page & \textcolor{green}{\textbf{Yes}} & --- & --- \\
+\bottomrule
+\end{tabularx}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Development Effort}
+
+\subsection{Overview}
+
+SOCIO was conceived, designed, and built entirely by a student team at Christ University, Bengaluru. The project spans 18 months — from initial planning in November 2024 through to full production deployment in 2026 — covering three separate products, a native Android application, a physical gate access control system, and multiple prior versions that were built, tested, and iterated upon before the final platform was established.
+
+\begin{highlightbox}
+\centering
+\textbf{18 months} of development \quad\textbullet\quad \textbf{2,000+ commits} across all repositories \quad\textbullet\quad \textbf{192,285+ lines of code} \quad\textbullet\quad \textbf{10+ student contributors}
+\end{highlightbox}
+
+\subsection{Lines of Code (Production Repositories)}
+
+\begin{tabularx}{\textwidth}{L{3cm} L{3.5cm} C{2.5cm} C{2cm}}
+\toprule
+\rowcolor{primary!10}
+\textbf{Product Name} & \textbf{GitHub Repository} & \textbf{Lines of Code} & \textbf{Commits} \\
+\midrule
+socioweb & \texttt{socio2026v2} & 168,538 & 1,038 \\
+socioapp & \texttt{sociomobilev2} & 14,535 & 294 \\
+sociogated & \texttt{universitygatedv2} & 9,212 & 35 \\
+\midrule
+\rowcolor{primary!10}
+\textbf{Production total} & & \textbf{192,285} & \textbf{1,367+} \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.4cm}
+
+Earlier testing and development repositories (not counted in production totals):
+
+\begin{tabularx}{\textwidth}{L{3.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Repository} & \textbf{Description} \\
+\midrule
+\texttt{socio-mobile-} & Original Flutter/Dart mobile application — built before the Capacitor pivot; full native Android development \\
+\texttt{sociotest} & Testing pilot phase — TypeScript; used for live alpha testing with real users \\
+\texttt{sociotestv2} & Version 2 alpha — Vercel + Supabase architecture; established the data model and auth layer carried into production \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.4cm}
+
+Including all development and testing repositories, total commits across the entire SOCIO project history exceed \textbf{2,000 commits}. The 192,285 line count represents production code only and does not include earlier versions.
+
+For reference: 192,000+ lines of production TypeScript, JavaScript, and CSS represents a scope comparable to mid-size commercial SaaS codebases. This excludes all auto-generated files, \texttt{node\_modules}, build artifacts, and lock files — only hand-written source code is counted.
+
+\subsection{Development Timeline}
+
+\begin{tabularx}{\textwidth}{L{3.2cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Period} & \textbf{Milestone} \\
+\midrule
+November 2024 & Project planning begins — problem identification, scope definition, product vision \\
+April 2025 & Ideation formalised; active coding begins across the team \\
+April -- June 2025 & \texttt{socio-mobile-} built in Flutter/Dart — original native Android application \\
+August 2025 & \texttt{sociotestv2} — Version 2 alpha launched on Vercel + Supabase; architecture validated with real users \\
+September 2025 & \texttt{sociotest} — Testing pilot phase; multi-user feedback and iteration \\
+October 2025 & SOCIO Gated initiated — campus gate access control system \\
+January 2026 & SOCIO Web v3 initiated — full production rewrite with Next.js 15, Express 5, 10+ role system \\
+February 2026 & SOCIO App initiated — Capacitor Android PWA replacing the Flutter version \\
+March 2026 & SOCIO Gated deployed at gated.withsocio.com \\
+April 2026 & Multi-stage approval engine, 3-tier analytics, AI chatbot integration complete \\
+May 2026 & Full platform live at socio.christuniversity.in; Android APK distributed to students \\
+\bottomrule
+\end{tabularx}
+
+\subsection{What Was Planned and Built}
+
+The team managed the complete software development lifecycle independently:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Product planning:} Feature scoping, user journey mapping, and role system design for 10+ distinct user types across three products
+    \item \textbf{Architecture design:} Multi-product monorepo with isolated databases, bi-directional sync, and shared authentication layer
+    \item \textbf{UI/UX design:} All screens designed and implemented by the team — no third-party design agency involved
+    \item \textbf{Backend engineering:} 24 route files, 130+ REST API endpoints, approval workflow engine, role-based access control, rate limiting
+    \item \textbf{Frontend engineering:} 61 web pages, 20 mobile screens, 80+ React components across two applications
+    \item \textbf{Mobile development:} Native Android APK via Capacitor, native MLKit barcode scanning, offline queue, shake-to-scan
+    \item \textbf{DevOps and deployment:} nginx configuration, PM2 process management, Vercel deployment pipelines, Sentry error tracking, domain management across three live production URLs
+    \item \textbf{Integrations:} 13 external services integrated independently — OpenAI, Google Gemini, Supabase, Resend, OneSignal, Sentry, ExcelJS, jsPDF, and others
+    \item \textbf{Security:} JWT server-side verification, role expiry enforcement, CORS policies, per-volunteer rate limiting, cryptographic QR signing, audit logging
+    \item \textbf{Testing and iteration:} Continuous deployment with real student users at Christ University providing live feedback across the development period
+\end{itemize}
+
+\subsection{Student Contributors}
+
+The following students contributed to the design, development, and deployment of the SOCIO platform:
+
+\begin{tabularx}{\textwidth}{L{5cm} L{2.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Contributor} & \textbf{Role} & \textbf{Contribution} \\
+\midrule
+\textbf{Sachin Yadav} & Lead Developer & Lead architect and full-stack developer — socioweb, socioapp, sociogated; system design, backend API, DevOps, deployment \\
+\addlinespace
+\textbf{Surya Vamshi} & Co-Developer & Full-stack developer — socioweb, socioapp; frontend engineering, mobile development, Capacitor Android integration \\
+\addlinespace
+\textbf{Advaith Biju} & Intern & Frontend development — socioweb UI components, event and fest pages \\
+\addlinespace
+\textbf{Alwin Joseph} & Intern & Frontend development — socioweb pages and student-facing flows \\
+\addlinespace
+\textbf{Alton Joe} & Intern & Frontend development — socioweb pages \\
+\addlinespace
+\textbf{Bhoomi Prabhakar} & Intern & Frontend development — socioweb \\
+\addlinespace
+\textbf{Hatim Abizer Tinwala} & Intern & Frontend development — socioweb \\
+\addlinespace
+\textbf{Suryachalam V M} & Intern & Frontend development — socioweb, socioapp \\
+\addlinespace
+\textbf{Additional interns} & Interns & Planning, UI review, testing, and iteration based on real usage at Christ University \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.4cm}
+\begin{infobox}
+All contributors listed above are students at Christ (Deemed to be University), Bengaluru. No external development agency, freelancer, or contracted engineer was involved in building this platform. Every line of code, every deployment, and every design decision was made by the student team.
+\end{infobox}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Summary}
+
+\begin{highlightbox}
+\textbf{SOCIO is not a prototype or academic exercise.}\\[0.4cm]
+It is a production-deployed, three-product SaaS platform currently serving students, organisers, and administrative staff at Christ University, Bengaluru. It covers the complete university event lifecycle — creation, institutional approval, registration, ticketing, physical gate access, attendance, analytics, and AI assistance — with a mobile-native Android application and a physical campus security management system.\\[0.4cm]
+The platform is architecturally ready for multi-university deployment, with existing campus segmentation, tiered pricing infrastructure, and isolated database design for per-institution deployment.
+\end{highlightbox}
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Total web pages & 61 \\
+Total API endpoints & 130+ \\
+Mobile screens & 20 \\
+User roles & 10+ \\
+Database tables & 21+ (across both databases) \\
+Approval workflow stages & 4 (HOD, Dean, CFO, Finance) + 4 parallel \\
+Analytics dashboard tiers & 3 (Master Admin, HOD, Dean) \\
+AI models integrated & 2 (GPT-4o-mini, Gemini Flash) \\
+Push notification systems & 2 (WebPush, OneSignal) \\
+Live production domains & 3 \\
+Native mobile platform & Android (Capacitor 8, APK included) \\
+External service integrations & 13 \\
+\midrule
+\rowcolor{accent!10}
+\textbf{Total lines of code} & \textbf{192,285+ (production repos only)} \\
+\rowcolor{accent!10}
+\textbf{Total commits} & \textbf{2,000+ (across all repositories)} \\
+\rowcolor{accent!10}
+\textbf{Development duration} & \textbf{18 months (Nov 2024 -- May 2026)} \\
+\rowcolor{accent!10}
+\textbf{Student contributors} & \textbf{10+} \\
+\rowcolor{accent!10}
+\textbf{External developers hired} & \textbf{None} \\
+\bottomrule
+\end{tabularx}
+
+\vspace{2cm}
+\begin{center}
+{\small\color{darkgray}
+SOCIO Platform — Technical Overview \textbullet\ Sachin Yadav \& Surya Vamshi\\
+Christ (Deemed to be University), Bengaluru \textbullet\ Confidential
+}
+\end{center}
+
+\end{document}
