@@ -1,0 +1,1389 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{fontenc}
+\usepackage{inputenc}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{parskip}
+\usepackage{amssymb}
+\usepackage{pifont}
+
+% ── Colour Palette ─────────────────────────────────────────────────────────────
+\definecolor{primary}{HTML}{1a1a2e}
+\definecolor{accent}{HTML}{e94560}
+\definecolor{lightgray}{HTML}{f5f5f5}
+\definecolor{midgray}{HTML}{cccccc}
+\definecolor{darkgray}{HTML}{555555}
+\definecolor{green}{HTML}{27ae60}
+\definecolor{blue}{HTML}{2980b9}
+\definecolor{amber}{HTML}{e67e22}
+\definecolor{red}{HTML}{c0392b}
+
+% ── Hyperref Setup ─────────────────────────────────────────────────────────────
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=blue,
+    pdfauthor={SOCIO Platform},
+    pdftitle={SOCIO — Software Requirements Specification},
+    pdfsubject={SRS for Vendor Quotation},
+}
+
+% ── Section Formatting ─────────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{primary}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{accent}}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{darkgray}}{}{0em}{}
+
+% ── Header / Footer ────────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{darkgray} SOCIO Platform — Software Requirements Specification}
+\fancyhead[R]{\small\color{darkgray} Confidential}
+\fancyfoot[C]{\small\color{darkgray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Custom Environments ────────────────────────────────────────────────────────
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{infobox}[1][]{
+    colback=lightgray, colframe=midgray,
+    boxrule=0.5pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt,
+    #1
+}
+
+\newtcolorbox{reqbox}{
+    colback=primary!4, colframe=primary,
+    boxrule=0.8pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{warnbox}{
+    colback=accent!6, colframe=accent,
+    boxrule=0.8pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{techbox}{
+    colback=blue!5, colframe=blue,
+    boxrule=0.8pt, arc=4pt,
+    left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% ── Column Types ───────────────────────────────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% ── Symbols ───────────────────────────────────────────────────────────────────
+\newcommand{\req}{\textcolor{accent}{\textbf{REQ}}}
+\newcommand{\must}{\textcolor{red}{\textbf{MUST}}}
+\newcommand{\should}{\textcolor{amber}{\textbf{SHOULD}}}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title Page ─────────────────────────────────────────────────────────────────
+\begin{titlepage}
+    \centering
+    \vspace*{1.5cm}
+
+    {\fontsize{38}{46}\selectfont\bfseries\color{primary} SOCIO}\\[0.4cm]
+    {\Large\color{accent} University Event Management Platform}\\[0.3cm]
+    {\large\color{darkgray} Software Requirements Specification (SRS)}
+
+    \vspace{1cm}
+    \noindent\rule{\textwidth}{1.5pt}
+    \vspace{0.5cm}
+
+    \begin{infobox}
+        \centering
+        \textbf{Document Purpose:} Vendor Quotation and Development Scoping\\[0.3cm]
+        This document provides a complete specification of the SOCIO platform for the purpose of obtaining a development quotation from an IT solutions provider. It describes all functional requirements, user roles, screens, API surface, database schema, integrations, and non-functional requirements needed to build a functionally identical system.\\[0.3cm]
+        \textbf{The vendor is expected to deliver a system matching all requirements described herein.}
+    \end{infobox}
+
+    \vspace{1cm}
+
+    \begin{tabularx}{\textwidth}{L{4cm} X}
+    \toprule
+    \rowcolor{primary!10}
+    \textbf{Document Version} & 1.0 \\
+    \textbf{Platform} & SOCIO University Event Management Platform \\
+    \textbf{Products in Scope} & socioweb, socioapp, sociogated \\
+    \textbf{Total Web Pages} & 61 (socioweb) + 8 (sociogated) = 69 \\
+    \textbf{Total Mobile Screens} & 20 (socioapp) \\
+    \textbf{Total API Endpoints} & 130+ (socioweb) + 10+ (sociogated) = 140+ \\
+    \textbf{Database Tables} & 21+ (across two isolated databases) \\
+    \textbf{User Roles} & 12 distinct roles \\
+    \textbf{Third-Party Integrations} & 13 external services \\
+    \bottomrule
+    \end{tabularx}
+
+    \vfill
+    {\small\color{darkgray} Confidential — For Vendor Use Only \textbullet\ \the\year}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Introduction}
+
+\subsection{Purpose of This Document}
+
+This Software Requirements Specification (SRS) defines the complete functional and non-functional requirements for the SOCIO University Event Management Platform. It is intended for use by an IT solutions provider to understand the full scope of the system and provide an accurate development cost estimate and delivery timeline.
+
+The document covers all three products that together constitute the SOCIO platform:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{socioweb} — The primary web-based platform used by organisers, students, and institutional staff.
+    \item \textbf{socioapp} — A mobile Progressive Web App (PWA) with a native Android APK for student use.
+    \item \textbf{sociogated} — A standalone campus gate access control system for physical entry management.
+\end{enumerate}
+
+\subsection{Scope}
+
+The system digitises the complete lifecycle of university events — from creation through multi-authority institutional approval, student registration, QR-based ticketing, physical campus gate access, real-time attendance scanning, post-event analytics, and AI-assisted chatbot support.
+
+The platform is designed for deployment at a single university with architecture that supports multi-campus configurations and future multi-university licensing.
+
+\subsection{Definitions and Abbreviations}
+
+\begin{tabularx}{\textwidth}{L{3cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Term} & \textbf{Definition} \\
+\midrule
+SRS & Software Requirements Specification \\
+PWA & Progressive Web Application — a web app installable on mobile devices \\
+APK & Android Package Kit — native Android installation file \\
+HOD & Head of Department \\
+CFO & Chief Financial Officer \\
+CSO & Chief Security Officer \\
+QR & Quick Response code — 2D barcode used for ticketing and access \\
+JWT & JSON Web Token — used for server-side session authentication \\
+RBAC & Role-Based Access Control \\
+API & Application Programming Interface \\
+REST & Representational State Transfer — architectural style for APIs \\
+OTP & One-Time Password \\
+KPI & Key Performance Indicator \\
+XLSX & Microsoft Excel file format \\
+PDF & Portable Document Format \\
+CRUD & Create, Read, Update, Delete \\
+SSO & Single Sign-On \\
+\bottomrule
+\end{tabularx}
+
+\subsection{System Overview}
+
+\begin{reqbox}
+\textbf{The system must be live, fully functional, and deployed to production URLs at the time of handover. The deliverable is not source code alone — it is a running, tested, production-deployed platform.}
+\end{reqbox}
+
+\vspace{0.3cm}
+
+The SOCIO platform serves the following primary workflows:
+
+\begin{enumerate}[leftmargin=*]
+    \item An organiser creates an event or fest with detailed information.
+    \item The event is submitted through a multi-stage institutional approval chain (HOD → Dean → optional CFO → optional Finance). Parallel non-blocking requests for venue, catering, stalls, and IT support are also created.
+    \item Once all blocking approvals are granted, the event is published and visible to students.
+    \item Students register for events via the web platform or mobile app. Team registrations are supported. Each registration generates a unique, cryptographically signed QR code.
+    \item On the day of the event, volunteers scan student QR codes using the mobile app or web scanner to mark attendance. Scans are recorded in real time.
+    \item For external visitors (non-students), the SOCIO Gated system manages physical campus entry — collecting visitor data, generating colour-coded QR access passes, and verifying them at the gate.
+    \item Post-event, organisers dispatch feedback forms to all registered participants via push notification. Analytics dashboards provide institution-wide and department-level insights.
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Overall System Architecture}
+
+\subsection{Architecture Overview}
+
+The platform consists of three independently deployable products sharing a common authentication layer:
+
+\begin{tabularx}{\textwidth}{L{3cm} L{3cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Product} & \textbf{Type} & \textbf{Description} \\
+\midrule
+socioweb & Web Application & Next.js frontend + Node.js/Express backend API. Serves all web users. \\
+socioapp & Mobile App & Next.js PWA wrapped in Capacitor for Android APK generation. Student-facing. \\
+sociogated & Web Application & Separate Next.js application with its own database. Gate security management. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Required Technology Stack}
+
+\begin{warnbox}
+\textbf{The vendor must use the exact technology stack specified below.} Substitutions are not acceptable unless explicitly approved in writing. The existing platform is built on these technologies and any future integration, update, or migration depends on stack consistency.
+\end{warnbox}
+
+\vspace{0.4cm}
+
+\subsubsection{socioweb — Frontend}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Technology} & \textbf{Specification} \\
+\midrule
+Framework & Next.js 15 with App Router \\
+UI Library & React 19 \\
+Language & TypeScript (strict mode) \\
+Styling & Tailwind CSS 4 \\
+Form Handling & React Hook Form with Zod schema validation \\
+Charts & Recharts (AreaChart, BarChart, PieChart, FunnelChart) \\
+Animation & GSAP with ScrollTrigger plugin + Framer Motion \\
+QR Generation & \texttt{qrcode} npm package (server-side) \\
+QR Scanning & \texttt{qr-scanner} npm package (client-side) \\
+Excel Export & ExcelJS with custom themed XLSX output \\
+Error Tracking & Sentry SDK \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{socioweb — Backend}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Technology} & \textbf{Specification} \\
+\midrule
+Runtime & Node.js with ES Modules (\texttt{type: "module"} in package.json) \\
+Framework & Express 5 \\
+Database Client & \texttt{@supabase/supabase-js} v2 \\
+Authentication & Supabase Auth + JWT (server-side verification on every protected route) \\
+Email & Resend SDK (\texttt{resend} npm package) \\
+Push (Browser) & Web Push API (\texttt{web-push} npm package) \\
+Push (Mobile) & OneSignal REST API \\
+AI — Primary & OpenAI API (\texttt{openai} npm package) — model: \texttt{gpt-4o-mini} \\
+AI — Fallback & Google Gemini API (\texttt{@google/generative-ai}) — model: Gemini Flash \\
+File Uploads & Multer (middleware) + Supabase Storage \\
+Process Manager & PM2 \\
+Reverse Proxy & nginx \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{socioapp — Mobile}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Technology} & \textbf{Specification} \\
+\midrule
+Framework & Next.js 16 with App Router, React 19, TypeScript, Tailwind CSS 4 \\
+Mobile Runtime & Capacitor 8 — produces Android APK (\texttt{com.socioapp.mobile}) \\
+Data Fetching & SWR with caching, revalidation, and TTL strategy \\
+Native QR Scan & \texttt{@capacitor-mlkit/barcode-scanning} (Android hardware-accelerated) \\
+Web QR Scan & \texttt{@zxing/browser} + \texttt{@zxing/library} (PWA/browser fallback) \\
+Haptics & \texttt{@capacitor/haptics} \\
+Motion/Shake & \texttt{@capacitor/motion} (accelerometer — shake-to-scan) \\
+Screen Lock & \texttt{@capacitor/screen-orientation} \\
+Share & \texttt{@capacitor/share} \\
+In-App Browser & \texttt{@capacitor/browser} (OAuth native flow) \\
+Push Notifications & OneSignal Cordova plugin \\
+PDF Generation & jsPDF \\
+Animation & Framer Motion \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{sociogated}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Technology} & \textbf{Specification} \\
+\midrule
+Framework & Next.js 14 with Pages Router, TypeScript, Tailwind CSS, Framer Motion \\
+Database & Supabase (PostgreSQL) — \textbf{separate, isolated Supabase project} from socioweb \\
+Authentication & Custom username/password login (no Google OAuth); role-based sessions \\
+QR Generation & \texttt{qrcode} npm package \\
+PDF Passes & jsPDF — branded visitor access passes \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{Shared Infrastructure}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Service} & \textbf{Specification} \\
+\midrule
+Database & Supabase (PostgreSQL) — two separate projects: one for socioweb+socioapp, one for sociogated \\
+Auth Provider & Supabase Auth with Google OAuth 2.0 SSO (for socioweb + socioapp) \\
+File Storage & Supabase Storage (for event images, documents) \\
+Frontend Deploy & Vercel (socioweb client + socioapp) \\
+Backend Deploy & Linux VPS with nginx + PM2 (socioweb Express server) \\
+Error Monitoring & Sentry (socioweb) \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Deployment Requirements}
+
+\begin{itemize}[leftmargin=*]
+    \item socioweb frontend: Deployed to Vercel with custom domain
+    \item socioweb backend (Express): Deployed to a Linux VPS behind nginx as a reverse proxy, managed by PM2
+    \item socioapp: Deployed to Vercel; Android APK (\texttt{.apk} file) built via Capacitor and distributed directly (not via Play Store)
+    \item sociogated: Deployed to Vercel with custom domain
+    \item Three live production domains required at handover, each with HTTPS
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{User Roles and Access Control}
+
+\subsection{Role Overview}
+
+The platform implements Role-Based Access Control (RBAC) with 12 distinct user roles. Role assignments are time-bound — every role has an optional expiry date that is enforced server-side on every authenticated API request.
+
+\begin{longtable}{L{3.5cm} L{2.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Role} & \textbf{Product(s)} & \textbf{Description and Capabilities} \\
+\midrule
+\endhead
+\textbf{Student} & socioweb, socioapp & Default role for all registered users. Can discover events/fests/clubs, register for events (individual and team), view digital tickets, submit feedback, view attendance status, and access their profile with all registrations and QR codes. \\
+\addlinespace
+\textbf{Organiser} & socioweb, socioapp & Can create, edit, publish, archive, and soft-delete events, fests, and clubs. Manages approval submissions. Books venues, catering, and stalls. Assigns volunteers. Sends event reminders. Exports participant data to Excel. Manages club members and roles. \\
+\addlinespace
+\textbf{Volunteer} & socioweb, socioapp & Assigned to specific events by an organiser. Can view their assigned events and access the QR attendance scanner for those events only. Cannot see events they are not assigned to. \\
+\addlinespace
+\textbf{HOD} & socioweb & Head of Department. Sees a queue of events pending HOD approval from their department. Can approve, reject, or request revision with notes. Blocking stage — event cannot proceed to Dean without HOD approval. Has access to HOD Analytics Dashboard. \\
+\addlinespace
+\textbf{Dean} & socioweb & Institution-level approval authority. Sees all events pending Dean approval (across all departments). Can approve, reject, or return with notes. Blocking stage. Has access to Dean Analytics Dashboard. \\
+\addlinespace
+\textbf{CFO} & socioweb & Financial approval authority. Sees events pending CFO approval with full budget line item breakdown. Optional stage — can be enabled or skipped per event. \\
+\addlinespace
+\textbf{Finance / Accounts} & socioweb & Finance office sign-off. Final optional financial approval stage. \\
+\addlinespace
+\textbf{Venue Manager} & socioweb & Manages venue booking requests. Can approve, reject, or return for revision with notes. Overlap detection is shown. \\
+\addlinespace
+\textbf{Catering Vendor} & socioweb & Manages catering orders linked to events. Can accept or decline individual orders. \\
+\addlinespace
+\textbf{Stalls Coordinator} & socioweb & Manages stall booking requests linked to events and fests. \\
+\addlinespace
+\textbf{IT Support} & socioweb & Manages IT request queue. Can approve, decline, or return requests. \\
+\addlinespace
+\textbf{Master Admin} & socioweb & Full platform control. User management (CRUD + role assignment with expiry), event and fest management override, broadcast push notifications, full analytics access, data explorer, approvals manager. \\
+\midrule
+\textbf{Organiser} (Gated) & sociogated & Submit event access requests, manage visitor registrations, generate bulk QR passes. \\
+\textbf{CSO} (Gated) & sociogated & Approve or reject event access requests. View notifications. Manage all active events. \\
+\textbf{Guard} (Gated) & sociogated & Scan visitor QR codes at the entry gate. Verify identity against colour-coded pass type. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Role Assignment Rules}
+
+\begin{itemize}[leftmargin=*]
+    \item All roles except Student are assigned by the Master Admin via the \texttt{/masteradmin} dashboard.
+    \item Each role assignment includes an optional expiry date stored in the database.
+    \item The backend must verify role expiry on every authenticated API request — an expired role must be treated as if the role does not exist.
+    \item A user can hold multiple roles simultaneously (e.g.\ a person can be both Organiser and HOD).
+    \item Students are automatically assigned the Student role on first login via Google OAuth.
+    \item sociogated user accounts are created manually by a system administrator (no self-registration). Accounts in sociogated are completely separate from socioweb/socioapp accounts.
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{SOCIOWEB — Functional Requirements}
+
+\subsection{Authentication System}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Requirement} & \textbf{Description} \\
+\midrule
+Google OAuth SSO & Users sign in exclusively via Google OAuth 2.0. No username/password login for regular users. \\
+OAuth Callback & A callback route handles the OAuth redirect, exchanges the code for a session, and resolves the user's role. \\
+Popup OAuth Flow & The system must support a popup-based OAuth flow (for scenarios where a full-page redirect is undesirable) in addition to the standard redirect flow. \\
+Post-Login Verification & After OAuth, the system checks whether the user exists in the database. If not, creates a new user record with the Student role. Resolves and returns the full role set for the session. \\
+JWT Verification & Every protected API endpoint must verify the JWT server-side using Supabase Auth. Expired or invalid tokens must return HTTP 401. \\
+Role Expiry Enforcement & The backend middleware must check role expiry timestamps on every protected request. \\
+Session Management & Sessions are managed by Supabase Auth. The \texttt{/api/me} endpoint returns the current authenticated user with their full role set. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Event Management}
+
+\subsubsection{Event Creation and Editing}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Requirement} & \textbf{Description} \\
+\midrule
+Event Creation Wizard & A multi-step form for creating an event. Fields: title, description (rich text), category, department, campus, date/time (start and end), venue (optional, linked from venue table), capacity (max registrations), registration deadline, image upload, prizes, rules, schedule (multiple time slots), organiser contact, WhatsApp group link, team settings (min/max team size), outsider eligibility flag, custom registration fields. \\
+Custom Fields & Organisers can add custom fields to the registration form (text, number, dropdown, checkbox types). These fields are answered by students at registration time. \\
+Event Draft Mode & Newly created events are in \texttt{draft = true} state. They are not visible to students until all blocking approvals are complete and draft is set to false. \\
+Event Editing & Organisers can edit all fields of their own events before and after approval (with re-approval triggered on significant changes). \\
+Event Publishing & Events are automatically published (\texttt{draft = false}) once all blocking approval stages are satisfied. \\
+Event Archival & Organisers can archive their own events. Archived events are hidden from discovery listings but accessible via direct URL and organiser dashboard. \\
+Soft Delete & Events can be soft-deleted (flagged, not permanently removed from the database). \\
+Volunteer Assignment & Organisers can assign registered users to an event as volunteers from within the event management interface. Assigned volunteers appear in the volunteer's dashboard. \\
+Gated Sync & When an event or fest is created with the \texttt{outsider\_eligible} flag or similar, it must be automatically pushed to the sociogated database via a sync module (\texttt{gatedSync.js}). \\
+Fest-Event Linkage & Events can be linked to a parent Fest. Linked events inherit the fest's approval status — they bypass the HOD and Dean approval stages. \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{Fest Management}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Requirement} & \textbf{Description} \\
+\midrule
+Fest Creation & Multi-step form similar to event creation. Fields: title, description, category, department, campus, start/end dates, banner image, sponsors (name + logo), social links (Instagram, LinkedIn, etc.), FAQ items, timeline entries. \\
+Sub-Event Linking & Any event can be linked to a fest, making it a sub-event. Sub-events appear on the fest detail page. \\
+Fest Approval & Fests go through the same HOD → Dean approval chain as standalone events. \\
+Approval Inheritance & Sub-events linked to an approved fest automatically bypass HOD and Dean approval stages — they go directly to published. \\
+Fest Gated Sync & Fests are also synced to the sociogated system. \\
+Fest Archival & Organisers can archive fests. \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{Club Management}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Requirement} & \textbf{Description} \\
+\midrule
+Club Creation & Organisers can create clubs. Fields: name, description, category, department, image, roles within the club. \\
+Club Discovery & Clubs are listed on a public discovery page filterable by category. \\
+Club Detail Page & Shows club description, member list, and available roles. \\
+Role Applications & Students can apply for roles within a club from the club detail page. \\
+Club Editor & A dedicated page for the club manager (organiser who created the club) to manage membership and assign/revoke roles. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Multi-Stage Approval Workflow Engine}
+
+\begin{reqbox}
+\textbf{This is a core system feature.} The approval engine must be implemented exactly as specified. It controls when events become visible to students and governs the entire institutional review process.
+\end{reqbox}
+
+\vspace{0.4cm}
+
+\subsubsection{Approval Stages}
+
+\begin{tabularx}{\textwidth}{L{3cm} C{2cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Stage} & \textbf{Type} & \textbf{Description} \\
+\midrule
+Stage 1: HOD & \textbf{Blocking} & Must be approved before Stage 2. Scoped to events in the HOD's department. \\
+Stage 2: Dean & \textbf{Blocking} & Must be approved before the event is published. Institution-wide. \\
+Stage 3: CFO & Optional & Financial approval. Enabled on a per-event basis. Non-blocking to publication if not required. \\
+Stage 4: Finance/Accounts & Optional & Final financial sign-off. Same conditions as CFO. \\
+Venue Booking & Non-blocking & Parallel to the main approval chain. Does not prevent event publication. \\
+Catering & Non-blocking & Parallel. \\
+Stall Booking & Non-blocking & Parallel. \\
+IT Request & Non-blocking & Parallel. \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3cm}
+Once \textbf{both blocking stages} (HOD and Dean) are approved (or if the event is a sub-event of an approved fest), the event is automatically set to \texttt{draft = false} and becomes publicly visible.
+
+\subsubsection{Approval Engine Requirements}
+
+\begin{itemize}[leftmargin=*]
+    \item Each stage records: approver email, timestamp, action (approved / rejected / returned), and optional revision notes.
+    \item Full audit log per event — all approval actions are persisted and viewable.
+    \item Each role-holder (HOD, Dean, CFO, Accounts) sees only the queue of events assigned to their stage and role.
+    \item An event returned for revision goes back to the organiser — the relevant stage is reset to pending.
+    \item Budget line items are attached to events: each line item has a description, quantity, and unit price. CFO and Finance dashboards show the full budget breakdown per event.
+    \item Fest sub-events must skip Stages 1 and 2 automatically when the parent fest is already approved.
+    \item The \texttt{/approvals/[itemId]} page shows the stage-by-stage breakdown for a specific event (visible to the organiser and relevant approvers).
+\end{itemize}
+
+\subsection{Student Registration System}
+
+\subsubsection{Registration Flow}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Requirement} & \textbf{Description} \\
+\midrule
+Individual Registration & A student can register individually for any event they are eligible for. \\
+Team Registration & If the event has team settings enabled, a student can register as a team leader with a specified team size (within min/max bounds). Teammate details are collected. \\
+Teammate Auto-Provisioning & For team registrations, if a listed teammate is not yet registered on the platform, the system creates a placeholder user record and links them to the registration. \\
+Custom Field Responses & The registration form presents all custom fields defined by the organiser. Responses are stored per registration. \\
+Capacity Enforcement & The system must enforce the event's maximum capacity at registration time. Registrations must be rejected once capacity is reached. Race conditions must be handled (two students cannot both take the last slot). \\
+Department/Campus Filtering & Event registration can be restricted to specific departments or campuses. The registration form must validate the student's department/campus against these restrictions. \\
+Outsider Handling & If an event accepts outsiders (non-university people), the registration system handles a separate outsider registration path. Outsider registrations are automatically synced to sociogated as visitor records. \\
+QR Code Issuance & Upon successful registration, the system generates a unique, cryptographically signed QR code for the registration. The QR code is stored server-side and linked to the registration record. \\
+Registration Cancellation & Students can cancel their own registration from their profile page, subject to any deadline. \\
+\bottomrule
+\end{tabularx}
+
+\subsubsection{Digital Ticket}
+
+\begin{itemize}[leftmargin=*]
+    \item Each registration has a dedicated ticket page (\texttt{/event/[id]/ticket/[regId]}) showing: event details, student name, registration ID, and the QR code.
+    \item The ticket page must have a print layout (CSS print styles) so it can be printed cleanly.
+    \item The ticket page must include a ``Add to Google Calendar'' button that generates a Google Calendar event link pre-populated with the event details.
+    \item QR codes must be unique per registration — not per event. Two students attending the same event have different QR codes.
+    \item The QR code payload must be cryptographically signed (e.g.\ HMAC) so it cannot be forged.
+\end{itemize}
+
+\subsection{QR Attendance Scanning System}
+
+\begin{tabularx}{\textwidth}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Requirement} & \textbf{Description} \\
+\midrule
+Volunteer Scanner & A volunteer assigned to an event can open the scanner page (\texttt{/volunteer/scanner/[eventId]}) and scan student QR codes using the device camera. \\
+QR Verification & On scan, the system sends the QR payload to the backend for cryptographic verification. The backend checks: (1) QR signature is valid, (2) QR belongs to this event, (3) student is registered for this event, (4) student has not already been marked present. \\
+Attendance Upsert & On successful scan, an attendance record is created or updated for that registration. \\
+Per-Volunteer Rate Limiting & The backend must enforce a rate limit on the attendance scan endpoint per volunteer (e.g.\ max N scans per minute) to prevent abuse. \\
+Real-Time Notification & When a student is scanned in, a push notification is sent to the event organiser. \\
+Scan Result Display & The scanner UI must clearly show success (student name, tick, green) or error (red, reason: already scanned, invalid QR, wrong event) after each scan. \\
+Offline Scan Queue (socioapp) & On the mobile app, if the device is offline at scan time, the scan is queued locally. The queue is submitted automatically when connectivity is restored. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Venue, Catering, and Stall Booking Modules}
+
+\subsubsection{Venue Booking}
+
+\begin{itemize}[leftmargin=*]
+    \item The system maintains a list of venues, each with: name, capacity, campus, location description, and available facilities.
+    \item Venues are filtered by campus when displayed to the organiser during booking.
+    \item An organiser can submit a venue booking request linked to an event. The request includes: preferred dates/times, setup requirements, and notes.
+    \item The Venue Manager portal (\texttt{/venue}) shows all pending, approved, and rejected booking requests.
+    \item The backend must detect scheduling conflicts — if a venue is already booked for an overlapping time slot, it must flag this to the Venue Manager.
+    \item The Venue Manager can approve, reject, or return the request for revision with notes.
+    \item Status changes trigger a notification to the organiser.
+\end{itemize}
+
+\subsubsection{Catering Booking}
+
+\begin{itemize}[leftmargin=*]
+    \item Catering vendors are registered in the system by the Master Admin.
+    \item An organiser can submit a catering booking request linked to an event, specifying: expected headcount, menu preferences, and delivery time.
+    \item The Catering Vendor portal (\texttt{/catering}) shows all incoming orders.
+    \item The vendor can accept or decline individual orders.
+    \item Status changes notify the organiser.
+\end{itemize}
+
+\subsubsection{Stall Booking}
+
+\begin{itemize}[leftmargin=*]
+    \item Stall booking requests are linked to events and fests.
+    \item Requests are managed by the Stalls Coordinator portal (\texttt{/stalls}).
+    \item Similar accept/reject flow to catering.
+\end{itemize}
+
+\subsection{Analytics System}
+
+\begin{reqbox}
+\textbf{Three distinct analytics dashboards} must be implemented, each scoped to a different user role and showing different metrics. All charts must use Recharts components as specified.
+\end{reqbox}
+
+\vspace{0.4cm}
+
+\subsubsection{Master Admin Analytics Dashboard (\texttt{/masteradmin} — Analytics Tab)}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{KPI Cards:} Total events, total registrations, total attendance, active students, each with a month-on-month percentage change indicator (positive = green, negative = red).
+    \item \textbf{Date Range Filter:} Presets for Last 30 / 90 / 180 / 365 days.
+    \item \textbf{Area Chart:} Monthly trend of registrations and attendance over the selected date range.
+    \item \textbf{Pie Chart:} Registration breakdown by event category.
+    \item \textbf{Bar Chart:} Registration breakdown by department.
+    \item \textbf{Funnel Chart:} Conversion funnel from events created → registered students → attended students.
+    \item \textbf{Top Events Table:} Top 10 events by registration count, with event name, category, registrations, and attendance rate.
+    \item \textbf{At-Risk Student Detection:} Identify students who registered for events but have low attendance rates (configurable threshold). Displayed as a table.
+    \item \textbf{Engagement Scoring:} A computed score per student based on registration and attendance frequency.
+    \item \textbf{AI-Powered Predictions:} Using the OpenAI integration, generate a short predictive summary of upcoming event performance based on historical data. Displayed as a text card.
+    \item \textbf{Excel Export:} All analytics data exportable to a themed, formatted XLSX file using ExcelJS.
+\end{itemize}
+
+\subsubsection{Data Explorer Dashboard (\texttt{/masteradmin} — Data Explorer Tab)}
+
+\begin{itemize}[leftmargin=*]
+    \item Deep drill-down view with: funnel chart, line chart (trend over time), multiple bar charts, prediction overlay text.
+    \item Date preset selectors (same as main analytics).
+    \item Event-level breakdown: click an event to see its individual registration/attendance funnel.
+\end{itemize}
+
+\subsubsection{HOD Analytics Dashboard (\texttt{/hod})}
+
+\begin{itemize}[leftmargin=*]
+    \item All metrics are scoped to the HOD's department only.
+    \item KPI cards: events in department, total registrations, attendance rate.
+    \item HOD Fest Dashboard: per-fest breakdown showing sub-events, registrations, and attendance for all fests in the department.
+\end{itemize}
+
+\subsubsection{Dean Analytics Dashboard (\texttt{/dean})}
+
+\begin{itemize}[leftmargin=*]
+    \item Institution-wide KPIs (not department-scoped).
+    \item \textbf{Insider vs.\ Outsider split:} Pie chart or bar chart showing the ratio of registered students (insiders) to external visitors (outsiders) per event/period.
+    \item \textbf{Per-department leaderboard:} Departments ranked by event count and registrations.
+    \item \textbf{Per-fest drill-down:} Click a fest to see its detailed statistics.
+    \item \textbf{Feedback Aggregate:} 5 feedback questions averaged per event; aggregate scores displayed.
+    \item \textbf{Monthly trend chart.}
+    \item \textbf{Attendance rate chart.}
+\end{itemize}
+
+\subsection{AI Chatbot}
+
+\begin{itemize}[leftmargin=*]
+    \item A floating chatbot button (ChatbotFab component) is present on all pages of socioweb and socioapp.
+    \item Clicking the button opens a chat interface.
+    \item The chatbot uses OpenAI \texttt{gpt-4o-mini} as the primary model.
+    \item If the OpenAI API fails or rate-limits, the system automatically falls back to Google Gemini Flash — transparently, without any error shown to the user.
+    \item \textbf{Page-context injection:} The chatbot is aware of the current page's content. When a student asks a question, the system injects relevant page data (event details, registration status, etc.) into the prompt context.
+    \item \textbf{Per-user daily rate limiting:} Each user is limited to a configurable number of chatbot messages per day. Exceeding this limit returns a friendly ``You have reached your daily limit'' message, not an error.
+    \item Chat history is maintained within the session (not persisted across sessions).
+\end{itemize}
+
+\subsection{Notification System}
+
+\begin{tabularx}{\textwidth}{L{4.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Requirement} & \textbf{Description} \\
+\midrule
+Browser Push (WebPush) & The system must support Web Push API browser notifications. Users can subscribe/unsubscribe. Subscriptions are stored per user in the database. \\
+Mobile Push (OneSignal) & OneSignal is integrated for mobile push notifications via the socioapp. \\
+Broadcast Notifications & The Master Admin can send a push notification to all subscribed users simultaneously. \\
+Event Reminders & Organisers can dispatch a reminder notification to all registered participants of their event. \\
+Attendance Scan Notification & When a volunteer scans a student QR, a push notification is sent to the event organiser in real time. \\
+Post-Event Feedback Push & After an event ends, the organiser can trigger a push notification to all registered participants containing a link to the feedback form. \\
+Per-User Read State & Each notification has a ``read'' flag per user. The notification bell in the UI shows unread count. Users can mark individual notifications as read or clear all. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Post-Event Feedback System}
+
+\begin{itemize}[leftmargin=*]
+    \item After an event, the organiser can dispatch a feedback form to all registered participants via push notification.
+    \item The feedback form (\texttt{/feedback/[eventId]}) contains a set of rating questions (1--5 scale) plus an optional open text comment.
+    \item Responses are stored per participant per event.
+    \item The organiser can view the aggregated feedback results (\texttt{/feedbacks/[eventId]}).
+    \item The Dean Analytics Dashboard displays a 5-question aggregate score per event.
+\end{itemize}
+
+\subsection{Master Admin Dashboard (\texttt{/masteradmin})}
+
+The Master Admin has a single dashboard with multiple tabs/sections:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{User Management:} Paginated, searchable table of all users. CRUD operations. Role assignment with expiry date for each role. Role revocation.
+    \item \textbf{Event/Fest Control:} View and manage all events and fests on the platform (not just own ones). Can archive, delete, or force-publish any event.
+    \item \textbf{Approvals Manager:} View the complete approval queue for all events across all stages.
+    \item \textbf{Broadcast Notifications:} Form to compose and send a push notification to all subscribed users.
+    \item \textbf{Analytics:} Full Master Admin analytics dashboard (described above).
+    \item \textbf{Data Explorer:} Deep drill-down analytics (described above).
+\end{itemize}
+
+\subsection{Status Check Dashboard (\texttt{/statuscheck})}
+
+An internal dashboard visible only to the Master Admin (or a special role) that:
+
+\begin{itemize}[leftmargin=*]
+    \item Probes all 22+ route groups of the backend API and displays their health status (green/red).
+    \item Load-tests all API endpoints and shows response times.
+    \item Provides a real-time view of system health.
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{SOCIOWEB — Complete Page List}
+
+The following 61 pages must be implemented. Each page is a distinct route in the Next.js App Router.
+
+\subsection{Public / Marketing Pages (19 pages)}
+
+\begin{longtable}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Description and Requirements} \\
+\midrule
+\endhead
+\texttt{/} & Landing page. Animated hero section (GSAP + ScrollTrigger). Platform feature highlights. FAQ accordion. Call-to-action buttons. Must be visually polished — this is the marketing entry point. \\
+\addlinespace
+\texttt{/events} & Event discovery listing. Search bar. Category and department filter chips. Displays all published, non-archived events as cards with image, title, date, category. \\
+\addlinespace
+\texttt{/fests} & Fest discovery listing. Same filter/search pattern as events. \\
+\addlinespace
+\texttt{/clubs} & Club discovery listing. Category filter. \\
+\addlinespace
+\texttt{/event/[id]} & Event detail page. Event banner image. Full description. Schedule (list of time slots). Prizes section. Rules section. Organiser info. WhatsApp group link. Registration CTA button (disabled if not logged in, capacity full, past deadline, or already registered). \\
+\addlinespace
+\texttt{/fest/[id]} & Fest detail page. Banner. Description. Timeline. Sponsors section (logos + names). Social links. FAQ section. Sub-events listing. \\
+\addlinespace
+\texttt{/club/[id]} & Club detail page. Description. Member list with roles. Apply for role button. \\
+\addlinespace
+\texttt{/Discover} & Unified discovery hub. Shows all events, fests, and clubs in one view. Category grid. Image carousel. Search. \\
+\addlinespace
+\texttt{/about} & About page for the SOCIO platform. \\
+\addlinespace
+\texttt{/about/mission} & Mission page. \\
+\addlinespace
+\texttt{/about/story} & Story / origin page. \\
+\addlinespace
+\texttt{/about/team} & Team page listing contributors. \\
+\addlinespace
+\texttt{/pricing} & Tiered pricing page. Four tiers: Free, Basic, Pro, Enterprise. Prices in INR. Feature comparison table. \\
+\addlinespace
+\texttt{/solutions} & Use-case marketing page describing SOCIO for different institution types. \\
+\addlinespace
+\texttt{/faq} & Platform FAQ page. \\
+\addlinespace
+\texttt{/contact} & Contact form page. Submits to backend contact route. \\
+\addlinespace
+\texttt{/support} & General support page. \\
+\addlinespace
+\texttt{/support/careers} & Careers/opportunities page. \\
+\addlinespace
+\texttt{/support/inbox} & Support inbox page (accessible to support staff role or admin). \\
+\addlinespace
+\texttt{/app-download} & App download CTA page. Links to APK download or PWA install instructions. \\
+\addlinespace
+\texttt{/privacy} & Privacy policy page. \\
+\addlinespace
+\texttt{/terms} & Terms of service page. \\
+\addlinespace
+\texttt{/cookies} & Cookie policy page. \\
+\addlinespace
+\texttt{/refunds} & Refund policy page. \\
+\addlinespace
+\texttt{/guide/organiser} & Organiser onboarding guide — step-by-step instructions for using the organiser features. \\
+\addlinespace
+\texttt{/guide/masteradmin} & Master Admin onboarding guide. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Authentication Pages (4 pages)}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Description} \\
+\midrule
+\texttt{/auth} & Google OAuth sign-in page. ``Sign in with Google'' button. Handles both redirect and popup OAuth flows. \\
+\texttt{/auth/callback} & OAuth redirect handler. Processes the OAuth code, establishes the Supabase session, resolves the user role, and redirects to the appropriate dashboard. \\
+\texttt{/auth/verify} & Post-login verification page. Checks whether the user's role is still active. Displays role expiry warnings if applicable. \\
+\texttt{/auth/popup-success} & Success handler for the popup OAuth flow. Closes the popup and signals the parent window. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Student Pages (7 pages)}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Description} \\
+\midrule
+\texttt{/profile} & User profile page. Shows: user info (name, email, avatar, department, campus). All events the user has registered for (with status: upcoming, attended, cancelled). QR code accessible per registration. Cancellation option. \\
+\texttt{/event/[id]/register} & Event registration form. Individual or team mode (based on event settings). Shows all custom fields defined by the organiser. Department/campus validation. Capacity check. Teammate input for team registrations. \\
+\texttt{/event/[id]/ticket/[regId]} & Digital ticket page. Shows event details, student name, registration ID, QR code (large). Print layout CSS. Google Calendar add button. \\
+\texttt{/event/[id]/participants} & Participant list for an event. Accessible to the event organiser and registered participants. \\
+\texttt{/attendance} & Attendance status overview page for the logged-in student. Shows all events and whether they have been marked as attended. \\
+\texttt{/feedback/[eventId]} & Post-event feedback submission form. Rating questions (1--5) + open text. Can only be submitted once per user per event. \\
+\texttt{/feedbacks/[eventId]} & Feedback results view (organiser-only). Shows aggregated ratings per question and all open text responses. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Organiser Pages (14 pages)}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Description} \\
+\midrule
+\texttt{/manage} & Organiser dashboard. Lists all events and fests created by this organiser. Actions per event: edit, archive, delete, export participant list (XLSX), send reminders, book venue/catering/stalls. Shows approval status badge per event. \\
+\texttt{/create/event} & Event creation wizard (multi-step form — as specified in Section 4.2.1). \\
+\texttt{/create/fest} & Fest creation wizard. \\
+\texttt{/create/clubs} & Club creation form. \\
+\texttt{/edit/event/[id]} & Event editing form — same fields as creation, pre-populated. \\
+\texttt{/edit/fest/[id]} & Fest editing form. \\
+\texttt{/edit/clubs/[id]} & Club editing form. \\
+\texttt{/clubeditor/[id]} & Club member and role editor. Shows member list, allows role assignment/revocation per member. \\
+\texttt{/approvals/[itemId]} & Approval detail view. Shows the complete approval chain for an event — each stage with approver name, timestamp, status, and notes. Accessible to the organiser and relevant approvers. \\
+\texttt{/volunteer} & Volunteer's event list. Shows all events the logged-in volunteer is assigned to. \\
+\texttt{/volunteer/scanner/[eventId]} & QR attendance scanner. Camera-based QR scanning. Scan result display. Rate-limited. (See Section 4.5.) \\
+\texttt{/bookvenue} & Venue booking request form. Campus-filtered venue selector. Date/time picker. Notes field. \\
+\texttt{/bookcatering} & Catering booking request form. \\
+\texttt{/bookstall} & Stall booking request form. \\
+\texttt{/statuscheck} & API health check dashboard (internal). \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Role-Gated Staff Portals (9 pages)}
+
+\begin{tabularx}{\textwidth}{L{3cm} L{2.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route} & \textbf{Role} & \textbf{Requirements} \\
+\midrule
+\texttt{/masteradmin} & Master Admin & Full platform control: user management table (paginated, searchable, CRUD + role assignment with expiry), event/fest control, broadcast notification form, analytics, data explorer, approvals manager. \\
+\addlinespace
+\texttt{/dean} & Dean & Approval queue showing all events at Dean stage (pending, reviewed). Dean Analytics Dashboard. \\
+\addlinespace
+\texttt{/hod} & HOD & Approval queue filtered to HOD's department. HOD Analytics Dashboard. HOD Fest Dashboard. \\
+\addlinespace
+\texttt{/cfo} & CFO & Approval queue with full budget item breakdown per event. \\
+\addlinespace
+\texttt{/accounts} & Finance Office & Approval queue for financial sign-off stage. \\
+\addlinespace
+\texttt{/venue} & Venue Manager & Booking queue. Approve/reject/return. Overlap detection display. \\
+\addlinespace
+\texttt{/catering} & Catering Vendor & Order management. Accept/decline. \\
+\addlinespace
+\texttt{/stalls} & Stalls Coordinator & Stall booking management. \\
+\addlinespace
+\texttt{/it} & IT Support & IT request queue. Approve/decline/return. \\
+\bottomrule
+\end{tabularx}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{SOCIOWEB — Backend API Requirements}
+
+\subsection{Overview}
+
+The backend is a standalone Express 5 server (separate from the Next.js frontend) with 24 route files and 130+ REST API endpoints. All protected endpoints must verify the Supabase JWT on every request. All endpoints return JSON. Appropriate HTTP status codes must be used (200, 201, 400, 401, 403, 404, 409, 500).
+
+\subsection{Route File Specifications}
+
+\begin{longtable}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Route File} & \textbf{Required Endpoints and Behaviour} \\
+\midrule
+\endhead
+\texttt{authRoutes.js} & \textbf{POST /login} (session initiation), \textbf{GET /me} (return current user with roles), \textbf{POST /logout}, \textbf{JWT verification middleware} applied to all protected routes. \\
+\addlinespace
+\texttt{userRoutes.js} & \textbf{GET /users} (paginated, searchable list — Master Admin only), \textbf{GET /users/:id}, \textbf{POST /users} (create), \textbf{PUT /users/:id} (update including role assignment with expiry), \textbf{DELETE /users/:id} (soft delete or deactivate). \\
+\addlinespace
+\texttt{eventRoutes\_secured.js} & \textbf{GET /events} (all published events, filterable by category/department/campus), \textbf{GET /events/:id}, \textbf{POST /events} (create — Organiser only), \textbf{PUT /events/:id} (edit — owner or Master Admin), \textbf{DELETE /events/:id} (soft delete), \textbf{POST /events/:id/archive}, \textbf{POST /events/:id/publish}, \textbf{PUT /events/:id/customfields} (update custom registration fields), \textbf{POST /events/:id/volunteers} (assign volunteers), \textbf{POST /events/:id/gatedsync} (trigger sync to sociogated). \\
+\addlinespace
+\texttt{festRoutes.js} & \textbf{GET /fests}, \textbf{GET /fests/:id}, \textbf{POST /fests}, \textbf{PUT /fests/:id}, \textbf{DELETE /fests/:id}, \textbf{POST /fests/:id/archive}, \textbf{POST /fests/:id/linkEvent} (link an event as sub-event), \textbf{POST /fests/:id/gatedsync}. \\
+\addlinespace
+\texttt{registrationRoutes.js} & \textbf{POST /registrations} (create — validates capacity, deadline, custom fields, department/campus restrictions, generates QR code), \textbf{GET /registrations/:id}, \textbf{GET /registrations/event/:eventId} (all registrations for an event — Organiser only), \textbf{GET /registrations/user/:userId} (all registrations for a user), \textbf{DELETE /registrations/:id} (cancel — student cancels own registration), \textbf{GET /registrations/:id/qr} (retrieve QR code for a registration). \\
+\addlinespace
+\texttt{attendanceRoutes.js} & \textbf{POST /attendance/scan} (verify QR payload, validate event match, check for duplicate scan, create attendance record, send push notification to organiser — rate-limited per volunteer), \textbf{GET /attendance/event/:eventId} (attendance list for an event), \textbf{GET /attendance/user/:userId} (attendance history for a user). \\
+\addlinespace
+\texttt{approvalRoutes.js} & \textbf{POST /approvals} (create approval record for an event — triggered on event creation), \textbf{GET /approvals/event/:eventId} (full approval chain for an event), \textbf{PUT /approvals/:id/hod} (HOD action: approve/reject/return + notes), \textbf{PUT /approvals/:id/dean} (Dean action), \textbf{PUT /approvals/:id/cfo} (CFO action), \textbf{PUT /approvals/:id/accounts} (Accounts action), \textbf{GET /approvals/queue/hod} (HOD's pending queue), \textbf{GET /approvals/queue/dean}, \textbf{GET /approvals/queue/cfo}, \textbf{GET /approvals/queue/accounts}. \\
+\addlinespace
+\texttt{venueRoutes.js} & \textbf{GET /venues} (filterable by campus), \textbf{GET /venues/:id}, \textbf{POST /venues} (Master Admin creates venue), \textbf{PUT /venues/:id}, \textbf{DELETE /venues/:id}. \\
+\addlinespace
+\texttt{venueBookingRoutes.js} & \textbf{POST /venuebookings} (organiser submits booking request), \textbf{GET /venuebookings} (Venue Manager sees all — with conflict detection data), \textbf{GET /venuebookings/:id}, \textbf{PUT /venuebookings/:id/approve}, \textbf{PUT /venuebookings/:id/reject}, \textbf{PUT /venuebookings/:id/return} (return for revision with notes). \\
+\addlinespace
+\texttt{cateringRoutes.js} & \textbf{GET /catering/vendors}, \textbf{POST /catering/bookings}, \textbf{GET /catering/bookings} (vendor sees their orders), \textbf{PUT /catering/bookings/:id/accept}, \textbf{PUT /catering/bookings/:id/decline}. \\
+\addlinespace
+\texttt{stallBookingRoutes.js} & \textbf{POST /stallbookings}, \textbf{GET /stallbookings}, \textbf{PUT /stallbookings/:id/approve}, \textbf{PUT /stallbookings/:id/reject}. \\
+\addlinespace
+\texttt{serviceRequestRoutes.js} & \textbf{POST /servicerequests} (IT request — alias for venue booking queue with backward-compat shim), \textbf{GET /servicerequests}, \textbf{PUT /servicerequests/:id/approve}, \textbf{PUT /servicerequests/:id/decline}, \textbf{PUT /servicerequests/:id/return}. \\
+\addlinespace
+\texttt{clubRoutes.js} & \textbf{GET /clubs}, \textbf{GET /clubs/:id}, \textbf{POST /clubs}, \textbf{PUT /clubs/:id}, \textbf{DELETE /clubs/:id}, \textbf{POST /clubs/:id/apply} (student applies for a role), \textbf{GET /clubs/:id/members}, \textbf{PUT /clubs/:id/members/:userId} (assign/revoke role). \\
+\addlinespace
+\texttt{feedbackRoutes.js} & \textbf{POST /feedback} (student submits feedback — one submission per user per event enforced), \textbf{GET /feedback/event/:eventId} (organiser views results), \textbf{POST /feedback/notify/:eventId} (organiser dispatches push notification to participants). \\
+\addlinespace
+\texttt{analyticsRoutes.js} & Master Admin analytics endpoints: \textbf{GET /analytics/overview} (KPI cards with MoM change), \textbf{GET /analytics/monthly} (monthly trend data), \textbf{GET /analytics/categories} (breakdown by category), \textbf{GET /analytics/departments} (breakdown by department), \textbf{GET /analytics/funnel} (registration-to-attendance funnel), \textbf{GET /analytics/topevents}, \textbf{GET /analytics/atrisk} (at-risk students), \textbf{GET /analytics/prediction} (AI-generated prediction — calls OpenAI), \textbf{GET /analytics/export} (XLSX export). All endpoints accept a \texttt{?days=30/90/180/365} query parameter. \\
+\addlinespace
+\texttt{hodAnalyticsRoutes.js} & HOD-scoped analytics (filtered by department): \textbf{GET /analytics/hod/overview}, \textbf{GET /analytics/hod/fests}. \\
+\addlinespace
+\texttt{deanAnalyticsRoutes.js} & Dean analytics: \textbf{GET /analytics/dean/overview}, \textbf{GET /analytics/dean/insideroutsider}, \textbf{GET /analytics/dean/departments}, \textbf{GET /analytics/dean/fests/:festId}, \textbf{GET /analytics/dean/feedback}, \textbf{GET /analytics/dean/monthly}, \textbf{GET /analytics/dean/attendance}. \\
+\addlinespace
+\texttt{reportRoutes.js} & \textbf{GET /reports/event/:eventId} (generate and download a full event report as XLSX — registrations, attendance, feedback). \\
+\addlinespace
+\texttt{notificationRoutes.js} & \textbf{POST /notifications/subscribe} (save WebPush subscription), \textbf{DELETE /notifications/subscribe} (unsubscribe), \textbf{POST /notifications/subscribe/onesignal} (save OneSignal player ID), \textbf{POST /notifications/broadcast} (Master Admin sends to all users), \textbf{GET /notifications/:userId} (user's notification list), \textbf{PUT /notifications/:id/read} (mark as read), \textbf{DELETE /notifications/clear/:userId} (clear all for user). \\
+\addlinespace
+\texttt{chatRoutes.js} & \textbf{POST /chat} (authenticated user sends a message; system calls OpenAI GPT-4o-mini with page context injection; falls back to Gemini Flash on failure; enforces daily rate limit per user; returns AI response). \\
+\addlinespace
+\texttt{volunteerRoutes.js} & \textbf{GET /volunteer/events} (list of events the logged-in volunteer is assigned to), \textbf{GET /volunteer/events/:eventId/validate} (check that this volunteer is authorised for this event before allowing scanner access). \\
+\addlinespace
+\texttt{uploadRoutes.js} & \textbf{POST /upload/image} (Multer upload + store to Supabase Storage, return public URL). \\
+\addlinespace
+\texttt{contactRoutes.js} & \textbf{POST /contact} (contact form submission — stored in DB and/or emailed via Resend). \\
+\addlinespace
+\texttt{statuscheckRoutes.js} & \textbf{GET /statuscheck/health} (probe all route groups, return health matrix), \textbf{GET /statuscheck/loadtest} (run lightweight load test on all endpoints, return response times). \\
+\bottomrule
+\end{longtable}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{SOCIOAPP — Functional Requirements}
+
+\subsection{Overview}
+
+socioapp is a mobile-first application targeting students. It is built as a Next.js PWA and packaged as a native Android APK using Capacitor 8. The APK package ID is \texttt{com.socioapp.mobile}. The APK must be a working, installable file delivered at handover (minimum 40MB, typical 46MB).
+
+\subsection{Authentication}
+
+\begin{itemize}[leftmargin=*]
+    \item Sign-in via Google OAuth, handled through a web popup flow on PWA and via \texttt{@capacitor/browser} in-app browser on the native Android app.
+    \item OAuth callback must handle the native deep-link on Android (custom URL scheme registered in the Capacitor config).
+    \item Session is stored in localStorage (not cookies) to persist across PWA sessions without re-authentication.
+\end{itemize}
+
+\subsection{Data Fetching}
+
+All data fetching in socioapp must use \textbf{SWR} with appropriate caching, revalidation, and TTL strategies. This is not optional — SWR is required for correct offline behaviour and performance.
+
+\subsection{Mobile Screens — 20 Screens}
+
+\begin{longtable}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Screen / Route} & \textbf{Requirements} \\
+\midrule
+\endhead
+\textbf{Home} \texttt{/} & Personalised home screen. Shows: (1) upcoming events the student is registered for, (2) a quick action grid (icons/buttons for: Discover, My Registrations, Fests, Clubs, Volunteer Scanner, Catering), (3) active fest highlight card(s). Data fetched with SWR. \\
+\addlinespace
+\textbf{Discover} \texttt{/discover} & Unified search with category filter chips at the top. Paginated event and fest results below. Real-time search filtering. \\
+\addlinespace
+\textbf{Events} \texttt{/events} & Events listing. Filter chips: Open (registration open), Past, All. Search bar. SWR caching. \\
+\addlinespace
+\textbf{Fests} \texttt{/fests} & Fests listing with search. \\
+\addlinespace
+\textbf{Clubs} \texttt{/clubs} & Clubs listing with category filter. \\
+\addlinespace
+\textbf{Event Detail} \texttt{/event/[id]} & Event detail screen. Shows: banner image, title, description, schedule, prizes, rules, organiser info. Registration CTA button (disabled if not eligible, capacity full, or already registered). Navigates to registration screen on tap. \\
+\addlinespace
+\textbf{Event Register} \texttt{/event/[id]/register} & Registration form — same logic as socioweb registration (individual/team, custom fields, capacity enforcement). Adapted for mobile UI. \\
+\addlinespace
+\textbf{Fest Detail} \texttt{/fest/[id]} & Fest details. Description, sub-event listing. \\
+\addlinespace
+\textbf{Club Detail} \texttt{/club/[id]} & Club info. Role applications. \\
+\addlinespace
+\textbf{Profile} \texttt{/profile} & User profile. Sections: registered events (with QR code per registration accessible by tap), volunteer events list, catering orders (if catering role), attendance status overview, settings link. \\
+\addlinespace
+\textbf{Settings} \texttt{/profile/settings} & Account settings: display name, notification preferences, logout. \\
+\addlinespace
+\textbf{Notifications} \texttt{/notifications} & Notification list. Three types displayed differently: event notification, broadcast, system. Mark individual as read. Clear all button. \\
+\addlinespace
+\textbf{Volunteer Events} \texttt{/volunteer} & Volunteer's assigned event list (events the logged-in user is assigned to volunteer for). \\
+\addlinespace
+\textbf{QR Scanner} \texttt{/volunteer/scanner/[eventId]} & Full attendance scanner screen. Uses native MLKit on Android; ZXing on PWA/web. Screen orientation locked to landscape during scanning. Haptic feedback: distinct vibration pattern for successful scan vs.\ error scan. Toast message shown per scan (student name + result). Scan history log (last N scans shown). Shake-to-scan gesture: shaking the device opens the scanner. Offline scan queue (described in Section 4.5). \\
+\addlinespace
+\textbf{Catering} \texttt{/catering} & Catering order view for users with the Catering Vendor role. Shows incoming orders, accept/decline actions. \\
+\addlinespace
+\textbf{Auth} \texttt{/auth} & Sign-in screen. ``Sign in with Google'' button. Handles both web popup and native in-app browser OAuth flows. \\
+\addlinespace
+\textbf{Auth Callback} \texttt{/auth/callback} & OAuth handler. Processes the code from the OAuth redirect. Handles native deep-link (\texttt{com.socioapp.mobile://auth/callback}). \\
+\addlinespace
+\textbf{Offline} \texttt{/offline} & Offline fallback page served by the PWA service worker when the device has no internet and the requested resource is not cached. Shows a friendly ``You are offline'' message. \\
+\addlinespace
+\textbf{Privacy} \texttt{/privacy} & Privacy policy page (static). \\
+\addlinespace
+\textbf{Terms} \texttt{/terms} & Terms of service page (static). \\
+\bottomrule
+\end{longtable}
+
+\subsection{Native and PWA Features}
+
+\begin{tabularx}{\textwidth}{L{4.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Feature} & \textbf{Specification} \\
+\midrule
+Shake-to-Scan & Using \texttt{@capacitor/motion}, detect a device shake gesture and automatically navigate to/open the QR scanner. Threshold must be configurable. \\
+Haptic Feedback & On successful QR scan: a short, sharp haptic pulse. On failed/duplicate scan: a longer, double haptic pattern. Uses \texttt{@capacitor/haptics}. \\
+Offline QR Queue & When a QR scan is performed with no internet connection, the scan payload is stored in localStorage. On reconnect (detected via browser online event), the queue is automatically flushed — all queued scans are submitted to the backend in order. \\
+Native MLKit Scanning & On Android, barcode scanning must use \texttt{@capacitor-mlkit/barcode-scanning} for hardware-accelerated scanning. This is faster and more accurate than camera-based web scanning. \\
+ZXing Fallback & On PWA/web (non-Android), barcode scanning falls back to \texttt{@zxing/browser} + \texttt{@zxing/library}. \\
+Orientation Lock & The scanner screen (\texttt{/volunteer/scanner/[eventId]}) must lock the screen orientation to landscape mode using \texttt{@capacitor/screen-orientation}. It is released when navigating away. \\
+Desktop Gate & A component that detects desktop browser access and blocks or redirects non-mobile users away from mobile-specific pages (scanner, etc.). \\
+PWA Install Prompt & A smart, context-aware ``Add to Home Screen'' prompt that appears after the user has visited the app a certain number of times and has not already installed it. \\
+Smart Notification Prompt & A context-aware push notification permission request. Must not show the browser default permission dialog immediately — show a custom prompt first, then request permission only if the user agrees. \\
+Session Persistence & localStorage-based session restoration. On app launch, if a valid session token exists in localStorage, the user is logged in without re-authentication. \\
+Onboarding Overlay & On the first launch of the native Android app, show a full-screen onboarding overlay that walks the user through key features. Marked complete in localStorage so it does not re-appear. \\
+Campus Selector & On discovery screens, a campus selector allows multi-campus institutions to filter events by campus. \\
+Android APK & The final deliverable includes a working \texttt{.apk} file (debug or release build). Package ID: \texttt{com.socioapp.mobile}. \\
+\bottomrule
+\end{tabularx}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{SOCIOGATED — Functional Requirements}
+
+\subsection{Overview}
+
+SOCIO Gated is a completely standalone web application managing physical campus entry for events. It uses its own isolated Supabase project (separate database from socioweb) for security isolation. It communicates with socioweb via a bi-directional sync module.
+
+\subsection{Authentication}
+
+sociogated uses a \textbf{custom username/password login system} — no Google OAuth. User accounts are created by a system administrator directly in the database. Three roles exist: Organiser, CSO, Guard.
+
+\subsection{Pages — 8 Pages}
+
+\begin{tabularx}{\textwidth}{L{5cm} L{2.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Page / Route} & \textbf{Role} & \textbf{Requirements} \\
+\midrule
+\texttt{/login} & All & Username + password login form. Authenticates against the sociogated database. Returns a role-scoped session. Redirects to the correct portal based on role. \\
+\addlinespace
+\texttt{/organiser} & Organiser & Dashboard showing: (1) list of events this organiser has requested access for, (2) button to submit a new event access request, (3) for each approved event: button to manage visitor registrations, generate bulk QR passes, view visitors list. \\
+\addlinespace
+\texttt{/cso} & CSO & Dashboard showing: (1) pending event access requests with approve/reject actions, (2) all active/approved events, (3) notification bell for new requests, (4) ability to view all visitors for any event. \\
+\addlinespace
+\texttt{/guard} & Guard & Gate scanning screen. List of currently active events. On selecting an event: camera opens for QR scanning. On scan: show visitor name, pass colour, photo (if available), and entry status (valid / already entered / invalid QR). Approve or reject entry. \\
+\addlinespace
+\texttt{/visitor-register} & Public (no login) & Pre-event visitor self-registration form. Fields: full name, email, phone, institution/company, event they are visiting, ID type and number. On submission: generates a QR pass and sends it to the visitor's email. \\
+\addlinespace
+\texttt{/on-spot-registration} & Organiser / Guard & Walk-up registration form for visitors arriving at the gate without pre-registration. Same fields as /visitor-register. Immediately generates and prints/displays the QR pass. \\
+\addlinespace
+\texttt{/retrieve-qr} & Public (no login) & Visitors who have lost their QR pass can retrieve it by entering their registered email or phone number. The system resends the QR pass to the email on file. \\
+\addlinespace
+\texttt{/verify} & Guard & Manual identity verification fallback. For visitors whose QR code cannot be scanned (damaged, phone dead), a guard can manually look up a visitor by name/phone and verify their entry. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{API Endpoints — 11 Endpoints}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Endpoint} & \textbf{Description} \\
+\midrule
+\texttt{POST /api/login} & Authenticate username/password. Return role-scoped session token. \\
+\texttt{GET /api/event-requests} & List all event access requests (CSO view). \\
+\texttt{POST /api/event-requests} & Submit a new event access request (Organiser). \\
+\texttt{POST /api/cso/approve-event} & CSO approves an event request. Creates the active event row. \\
+\texttt{GET /api/cso/notifications} & CSO notification feed for new event requests. \\
+\texttt{POST /api/registerVisitor} & Register a visitor, generate their QR pass, send QR to their email via Resend (or similar). \\
+\texttt{POST /api/registerOnSpotVisitor} & On-the-spot gate registration (walk-up). \\
+\texttt{POST /api/verifyVisitor} & Verify a visitor QR code at the entry gate. Check validity, event match, duplicate entry. Return result to guard UI. \\
+\texttt{PUT /api/updateStatus} & Update a visitor's status (e.g.\ revoke entry pass). \\
+\texttt{POST /api/send-qr-email} & Resend a QR pass to a visitor's email (for /retrieve-qr). \\
+\texttt{GET /api/visitors} & List all visitors for a specific event (Organiser/CSO). \\
+\texttt{GET /api/approved-events} & List all CSO-approved active events. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Visitor Pass Colour System}
+
+QR passes must be colour-coded at generation time. The colour is encoded into the QR payload and/or the PDF pass design:
+
+\begin{tabularx}{\textwidth}{L{3cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Colour} & \textbf{Visitor Type} \\
+\midrule
+\textbf{Blue} & Regular student / general visitor \\
+\textbf{Amber} & Speaker / resource person \\
+\textbf{Maroon} & VIP / distinguished guest \\
+\bottomrule
+\end{tabularx}
+
+The guard's verification screen must prominently display the pass colour so the guard can visually match it to the printed colour-coded badge.
+
+\subsection{PDF Pass Generation}
+
+\begin{itemize}[leftmargin=*]
+    \item Each visitor receives a PDF pass generated using jsPDF.
+    \item The pass must include: visitor name, event name, event date, institution/company, pass type (colour label), QR code, and a unique pass ID.
+    \item The PDF is delivered to the visitor by email on pre-registration, or displayed on-screen for on-spot registration.
+    \item Organisers can trigger bulk PDF generation for all registered visitors of an event.
+\end{itemize}
+
+\subsection{Bi-Directional Sync with SOCIO Web}
+
+A sync module (\texttt{gatedSync.js}) in the socioweb backend must maintain the following synchronisation:
+
+\begin{enumerate}[leftmargin=*]
+    \item When an event or fest is created in socioweb with the outsider/gated flag, it is automatically inserted into the sociogated \texttt{event\_requests} table.
+    \item When an outsider registration is created in socioweb (a non-university person registers for an event), a corresponding visitor record is automatically created in the sociogated \texttt{visitors} table.
+    \item Organiser accounts in sociogated are auto-provisioned from socioweb organiser email addresses — when a new organiser is assigned in socioweb, they can log into sociogated with a system-generated credential.
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Database Requirements}
+
+\subsection{socioweb + socioapp Database (Supabase Project 1)}
+
+The following tables must be implemented in PostgreSQL (via Supabase). Column names and types are indicative — the vendor may use reasonable alternatives as long as all functional requirements are met.
+
+\begin{longtable}{L{4cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Table} & \textbf{Key Columns and Notes} \\
+\midrule
+\endhead
+\texttt{users} & id (UUID, PK), email (unique), name, avatar\_url, department, campus, roles (JSONB array of \{role, expiry\}), created\_at. \\
+\addlinespace
+\texttt{events} & id, title, description, category, department, campus, start\_time, end\_time, venue\_id (FK), capacity, registrations\_count, registration\_deadline, image\_url, prizes, rules, schedule (JSONB), organiser\_id (FK → users), team\_enabled, team\_min, team\_max, outsider\_eligible, custom\_fields (JSONB), draft (boolean), archived (boolean), deleted (boolean), fest\_id (FK → fests, nullable), created\_at. \\
+\addlinespace
+\texttt{fests} & id, title, description, category, department, campus, start\_date, end\_date, banner\_url, sponsors (JSONB), social\_links (JSONB), faq (JSONB), timeline (JSONB), organiser\_id, draft, archived, created\_at. \\
+\addlinespace
+\texttt{clubs} & id, name, description, category, department, image\_url, roles (JSONB — list of available roles), organiser\_id, created\_at. \\
+\addlinespace
+\texttt{registrations} & id, event\_id (FK), user\_id (FK), type (individual/team), team\_data (JSONB), custom\_field\_responses (JSONB), qr\_code (text — signed payload), qr\_generated\_at, status (active/cancelled), created\_at. \\
+\addlinespace
+\texttt{attendance\_status} & id, registration\_id (FK, unique), event\_id (FK), scanned\_by (FK → users — the volunteer), scanned\_at, status (present/absent). \\
+\addlinespace
+\texttt{approvals} & id, event\_id (FK, unique), hod\_status, hod\_email, hod\_notes, hod\_at, dean\_status, dean\_email, dean\_notes, dean\_at, cfo\_enabled (boolean), cfo\_status, cfo\_email, cfo\_notes, cfo\_at, accounts\_enabled (boolean), accounts\_status, accounts\_email, accounts\_notes, accounts\_at, budget\_items (JSONB array of \{description, quantity, unit\_price\}), created\_at, updated\_at. \\
+\addlinespace
+\texttt{venues} & id, name, capacity, campus, location, facilities (JSONB), created\_at. \\
+\addlinespace
+\texttt{venue\_bookings} & id, event\_id (FK), venue\_id (FK), organiser\_id (FK), requested\_start, requested\_end, notes, status (pending/approved/rejected/returned), manager\_notes, created\_at. \\
+\addlinespace
+\texttt{catering\_bookings} & id, event\_id (FK), vendor\_id (FK), organiser\_id (FK), headcount, menu\_notes, delivery\_time, status (pending/accepted/declined), created\_at. \\
+\addlinespace
+\texttt{stall\_bookings} & id, event\_id (FK), fest\_id (FK nullable), organiser\_id (FK), stall\_details (JSONB), status, created\_at. \\
+\addlinespace
+\texttt{service\_requests} & id, event\_id (FK), organiser\_id (FK), type (IT/other), details (JSONB), status, it\_notes, created\_at. \\
+\addlinespace
+\texttt{feedbacks} & id, event\_id (FK), user\_id (FK), ratings (JSONB — \{q1: 4, q2: 5, ...\}), comment (text), submitted\_at. Unique constraint on (event\_id, user\_id). \\
+\addlinespace
+\texttt{notifications} & id, user\_id (FK), title, body, type (event/broadcast/system), read (boolean), related\_event\_id (nullable), created\_at. \\
+\addlinespace
+\texttt{push\_subscriptions} & id, user\_id (FK), endpoint (text), keys (JSONB — p256dh + auth), platform (web/mobile), created\_at. \\
+\addlinespace
+\texttt{broadcast\_notification\_status} & id, notification\_id (FK), user\_id (FK), read (boolean). Tracks read state for broadcast notifications per user. \\
+\bottomrule
+\end{longtable}
+
+\subsection{sociogated Database (Supabase Project 2 — isolated)}
+
+\begin{tabularx}{\textwidth}{L{3.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Table} & \textbf{Key Columns and Notes} \\
+\midrule
+\texttt{users} & id, username (unique), password\_hash, role (organiser/cso/guard), email, created\_at. Completely separate from socioweb users. \\
+\addlinespace
+\texttt{event\_requests} & id, event\_name, event\_date, organiser\_id (FK → users), status (pending/approved/rejected), cso\_notes, created\_at. \\
+\addlinespace
+\texttt{events} & id, request\_id (FK), event\_name, event\_date, organiser\_id, active (boolean), created\_at. \\
+\addlinespace
+\texttt{visitors} & id, event\_id (FK), name, email, phone, institution, id\_type, id\_number, pass\_type (blue/amber/maroon), qr\_code (text), entry\_status (not\_entered/entered/denied), entered\_at, created\_at. \\
+\addlinespace
+\texttt{notifications} & id, user\_id (FK), message, read (boolean), created\_at. \\
+\bottomrule
+\end{tabularx}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Third-Party Integrations}
+
+All of the following external services must be integrated. The vendor is responsible for configuring accounts, obtaining API keys, and integrating the SDKs as specified.
+
+\begin{longtable}{L{3.5cm} L{2.5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Service} & \textbf{Used In} & \textbf{Integration Requirements} \\
+\midrule
+\endhead
+\textbf{Supabase} & All products & Two separate Supabase projects (socioweb+app, sociogated). PostgreSQL database, Supabase Auth (for socioweb/app), Supabase Storage (file uploads), Row Level Security policies appropriate for each table. \\
+\addlinespace
+\textbf{Google OAuth 2.0} & socioweb, socioapp & OAuth client ID and secret configured. Redirect URIs registered for web (Vercel URL) and native (Capacitor deep-link scheme). \\
+\addlinespace
+\textbf{OpenAI API} & socioweb, socioapp & API key with access to \texttt{gpt-4o-mini}. Used for AI chatbot and analytics predictions. \\
+\addlinespace
+\textbf{Google Gemini API} & socioweb, socioapp & API key with access to Gemini Flash model (\texttt{@google/generative-ai}). Fallback for OpenAI. \\
+\addlinespace
+\textbf{Resend} & socioweb, sociogated & API key. Used for transactional email (registration confirmations, QR passes, feedback notifications). From-address must be a verified domain. \\
+\addlinespace
+\textbf{Web Push API} & socioweb & VAPID key pair generated. Public key provided to the frontend for push subscription. \\
+\addlinespace
+\textbf{OneSignal} & socioweb, socioapp & OneSignal app created. App ID and REST API key configured. Cordova plugin installed in socioapp. \\
+\addlinespace
+\textbf{Sentry} & socioweb & Sentry project created. DSN configured in the socioweb frontend. Source maps uploaded for readable stack traces. \\
+\addlinespace
+\textbf{Vercel} & socioweb, socioapp & Both frontends deployed to Vercel. Environment variables configured. Custom domains connected. \\
+\addlinespace
+\textbf{nginx} & socioweb backend & nginx configured as a reverse proxy on the VPS, routing traffic to the PM2-managed Express process. SSL/TLS configured via Let's Encrypt. \\
+\addlinespace
+\textbf{PM2} & socioweb backend & PM2 process manager configured to start the Express server on boot and restart on crash. \texttt{ecosystem.config.js} included in deliverable. \\
+\addlinespace
+\textbf{ExcelJS} & socioweb & Used for generating themed XLSX reports. Styles must match the platform's colour palette (primary dark navy, accent red). \\
+\addlinespace
+\textbf{jsPDF} & socioapp, sociogated & Used for PDF ticket generation (socioapp) and visitor pass generation (sociogated). \\
+\addlinespace
+\textbf{Capacitor MLKit} & socioapp & \texttt{@capacitor-mlkit/barcode-scanning} installed and configured in the Capacitor Android project. Permissions declared in \texttt{AndroidManifest.xml}. \\
+\bottomrule
+\end{longtable}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Non-Functional Requirements}
+
+\subsection{Performance}
+
+\begin{itemize}[leftmargin=*]
+    \item All API endpoints must respond within 2 seconds under normal load (single concurrent user).
+    \item The QR attendance scan endpoint must respond within 500ms — it is used in real-time at events.
+    \item The socioweb frontend must achieve a Lighthouse Performance score of 70+ on desktop.
+    \item SWR caching in socioapp must prevent redundant API calls for data fetched in the last 30 seconds.
+\end{itemize}
+
+\subsection{Security}
+
+\begin{itemize}[leftmargin=*]
+    \item All API endpoints (except public listing and auth endpoints) must require a valid Supabase JWT.
+    \item Role expiry must be enforced server-side on every request — not just at login.
+    \item QR codes must be cryptographically signed (HMAC-SHA256 or equivalent) so they cannot be forged or replayed.
+    \item All user-submitted input must be validated server-side using Zod (or equivalent schema validation). Client-side validation alone is not sufficient.
+    \item Passwords in sociogated must be hashed using bcrypt (minimum 12 rounds).
+    \item CORS policy must be configured on the Express server — only origins matching the frontend domains should be permitted.
+    \item Rate limiting must be applied to the attendance scan endpoint (per-volunteer) and the AI chatbot endpoint (per-user daily limit).
+    \item File uploads must be validated for file type and size before storing.
+    \item All inter-service communication (gatedSync) must use authenticated Supabase service role keys, not anonymous keys.
+    \item HTTPS is mandatory on all three production domains.
+\end{itemize}
+
+\subsection{Scalability}
+
+\begin{itemize}[leftmargin=*]
+    \item The database schema must be designed for at least 10,000 registered users and 1,000 events without schema changes.
+    \item The multi-campus support (campus field on users, events, and venues) must be functional from day one — adding a new campus must require only data entry, not code changes.
+\end{itemize}
+
+\subsection{Reliability}
+
+\begin{itemize}[leftmargin=*]
+    \item The Express backend must be managed by PM2 and automatically restart on crash.
+    \item The platform must have 99\% uptime as a target — downtime during active events is not acceptable.
+    \item The AI chatbot fallback chain (OpenAI → Gemini) must be automatic with no user-visible error when OpenAI fails.
+    \item The offline scan queue in socioapp must persist across app restarts (i.e.\ stored in localStorage, not in-memory).
+\end{itemize}
+
+\subsection{Usability}
+
+\begin{itemize}[leftmargin=*]
+    \item The platform must be responsive — fully functional on desktop and mobile browsers.
+    \item The mobile app must work correctly in both PWA mode (installed on home screen) and native Android APK mode.
+    \item All role-gated portals must be completely invisible to users without that role — no broken routes, no empty pages.
+    \item Error states (failed API calls, capacity full, expired roles) must show user-friendly, descriptive messages — never raw error objects.
+\end{itemize}
+
+\subsection{Compliance}
+
+\begin{itemize}[leftmargin=*]
+    \item A working Privacy Policy, Terms of Service, Cookie Policy, and Refund Policy must be linked from the footer on all public pages.
+    \item Cookie consent must be handled appropriately.
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Deliverables}
+
+The vendor must deliver all of the following at project completion:
+
+\begin{tabularx}{\textwidth}{L{0.5cm} L{5.5cm} X}
+\toprule
+\rowcolor{primary!10}
+& \textbf{Deliverable} & \textbf{Notes} \\
+\midrule
+1 & Complete source code — socioweb & Frontend (Next.js) + Backend (Express) in a Git repository \\
+2 & Complete source code — socioapp & Next.js + Capacitor Android project \\
+3 & Complete source code — sociogated & Next.js + API routes \\
+4 & Android APK & Working installable \texttt{.apk} file for socioapp \\
+5 & Production deployment & All three products live on production domains with HTTPS \\
+6 & Database schema & SQL migration files or Supabase schema export for both projects \\
+7 & Environment variable documentation & A complete \texttt{.env.example} file for each product listing all required keys \\
+8 & Deployment documentation & Step-by-step guide to redeploy each product \\
+9 & PM2 ecosystem config & \texttt{ecosystem.config.js} for the Express backend \\
+10 & nginx config & Production nginx configuration file \\
+11 & Admin credentials & Master Admin login credentials for the first login \\
+12 & Supabase project credentials & Both project URLs, anon keys, and service role keys documented \\
+13 & Third-party API keys & All API keys configured and documented (or handed over to client) \\
+14 & Knowledge transfer session & Minimum 2-hour walkthrough of the codebase and admin operations \\
+\bottomrule
+\end{tabularx}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\newpage
+\section{Scope Summary for Vendor Estimation}
+
+\begin{infobox}
+This section provides a consolidated count of all items in scope. Vendors should use this as the basis for their work breakdown structure (WBS) and effort estimation.
+\end{infobox}
+
+\vspace{0.5cm}
+
+\begin{tabularx}{\textwidth}{L{6cm} C{2cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Item} & \textbf{Count} & \textbf{Notes} \\
+\midrule
+\multicolumn{3}{l}{\textbf{\color{accent} socioweb}} \\
+Web pages (Next.js routes) & 61 & Including all public, auth, student, organiser, and staff portal pages \\
+Backend route files & 24 & Express.js route files \\
+Backend API endpoints & 130+ & REST endpoints across all route files \\
+Distinct user roles & 12 & With RBAC and time-bound expiry \\
+Analytics dashboards & 3 & Master Admin, HOD, Dean \\
+Recharts chart types & 5 & Area, Bar, Pie, Funnel, Line \\
+Email templates & 4+ & Registration confirmation, QR pass, reminder, feedback dispatch \\
+Excel export templates & 2+ & Analytics export, event participant report \\
+\midrule
+\multicolumn{3}{l}{\textbf{\color{accent} socioapp}} \\
+Mobile screens & 20 & PWA + Android APK \\
+Capacitor native plugins & 7 & MLKit, Haptics, Motion, ScreenOrientation, Share, Browser, OneSignal \\
+\midrule
+\multicolumn{3}{l}{\textbf{\color{accent} sociogated}} \\
+Web pages & 8 & Standalone Next.js app \\
+API endpoints & 11+ & Next.js API routes \\
+\midrule
+\multicolumn{3}{l}{\textbf{\color{accent} Shared}} \\
+Database tables & 21+ & 16 in socioweb DB, 5 in sociogated DB \\
+Third-party integrations & 13 & As listed in Section 10 \\
+Production domains & 3 & With HTTPS \\
+\midrule
+\rowcolor{primary!10}
+\textbf{Total web routes} & \textbf{69} & socioweb + sociogated \\
+\rowcolor{primary!10}
+\textbf{Total mobile screens} & \textbf{20} & socioapp \\
+\rowcolor{primary!10}
+\textbf{Total API endpoints} & \textbf{140+} & socioweb + sociogated \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.8cm}
+
+\begin{reqbox}
+\textbf{Important note for vendors:} This specification is based on a working, production-deployed system. The complexity of individual features is non-trivial — the approval workflow engine, cryptographic QR signing, offline scan queue, bi-directional database sync, AI chatbot with fallback chains, and real-time push notifications are all production-grade features with edge cases that require careful implementation. Effort estimates should account for integration testing, mobile device testing (Android), and production deployment configuration.
+\end{reqbox}
+
+\vspace{0.5cm}
+
+\begin{tabularx}{\textwidth}{L{5cm} X}
+\toprule
+\rowcolor{primary!10}
+\textbf{Vendor Question} & \textbf{Guidance} \\
+\midrule
+What is the engagement model? & Fixed-price contract based on this SRS is preferred. Time-and-materials with milestone-based payments is acceptable. \\
+What is the expected timeline? & Vendors should propose a timeline. For reference, the original platform was built in 18 months by a 10-person student team. A professional team is expected to deliver faster. \\
+Who provides API keys? & The client will provide API keys for all third-party services. The vendor is responsible for integration and configuration only. \\
+What about testing? & The vendor must deliver a working, tested system. Functional testing evidence (screenshot/video of all major flows) must be provided at handover. \\
+What about post-delivery support? & Vendors should quote a separate 3-month or 6-month support retainer in addition to the development cost. \\
+\bottomrule
+\end{tabularx}
+
+\vspace{2cm}
+\begin{center}
+{\small\color{darkgray}
+SOCIO Platform — Software Requirements Specification\\
+Version 1.0 \textbullet\ Confidential \textbullet\ For Vendor Quotation Purposes \textbullet\ \the\year
+}
+\end{center}
+
+\end{document}
